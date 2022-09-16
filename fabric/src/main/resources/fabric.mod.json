@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "rolling",
   "version": "${version}",
-  "name": "Spell Damage Attribute",
+  "name": "Rolling",
   "description": "Roll like a ball",
   "authors": [
     "Daedelus"
@@ -15,6 +15,9 @@
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
+    "client": [
+      "net.rolling.fabric.client.FabricClientMod"
+    ],
     "main": [
       "net.rolling.fabric.FabricMod"
     ]
