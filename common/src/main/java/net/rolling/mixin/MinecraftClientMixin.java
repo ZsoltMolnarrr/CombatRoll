@@ -1,10 +1,12 @@
 package net.rolling.mixin;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.Vec3d;
 import net.rolling.api.EntityAttributes_Rolling;
 import net.rolling.client.RollManager;
 import net.rolling.client.RollingKeybings;
+import net.rolling.network.Packets;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -48,6 +50,9 @@ public abstract class MinecraftClientMixin {
             direction = direction.multiply(0.475 * distance);
             player.addVelocity(direction.x, direction.y, direction.z);
             rollManager.onRoll(player);
+            ClientPlayNetworking.send(
+                    Packets.RollAnimation.ID,
+                    new Packets.RollAnimation(player.getId(), "roll").write());
         }
     }
 }

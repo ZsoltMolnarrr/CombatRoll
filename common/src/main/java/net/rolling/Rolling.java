@@ -1,6 +1,7 @@
 package net.rolling;
 
 import net.minecraft.client.resource.language.I18n;
+import net.rolling.network.ServerNetwork;
 
 public class Rolling {
     public static final String MOD_ID = "rolling";
@@ -10,6 +11,6 @@ public class Rolling {
     }
 
     public static void init() {
-
+        ServerNetwork.initializeHandlers();
     }
 }
