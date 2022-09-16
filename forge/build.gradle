@@ -21,13 +21,18 @@ configurations {
     developmentForge.extendsFrom common
 }
 
+repositories {
+    maven { url 'https://maven.kosmx.dev/' }
+}
+
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     // Remove the next line if you don't want to depend on the API
     // modApi "dev.architectury:architectury-forge:${rootProject.architectury_version_api}"
-
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+
+    modImplementation("dev.kosmx.player-anim:player-animation-lib-forge:${project.player_anim_version}")
 }
 
 processResources {

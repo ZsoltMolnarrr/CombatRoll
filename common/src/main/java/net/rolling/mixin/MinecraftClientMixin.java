@@ -2,18 +2,24 @@ package net.rolling.mixin;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.rolling.api.EntityAttributes_Rolling;
+import net.rolling.client.AnimatablePlayer;
 import net.rolling.client.RollManager;
 import net.rolling.client.RollingKeybings;
 import net.rolling.network.Packets;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import javax.annotation.Nullable;
+
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
+    @Shadow @Nullable public ClientPlayerEntity player;
     private RollManager rollManager = new RollManager();
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -37,6 +43,10 @@ public abstract class MinecraftClientMixin {
                 // System.out.println("Not on the ground");
                 return;
             }
+            if(player.getVehicle() != null) {
+                // System.out.println("Mounted");
+                return;
+            }
             var forward = player.input.movementForward;
             var sideways = player.input.movementSideways;
             Vec3d direction;
@@ -46,13 +56,15 @@ public abstract class MinecraftClientMixin {
                 direction = new Vec3d(sideways, 0, forward).normalize();
             }
             direction = direction.rotateY((float) Math.toRadians((-1.0) * player.getYaw()));
-            var distance = player.getAttributeValue(EntityAttributes_Rolling.DISTANCE);
-            direction = direction.multiply(0.475 * distance);
+            var distance = 0.475 * player.getAttributeValue(EntityAttributes_Rolling.DISTANCE);
+            direction = direction.multiply(distance);
             player.addVelocity(direction.x, direction.y, direction.z);
             rollManager.onRoll(player);
+            var animation = "rolling:roll";
             ClientPlayNetworking.send(
                     Packets.RollAnimation.ID,
-                    new Packets.RollAnimation(player.getId(), "roll").write());
+                    new Packets.RollAnimation(player.getId(), animation).write());
+            ((AnimatablePlayer)player).playRollAnimation(animation);
         }
     }
 }
