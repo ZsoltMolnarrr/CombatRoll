@@ -22,18 +22,25 @@ public class RollManager {
     public void onRoll(ClientPlayerEntity player) {
         availableRolls -= 1;
         timeSinceLastRoll = 0;
-        currentCooldownLength = (int) Math.round(player.getAttributeValue(EntityAttributes_Rolling.COOLDOWN) * 20F);
+        updateCooldownLength(player);
     }
 
     public void tick(ClientPlayerEntity player) {
         maxRolls = (int) player.getAttributeValue(EntityAttributes_Rolling.COUNT);
-        if (availableRolls <= maxRolls) {
-            timeSinceLastRoll += 1;
+        timeSinceLastRoll += 1;
+        if (availableRolls < maxRolls) {
             if (timeSinceLastRoll >= currentCooldownLength) {
                 availableRolls += 1;
+                timeSinceLastRoll = 0;
+                updateCooldownLength(player);
             }
-        } else {
+        }
+        if (availableRolls > maxRolls) {
             availableRolls = maxRolls;
         }
+    }
+
+    private void updateCooldownLength(ClientPlayerEntity player) {
+        currentCooldownLength = (int) Math.round(4F * 20F * (20F / player.getAttributeValue(EntityAttributes_Rolling.RECHARGE)));
     }
 }

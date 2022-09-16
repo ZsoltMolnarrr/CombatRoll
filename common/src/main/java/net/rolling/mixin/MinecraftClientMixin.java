@@ -14,17 +14,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MinecraftClientMixin {
     private RollManager rollManager = new RollManager();
 
-    @Inject(method = "tick",at = @At("TAIL"))
+    @Inject(method = "tick", at = @At("TAIL"))
     private void tick_TAIL(CallbackInfo ci) {
         var player = MinecraftClient.getInstance().player;
         if (player == null) {
             return;
         }
         rollManager.tick(player);
+
+//        var cooldown = rollManager.getCooldown();
+//        System.out.println("Roll cd: " + cooldown);
+
         if (RollingKeybings.roll.wasPressed()) {
             if(!rollManager.isRollAvailable()) {
-                // var cooldown = rollManager.getCooldown();
-                // System.out.println("Roll not ready " + cooldown);
+//                 var cooldown = rollManager.getCooldown();
+//                 System.out.println("Roll not ready " + cooldown);
                 return;
             }
             if(!player.isOnGround()) {
