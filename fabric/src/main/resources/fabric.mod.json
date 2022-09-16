@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "rolling",
+  "version": "${version}",
+  "name": "Spell Damage Attribute",
+  "description": "Roll like a ball",
+  "authors": [
+    "Daedelus"
+  ],
+  "contact": {
+    "repo": "https://github.com/ZsoltMolnarrr/Rolling",
+    "issues": "https://github.com/ZsoltMolnarrr/Rolling/issues"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.rolling.fabric.FabricMod"
+    ]
+  },
+  "mixins": [
+    "rolling.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "1.19.X",
+    "fabricloader": ">=0.14.0"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/KN9b3pjFTM"
+      }
+    }
+  }
+}
