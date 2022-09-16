@@ -3,6 +3,7 @@ package net.rolling.mixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.Vec3d;
 import net.rolling.api.EntityAttributes_Rolling;
+import net.rolling.client.RollManager;
 import net.rolling.client.RollingKeybings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,11 +12,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
+    private RollManager rollManager = new RollManager();
+
     @Inject(method = "tick",at = @At("TAIL"))
     private void tick_TAIL(CallbackInfo ci) {
+        var player = MinecraftClient.getInstance().player;
+        if (player == null) {
+            return;
+        }
+        rollManager.tick(player);
         if (RollingKeybings.roll.wasPressed()) {
-            var player = MinecraftClient.getInstance().player;
-            if (!player.isOnGround()) {
+            if(!rollManager.isRollAvailable()) {
+                // var cooldown = rollManager.getCooldown();
+                // System.out.println("Roll not ready " + cooldown);
+                return;
+            }
+            if(!player.isOnGround()) {
+                // System.out.println("Not on the ground");
                 return;
             }
             var forward = player.input.movementForward;
@@ -28,9 +41,9 @@ public abstract class MinecraftClientMixin {
             }
             direction = direction.rotateY((float) Math.toRadians((-1.0) * player.getYaw()));
             var distance = player.getAttributeValue(EntityAttributes_Rolling.DISTANCE);
-            System.out.println("distance attr " + distance);
             direction = direction.multiply(0.475 * distance);
             player.addVelocity(direction.x, direction.y, direction.z);
+            rollManager.onRoll(player);
         }
     }
 }
