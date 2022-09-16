@@ -2,6 +2,7 @@ package net.rolling.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.Vec3d;
+import net.rolling.api.EntityAttributes_Rolling;
 import net.rolling.client.RollingKeybings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,6 +15,9 @@ public abstract class MinecraftClientMixin {
     private void tick_TAIL(CallbackInfo ci) {
         if (RollingKeybings.roll.wasPressed()) {
             var player = MinecraftClient.getInstance().player;
+            if (!player.isOnGround()) {
+                return;
+            }
             var forward = player.input.movementForward;
             var sideways = player.input.movementSideways;
             Vec3d direction;
@@ -22,10 +26,10 @@ public abstract class MinecraftClientMixin {
             } else  {
                 direction = new Vec3d(sideways, 0, forward).normalize();
             }
-            System.out.println("Direction: " + direction);
             direction = direction.rotateY((float) Math.toRadians((-1.0) * player.getYaw()));
-            System.out.println("Rotated by: " + player.getYaw() + " direction: " + direction);
-            direction = direction.multiply(3);
+            var distance = player.getAttributeValue(EntityAttributes_Rolling.DISTANCE);
+            System.out.println("distance attr " + distance);
+            direction = direction.multiply(0.475 * distance);
             player.addVelocity(direction.x, direction.y, direction.z);
         }
     }
