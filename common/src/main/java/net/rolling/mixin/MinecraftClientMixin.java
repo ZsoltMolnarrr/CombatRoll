@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.math.Vec3d;
+import net.rolling.Rolling;
 import net.rolling.api.EntityAttributes_Rolling;
 import net.rolling.client.MinecraftClientExtension;
 import net.rolling.client.RollEffect;
@@ -72,6 +73,9 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
                 return;
             }
             if (player.isUsingItem() || player.isBlocking()) {
+                return;
+            }
+            if (!Rolling.config.allow_rolling_while_weapon_cooldown && player.getAttackCooldownProgress(0) < 0.95) {
                 return;
             }
             var forward = player.input.movementForward;

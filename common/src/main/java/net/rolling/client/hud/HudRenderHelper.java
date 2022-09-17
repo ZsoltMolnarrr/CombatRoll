@@ -8,6 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.rolling.client.MinecraftClientExtension;
 import net.rolling.client.RollManager;
+import net.rolling.client.RollingClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class HudRenderHelper {
         }
         var cooldownInfo = ((MinecraftClientExtension)client).getRollManager().getCooldown();
         var viewModel = createViewModel(cooldownInfo);
+        var config = RollingClient.config;
 
         int horizontalSpacing = 8;
         int originX = 10;
@@ -43,7 +45,7 @@ public class HudRenderHelper {
             v = 0;
             width = height = textureSize = 15;
             RenderSystem.setShaderTexture(0, ARROW_BACKGROUND);
-            RenderSystem.setShaderColor(1, 1, 1, 0.75F);
+            RenderSystem.setShaderColor(1, 1, 1, ((float)config.hudBackgroundOpacity) / 100F);
             DrawableHelper.drawTexture(matrixStack, x, y, u, v, width, height, textureSize, textureSize);
 
             var color = element.color;
@@ -73,9 +75,10 @@ public class HudRenderHelper {
     }
 
     private static ViewModel createViewModel(RollManager.CooldownInfo info) {
+        var config = RollingClient.config;
         var elements = new ArrayList<ViewModel.Element>();
         for(int i = 0; i < info.maxRolls(); ++i) {
-            var color = 0x5488e3;
+            var color = config.hudArrowColor;
             float full = 0;
             if (i == (info.availableRolls())) {
                 full = ((float)info.elapsed()) / ((float)info.total());

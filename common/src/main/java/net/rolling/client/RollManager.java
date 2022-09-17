@@ -7,7 +7,7 @@ import net.minecraft.util.registry.Registry;
 import net.rolling.api.EntityAttributes_Rolling;
 
 public class RollManager {
-    public boolean isEnabled = true;
+    public boolean isEnabled = false;
     public static final int rollDuration = 10;
     private int timeSinceLastRoll = rollDuration;
     private int currentCooldownLength = 0;
@@ -53,9 +53,11 @@ public class RollManager {
         availableRolls += 1;
         timeSinceLastRoll = 0;
         updateCooldownLength(player);
-        var cooldownReady = Registry.SOUND_EVENT.get(new Identifier("rolling:roll_cooldown_ready"));
-        if (cooldownReady != null) {
-            player.world.playSound(player.getX(), player.getY(), player.getZ(), cooldownReady, SoundCategory.PLAYERS, 1, 1, false);
+        if (RollingClient.config.playCooldownSound) {
+            var cooldownReady = Registry.SOUND_EVENT.get(new Identifier("rolling:roll_cooldown_ready"));
+            if (cooldownReady != null) {
+                player.world.playSound(player.getX(), player.getY(), player.getZ(), cooldownReady, SoundCategory.PLAYERS, 1, 1, false);
+            }
         }
     }
 

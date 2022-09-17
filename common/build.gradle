@@ -1,5 +1,7 @@
 repositories {
     maven { url 'https://maven.kosmx.dev/' }
+    maven { url 'https://maven.shedaniel.me/' }
+    maven { url 'https://maven.terraformersmc.com/' }
 }
 
 dependencies {
@@ -9,7 +11,12 @@ dependencies {
     // Remove the next line if you don't want to depend on the API
     // modApi "dev.architectury:architectury:${rootProject.architectury_version_api}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+    modCompileOnly("com.terraformersmc:modmenu:${rootProject.mod_menu_version}") { transitive false }
+
     modImplementation("dev.kosmx.player-anim:player-animation-lib:${project.player_anim_version}")
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 }
 
 architectury {

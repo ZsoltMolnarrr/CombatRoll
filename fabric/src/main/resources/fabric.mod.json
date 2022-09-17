@@ -20,6 +20,9 @@
     ],
     "main": [
       "net.rolling.fabric.FabricMod"
+    ],
+    "modmenu": [
+      "net.rolling.fabric.client.ModMenuIntegration"
     ]
   },
   "mixins": [

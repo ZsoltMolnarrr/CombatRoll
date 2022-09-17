@@ -1,11 +1,13 @@
 package net.rolling.network;
 
+import com.google.gson.Gson;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.rolling.Rolling;
 import net.rolling.client.RollEffect;
+import net.rolling.config.ServerConfig;
 
 public class Packets {
     public record RollPublish(int playerId, RollEffect.Visuals visuals, Vec3d velocity) {
@@ -53,6 +55,25 @@ public class Packets {
                     RollEffect.Particles.valueOf(buffer.readString()));
             Vec3d velocity = new Vec3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
             return new RollAnimation(playerId, visuals, velocity);
+        }
+    }
+
+    public static class ConfigSync {
+        public static Identifier ID = new Identifier(Rolling.MOD_ID, "config_sync");
+
+        public static PacketByteBuf write(ServerConfig config) {
+            var gson = new Gson();
+            var json = gson.toJson(config);
+            var buffer = PacketByteBufs.create();
+            buffer.writeString(json);
+            return buffer;
+        }
+
+        public static ServerConfig read(PacketByteBuf buffer) {
+            var gson = new Gson();
+            var json = buffer.readString();
+            var config = gson.fromJson(json, ServerConfig.class);
+            return config;
         }
     }
 }

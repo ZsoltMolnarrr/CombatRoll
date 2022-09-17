@@ -19,9 +19,11 @@ public record RollEffect(Visuals visuals, String soundId) {
     private static Random random = new Random();
     public static void playVisuals(Visuals visuals, PlayerEntity player, Vec3d direction) {
         ((AnimatablePlayer)player).playRollAnimation(visuals.animationName(), direction);
-        var sound = Registry.SOUND_EVENT.get(new Identifier("rolling:roll"));
-        if (sound != null) {
-            player.world.playSound(player.getX(), player.getY(), player.getZ(), sound, SoundCategory.PLAYERS, 1, 1, true);
+        if (RollingClient.config.playRollSound) {
+            var sound = Registry.SOUND_EVENT.get(new Identifier("rolling:roll"));
+            if (sound != null) {
+                player.world.playSound(player.getX(), player.getY(), player.getZ(), sound, SoundCategory.PLAYERS, 1, 1, true);
+            }
         }
         switch (visuals.particles()) {
             case PUFF -> {

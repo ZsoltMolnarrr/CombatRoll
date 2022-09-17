@@ -1,18 +1,23 @@
 package net.rolling.network;
 
 import com.google.common.collect.Iterables;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.rolling.Rolling;
 
 public class ServerNetwork {
+    private static PacketByteBuf configSerialized = PacketByteBufs.create();
+
     public static void initializeHandlers() {
-//        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-//            sender.sendPacket(Packets.WeaponRegistrySync.ID, WeaponRegistry.getEncodedRegistry());
-//            sender.sendPacket(Packets.ConfigSync.ID, configSerialized);
-//        });
+        configSerialized = Packets.ConfigSync.write(Rolling.config);
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            sender.sendPacket(Packets.ConfigSync.ID, configSerialized);
+        });
+
         ServerPlayNetworking.registerGlobalReceiver(Packets.RollPublish.ID, (server, player, handler, buf, responseSender) -> {
             ServerWorld world = Iterables.tryFind(server.getWorlds(), (element) -> element == player.world)
                     .orNull();
