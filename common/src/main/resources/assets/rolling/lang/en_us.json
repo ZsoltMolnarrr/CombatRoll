@@ -1,7 +1,7 @@
 {
   "rolling.mod_name" : "Rolling",
   "keybinds.rolling.roll" : "Roll",
-  "attribute.name.rolling.distance" : "Roll distance",
-  "attribute.name.rolling.count" : "Extra roll",
-  "attribute.name.rolling.recharge" : "Roll recharging"
+  "attribute.name.rolling.distance" : "Roll Distance",
+  "attribute.name.rolling.count" : "Extra Roll",
+  "attribute.name.rolling.recharge" : "Roll Recharge"
 }

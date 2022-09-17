@@ -3,9 +3,7 @@ package net.rolling.mixin;
 import com.mojang.authlib.GameProfile;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
-import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
-import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.impl.IAnimatedPlayer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -51,9 +49,10 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
             lastRollDirection = direction;
 
             var fadeIn = copy.beginTick;
-            base.replaceAnimationWithFade(
-                    AbstractFadeModifier.standardFadeIn(fadeIn, Ease.INOUTSINE),
-                    new KeyframeAnimationPlayer(copy.build(), 0));
+            base.setAnimation(new KeyframeAnimationPlayer(copy.build(), 0));
+//            base.replaceAnimationWithFade(
+//                    AbstractFadeModifier.standardFadeIn(fadeIn, Ease.INOUTSINE),
+//                    new KeyframeAnimationPlayer(copy.build(), 0));
         } catch (Exception e) {
             e.printStackTrace();
         }
