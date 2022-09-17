@@ -5,6 +5,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.rolling.api.EntityAttributes_Rolling;
+import net.rolling.client.MinecraftClientExtension;
 import net.rolling.client.RollEffect;
 import net.rolling.client.RollManager;
 import net.rolling.client.RollingKeybings;
@@ -20,17 +21,20 @@ import javax.annotation.Nullable;
 import static net.rolling.client.RollEffect.Particles.PUFF;
 
 @Mixin(MinecraftClient.class)
-public abstract class MinecraftClientMixin {
+public abstract class MinecraftClientMixin implements MinecraftClientExtension {
     @Shadow @Nullable public ClientPlayerEntity player;
     private RollManager rollManager = new RollManager();
+    public RollManager getRollManager() {
+        return rollManager;
+    }
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick_TAIL(CallbackInfo ci) {
-        if (player == null) {
+        var client = (MinecraftClient) ((Object)this);
+        if (player == null || client.isPaused()) {
             return;
         }
         rollManager.tick(player);
-
 //        var cooldown = rollManager.getCooldown();
 //        System.out.println("Roll cd: " + cooldown);
 

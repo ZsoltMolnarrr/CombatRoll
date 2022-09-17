@@ -7,7 +7,7 @@ import net.minecraft.util.registry.Registry;
 import net.rolling.api.EntityAttributes_Rolling;
 
 public class RollManager {
-    public static final int rollDuration = 5;
+    public static final int rollDuration = 10;
     private int timeSinceLastRoll = rollDuration;
     private int currentCooldownLength = 0;
     private int maxRolls = 1;
