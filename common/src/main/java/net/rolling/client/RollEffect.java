@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.rolling.client.animation.AnimatablePlayer;
 
@@ -16,8 +17,8 @@ public record RollEffect(Visuals visuals, String soundId) {
     }
 
     private static Random random = new Random();
-    public static void playVisuals(Visuals visuals, PlayerEntity player) {
-        ((AnimatablePlayer)player).playRollAnimation(visuals.animationName());
+    public static void playVisuals(Visuals visuals, PlayerEntity player, Vec3d direction) {
+        ((AnimatablePlayer)player).playRollAnimation(visuals.animationName(), direction);
         var sound = Registry.SOUND_EVENT.get(new Identifier("rolling:roll"));
         if (sound != null) {
             player.world.playSound(player.getX(), player.getY(), player.getZ(), sound, SoundCategory.PLAYERS, 1, 1, true);

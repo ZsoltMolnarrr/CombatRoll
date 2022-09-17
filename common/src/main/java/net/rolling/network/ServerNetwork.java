@@ -20,7 +20,7 @@ public class ServerNetwork {
                 return;
             }
             final var packet = Packets.RollPublish.read(buf);
-            final var forwardBuffer = new Packets.RollAnimation(player.getId(), packet.visuals()).write();
+            final var forwardBuffer = new Packets.RollAnimation(player.getId(), packet.visuals(), packet.velocity()).write();
             PlayerLookup.tracking(player).forEach(serverPlayer -> {
                 try {
                     if (serverPlayer.getId() != player.getId() && ServerPlayNetworking.canSend(serverPlayer, Packets.RollAnimation.ID)) {

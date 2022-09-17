@@ -32,7 +32,7 @@ public class Packets {
         }
     }
 
-    public record RollAnimation(int playerId, RollEffect.Visuals visuals) {
+    public record RollAnimation(int playerId, RollEffect.Visuals visuals, Vec3d velocity) {
         public static Identifier ID = new Identifier(Rolling.MOD_ID, "animation");
 
         public PacketByteBuf write() {
@@ -40,6 +40,9 @@ public class Packets {
             buffer.writeInt(playerId);
             buffer.writeString(visuals.animationName());
             buffer.writeString(visuals.particles().toString());
+            buffer.writeDouble(velocity.x);
+            buffer.writeDouble(velocity.y);
+            buffer.writeDouble(velocity.z);
             return buffer;
         }
 
@@ -48,7 +51,8 @@ public class Packets {
             var visuals = new RollEffect.Visuals(
                     buffer.readString(),
                     RollEffect.Particles.valueOf(buffer.readString()));
-            return new RollAnimation(playerId, visuals);
+            Vec3d velocity = new Vec3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
+            return new RollAnimation(playerId, visuals, velocity);
         }
     }
 }

@@ -26,7 +26,6 @@ public abstract class MinecraftClientMixin {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick_TAIL(CallbackInfo ci) {
-        var player = MinecraftClient.getInstance().player;
         if (player == null) {
             return;
         }
@@ -66,7 +65,7 @@ public abstract class MinecraftClientMixin {
             ClientPlayNetworking.send(
                     Packets.RollPublish.ID,
                     new Packets.RollPublish(player.getId(), rollVisuals, direction).write());
-            RollEffect.playVisuals(rollVisuals, player);
+            RollEffect.playVisuals(rollVisuals, player, direction);
         }
     }
 }

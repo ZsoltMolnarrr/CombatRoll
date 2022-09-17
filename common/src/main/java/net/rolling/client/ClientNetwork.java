@@ -11,7 +11,7 @@ public class ClientNetwork {
             client.execute(() -> {
                 var entity = client.world.getEntityById(packet.playerId());
                 if (entity instanceof PlayerEntity player) {
-                    RollEffect.playVisuals(packet.visuals(), player);
+                    RollEffect.playVisuals(packet.visuals(), player, packet.velocity());
                 }
             });
         });
