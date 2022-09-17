@@ -1,6 +1,7 @@
 package net.rolling.mixin;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.math.Vec3d;
@@ -89,6 +90,15 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             direction = direction.rotateY((float) Math.toRadians((-1.0) * player.getYaw()));
             var distance = 0.475 * player.getAttributeValue(EntityAttributes_Rolling.DISTANCE);
             direction = direction.multiply(distance);
+
+            var block = player.world.getBlockState(player.getBlockPos().down()).getBlock();
+            var slipperiness = block.getSlipperiness();
+            var defaultSlipperiness = Blocks.GRASS.getSlipperiness();
+            if (slipperiness > defaultSlipperiness) {
+                direction = direction.multiply(defaultSlipperiness / slipperiness);
+            }
+
+            // slipperiness
             player.addVelocity(direction.x, direction.y, direction.z);
             rollManager.onRoll(player);
 
