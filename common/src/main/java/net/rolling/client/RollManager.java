@@ -1,16 +1,14 @@
 package net.rolling.client;
 
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.rolling.api.EntityAttributes_Rolling;
 
 public class RollManager {
     public static final int rollDuration = 5;
-    private int timeSinceLastRoll = 0;
+    private int timeSinceLastRoll = rollDuration;
     private int currentCooldownLength = 0;
     private int maxRolls = 1;
     private int availableRolls = 0;

@@ -37,16 +37,15 @@ public abstract class MinecraftClientMixin {
 
         if (RollingKeybings.roll.wasPressed()) {
             if(!rollManager.isRollAvailable()) {
-//                 var cooldown = rollManager.getCooldown();
-//                 System.out.println("Roll not ready " + cooldown);
                 return;
             }
             if(!player.isOnGround()) {
-                // System.out.println("Not on the ground");
                 return;
             }
             if(player.getVehicle() != null) {
-                // System.out.println("Mounted");
+                return;
+            }
+            if (player.isUsingItem() || player.isBlocking()) {
                 return;
             }
             var forward = player.input.movementForward;
