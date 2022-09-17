@@ -1,6 +1,5 @@
 package net.rolling.client;
 
-import com.google.gson.Gson;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.rolling.Rolling;
@@ -20,8 +19,6 @@ public class ClientNetwork {
 
         ClientPlayNetworking.registerGlobalReceiver(Packets.ConfigSync.ID, (client, handler, buf, responseSender) -> {
             var config = Packets.ConfigSync.read(buf);
-             var gson = new Gson();
-             System.out.println("Received server config: " + gson.toJson(config));
             ((MinecraftClientExtension)client).getRollManager().isEnabled = true;
             Rolling.config = config;
         });

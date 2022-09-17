@@ -95,6 +95,9 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
         var angle = Math.toDegrees(Math.acos(cosineTheta));
         var cross = a.crossProduct(b);
         angle *= Math.signum(cross.dotProduct(planeNormal));
+        if (Double.isNaN(angle)) {
+            return 0;
+        }
         return angle;
     }
 }
