@@ -16,11 +16,13 @@ public record RollEffect(Visuals visuals, String soundId) {
         PUFF
     }
 
-    private static SoundEvent rollSound = Registry.SOUND_EVENT.get(new Identifier("rolling:roll"));
     private static Random random = new Random();
     public static void playVisuals(Visuals visuals, PlayerEntity player) {
         ((AnimatablePlayer)player).playRollAnimation(visuals.animationName());
-        player.world.playSound(player.getX(), player.getY(), player.getZ(), rollSound, SoundCategory.PLAYERS, 1, 1, true);
+        var sound = Registry.SOUND_EVENT.get(new Identifier("rolling:roll"));
+        if (sound != null) {
+            player.world.playSound(player.getX(), player.getY(), player.getZ(), sound, SoundCategory.PLAYERS, 1, 1, true);
+        }
         switch (visuals.particles()) {
             case PUFF -> {
                 for(int i = 0; i < 15; ++i) {
