@@ -8,6 +8,7 @@
   ],
   "client": [
     "AbstractClientPlayerEntityMixin",
+    "ClientPlayerEntityMixin",
     "MinecraftClientMixin"
   ],
   "injectors": {

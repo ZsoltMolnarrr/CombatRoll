@@ -15,17 +15,40 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
 
 import static net.rolling.client.RollEffect.Particles.PUFF;
 
-@Mixin(MinecraftClient.class)
+@Mixin(value = MinecraftClient.class, priority = 449)
 public abstract class MinecraftClientMixin implements MinecraftClientExtension {
     @Shadow @Nullable public ClientPlayerEntity player;
     private RollManager rollManager = new RollManager();
     public RollManager getRollManager() {
         return rollManager;
+    }
+
+    @Inject(method = "doAttack", at = @At("HEAD"), cancellable = true)
+    private void doAttack_HEAD(CallbackInfoReturnable<Boolean> info) {
+        if (rollManager.isRolling()) {
+            info.setReturnValue(false);
+            info.cancel();
+        }
+    }
+
+    @Inject(method = "handleBlockBreaking", at = @At("HEAD"), cancellable = true)
+    private void handleBlockBreaking_HEAD(boolean bl, CallbackInfo ci) {
+        if (rollManager.isRolling()) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "doItemUse", at = @At("HEAD"), cancellable = true)
+    private void doItemUse_HEAD(CallbackInfo ci) {
+        if (rollManager.isRolling()) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -42,7 +65,7 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             if(!rollManager.isRollAvailable()) {
                 return;
             }
-            if(!player.isOnGround()) {
+            if(!player.isOnGround() || player.isSwimming()) {
                 return;
             }
             if(player.getVehicle() != null) {

@@ -7,11 +7,14 @@ import net.minecraft.util.registry.Registry;
 import net.rolling.api.EntityAttributes_Rolling;
 
 public class RollManager {
+    public boolean isEnabled = true;
     public static final int rollDuration = 10;
     private int timeSinceLastRoll = rollDuration;
     private int currentCooldownLength = 0;
     private int maxRolls = 1;
     private int availableRolls = 0;
+
+    public RollManager() { }
 
     public record CooldownInfo(int elapsed, int total, int availableRolls, int maxRolls) { }
 
@@ -20,7 +23,7 @@ public class RollManager {
     }
 
     public boolean isRollAvailable() {
-        return !isRolling() && availableRolls > 0;
+        return isEnabled && !isRolling() && availableRolls > 0;
     }
 
     public boolean isRolling() {
@@ -45,8 +48,6 @@ public class RollManager {
             availableRolls = maxRolls;
         }
     }
-
-//    private static SoundEvent cooldownReady = Registry.SOUND_EVENT.get(new Identifier("rolling:roll_cooldown_ready"));
 
     private void rechargeRoll(ClientPlayerEntity player) {
         availableRolls += 1;
