@@ -1,6 +1,11 @@
 package net.rolling.client;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.rolling.api.EntityAttributes_Rolling;
 
 public class RollManager {
@@ -35,13 +40,23 @@ public class RollManager {
         timeSinceLastRoll += 1;
         if (availableRolls < maxRolls) {
             if (timeSinceLastRoll >= currentCooldownLength) {
-                availableRolls += 1;
-                timeSinceLastRoll = 0;
-                updateCooldownLength(player);
+                rechargeRoll(player);
             }
         }
         if (availableRolls > maxRolls) {
             availableRolls = maxRolls;
+        }
+    }
+
+//    private static SoundEvent cooldownReady = Registry.SOUND_EVENT.get(new Identifier("rolling:roll_cooldown_ready"));
+
+    private void rechargeRoll(ClientPlayerEntity player) {
+        availableRolls += 1;
+        timeSinceLastRoll = 0;
+        updateCooldownLength(player);
+        var cooldownReady = Registry.SOUND_EVENT.get(new Identifier("rolling:roll_cooldown_ready"));
+        if (cooldownReady != null) {
+            player.world.playSound(player.getX(), player.getY(), player.getZ(), cooldownReady, SoundCategory.PLAYERS, 1, 1, false);
         }
     }
 

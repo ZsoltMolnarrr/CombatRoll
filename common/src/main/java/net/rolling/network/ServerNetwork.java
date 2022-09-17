@@ -4,6 +4,8 @@ import com.google.common.collect.Iterables;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 public class ServerNetwork {
     public static void initializeHandlers() {

@@ -2,6 +2,10 @@ package net.rolling.client;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.rolling.client.animation.AnimatablePlayer;
 
 import java.util.Random;
@@ -12,9 +16,11 @@ public record RollEffect(Visuals visuals, String soundId) {
         PUFF
     }
 
+    private static SoundEvent rollSound = Registry.SOUND_EVENT.get(new Identifier("rolling:roll"));
     private static Random random = new Random();
     public static void playVisuals(Visuals visuals, PlayerEntity player) {
         ((AnimatablePlayer)player).playRollAnimation(visuals.animationName());
+        player.world.playSound(player.getX(), player.getY(), player.getZ(), rollSound, SoundCategory.PLAYERS, 1, 1, true);
         switch (visuals.particles()) {
             case PUFF -> {
                 for(int i = 0; i < 15; ++i) {
