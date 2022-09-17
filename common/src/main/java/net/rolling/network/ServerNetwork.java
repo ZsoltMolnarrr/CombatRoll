@@ -11,14 +11,14 @@ public class ServerNetwork {
 //            sender.sendPacket(Packets.WeaponRegistrySync.ID, WeaponRegistry.getEncodedRegistry());
 //            sender.sendPacket(Packets.ConfigSync.ID, configSerialized);
 //        });
-        ServerPlayNetworking.registerGlobalReceiver(Packets.RollAnimation.ID, (server, player, handler, buf, responseSender) -> {
+        ServerPlayNetworking.registerGlobalReceiver(Packets.RollPublish.ID, (server, player, handler, buf, responseSender) -> {
             ServerWorld world = Iterables.tryFind(server.getWorlds(), (element) -> element == player.world)
                     .orNull();
             if (world == null || world.isClient) {
                 return;
             }
-            final var packet = Packets.RollAnimation.read(buf);
-            final var forwardBuffer = new Packets.RollAnimation(player.getId(), packet.animationName()).write();
+            final var packet = Packets.RollPublish.read(buf);
+            final var forwardBuffer = new Packets.RollAnimation(player.getId(), packet.visuals()).write();
             PlayerLookup.tracking(player).forEach(serverPlayer -> {
                 try {
                     if (serverPlayer.getId() != player.getId() && ServerPlayNetworking.canSend(serverPlayer, Packets.RollAnimation.ID)) {

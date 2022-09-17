@@ -5,7 +5,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.rolling.api.EntityAttributes_Rolling;
-import net.rolling.client.AnimatablePlayer;
+import net.rolling.client.RollEffect;
 import net.rolling.client.RollManager;
 import net.rolling.client.RollingKeybings;
 import net.rolling.network.Packets;
@@ -16,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
+
+import static net.rolling.client.RollEffect.Particles.PUFF;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
@@ -60,11 +62,12 @@ public abstract class MinecraftClientMixin {
             direction = direction.multiply(distance);
             player.addVelocity(direction.x, direction.y, direction.z);
             rollManager.onRoll(player);
-            var animation = "rolling:roll";
+
+            var rollVisuals = new RollEffect.Visuals("rolling:roll", PUFF);
             ClientPlayNetworking.send(
-                    Packets.RollAnimation.ID,
-                    new Packets.RollAnimation(player.getId(), animation).write());
-            ((AnimatablePlayer)player).playRollAnimation(animation);
+                    Packets.RollPublish.ID,
+                    new Packets.RollPublish(player.getId(), rollVisuals, direction).write());
+            RollEffect.playVisuals(rollVisuals, player);
         }
     }
 }

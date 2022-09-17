@@ -4,6 +4,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.rolling.api.EntityAttributes_Rolling;
 
 public class RollManager {
+    public static final int rollDuration = 5;
     private int timeSinceLastRoll = 0;
     private int currentCooldownLength = 0;
     private int maxRolls = 1;
@@ -16,7 +17,11 @@ public class RollManager {
     }
 
     public boolean isRollAvailable() {
-        return timeSinceLastRoll > 5 && availableRolls > 0;
+        return !isRolling() && availableRolls > 0;
+    }
+
+    public boolean isRolling() {
+        return timeSinceLastRoll <= rollDuration;
     }
 
     public void onRoll(ClientPlayerEntity player) {

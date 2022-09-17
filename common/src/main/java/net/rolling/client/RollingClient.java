@@ -2,6 +2,7 @@ package net.rolling.client;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.client.MinecraftClient;
+import net.rolling.client.animation.AnimationRegistry;
 
 public class RollingClient {
     public static void initialize() {

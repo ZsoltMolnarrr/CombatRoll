@@ -1,4 +1,4 @@
-package net.rolling.client;
+package net.rolling.client.animation;
 
 import com.mojang.logging.LogUtils;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;

@@ -10,10 +10,8 @@ public class ClientNetwork {
             final var packet = Packets.RollAnimation.read(buf);
             client.execute(() -> {
                 var entity = client.world.getEntityById(packet.playerId());
-
                 if (entity instanceof PlayerEntity player) {
-                    System.out.println("Player is rolling " + player.getName());
-//                    ((AnimatablePlayer)entity).playRollAnimation(packet.animationName());
+                    RollEffect.playVisuals(packet.visuals(), player);
                 }
             });
         });
