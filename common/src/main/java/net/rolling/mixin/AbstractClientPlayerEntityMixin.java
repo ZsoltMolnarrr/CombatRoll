@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
+import dev.kosmx.playerAnim.api.layered.modifier.SpeedModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.core.util.Vec3f;
@@ -33,11 +34,14 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
     }
 
     private final ModifierLayer base = new ModifierLayer(null);
+    private final SpeedModifier speedModifier = new SpeedModifier();
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void postInit(ClientWorld world, GameProfile profile, PlayerPublicKey publicKey, CallbackInfo ci) {
         var stack = ((IAnimatedPlayer) this).getAnimationStack();
         base.addModifier(createAdjustmentModifier(), 0);
+        base.addModifier(speedModifier, 0);
+        speedModifier.speed = 1.2f;
         stack.addAnimLayer(1000, base);
     }
 
