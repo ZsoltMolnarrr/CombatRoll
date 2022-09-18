@@ -27,9 +27,18 @@ public class HudRenderHelper {
         var viewModel = createViewModel(cooldownInfo);
         var config = RollingClient.config;
 
+        var screenWidth = client.getWindow().getScaledWidth();
+        var screenHeight = client.getWindow().getScaledHeight();
+        var rollWidget = RollingClient.hudConfig.currentConfig.rollWidget;
+        var originPoint = rollWidget.origin.getPoint(screenWidth, screenHeight);
+        var drawOffset = rollWidget.offset;
+
         int horizontalSpacing = 8;
-        int originX = 10;
-        int originY = 10;
+        int biggestTextureSize = 15;
+        int widgetWidth = biggestTextureSize + (horizontalSpacing * viewModel.elements.size());
+        int widgetHeight = biggestTextureSize;
+        int drawX = (int) (originPoint.x + drawOffset.x); // Growing to right by removing `- (widgetWidth) / 2`
+        int drawY = (int) (originPoint.y + drawOffset.y - (widgetHeight) / 2);
         for(var element: viewModel.elements()) {
             int x = 0;
             int y = 0;
@@ -39,8 +48,8 @@ public class HudRenderHelper {
             int height = 0;
             int textureSize = 0;
 
-            x = originX;
-            y = originY;
+            x = drawX;
+            y = drawY;
             u = 0;
             v = 0;
             width = height = textureSize = 15;
@@ -58,15 +67,15 @@ public class HudRenderHelper {
             var shift = (prevTextureSize - textureSize) / 2;
             width = textureSize;
             height = (int) ((element.full) * textureSize);
-            x = originX + shift;
-            y = originY + textureSize - height + shift;
+            x = drawX + shift;
+            y = drawY + textureSize - height + shift;
             u = 0;
             v = textureSize - height;
             RenderSystem.setShaderTexture(0, ARROW);
             RenderSystem.setShaderColor(red, green, blue, element.full);
             DrawableHelper.drawTexture(matrixStack, x, y, u, v, width, height, textureSize, textureSize);
 
-            originX += horizontalSpacing;
+            drawX += horizontalSpacing;
         }
     }
 

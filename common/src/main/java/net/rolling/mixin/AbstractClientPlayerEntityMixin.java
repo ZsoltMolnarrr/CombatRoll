@@ -3,7 +3,9 @@ package net.rolling.mixin;
 import com.mojang.authlib.GameProfile;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
+import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
+import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.impl.IAnimatedPlayer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -49,10 +51,9 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
             lastRollDirection = direction;
 
             var fadeIn = copy.beginTick;
-            base.setAnimation(new KeyframeAnimationPlayer(copy.build(), 0));
-//            base.replaceAnimationWithFade(
-//                    AbstractFadeModifier.standardFadeIn(fadeIn, Ease.INOUTSINE),
-//                    new KeyframeAnimationPlayer(copy.build(), 0));
+            base.replaceAnimationWithFade(
+                    AbstractFadeModifier.standardFadeIn(fadeIn, Ease.INOUTSINE),
+                    new KeyframeAnimationPlayer(copy.build(), 0));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,7 +74,6 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
                     if (lastRollDirection != null) {
                         var absoluteOrientation = new Vec3d(0,0,1).rotateY((float) Math.toRadians(-1.0 * player.bodyYaw));
                         float angle = (float) angleWithSignBetween(absoluteOrientation, lastRollDirection, new Vec3d(0,1,0));
-                        System.out.println("AdjustmentModifier body angle: " + angle);
                         rotationY = (float) Math.toRadians(angle); // + 180;
                     } else {
                         return Optional.empty();
