@@ -25,6 +25,7 @@ import static net.rolling.client.RollEffect.Particles.PUFF;
 
 @Mixin(value = MinecraftClient.class, priority = 449)
 public abstract class MinecraftClientMixin implements MinecraftClientExtension {
+    @Shadow private int itemUseCooldown;
     @Shadow @Nullable public ClientPlayerEntity player;
     private RollManager rollManager = new RollManager();
     public RollManager getRollManager() {
@@ -55,15 +56,16 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick_TAIL(CallbackInfo ci) {
+        tryRolling();
+    }
+
+    private void tryRolling() {
         var client = (MinecraftClient) ((Object)this);
         if (player == null || client.isPaused()) {
             return;
         }
         rollManager.tick(player);
-//        var cooldown = rollManager.getCooldown();
-//        System.out.println("Roll cd: " + cooldown);
-
-        if (RollingKeybings.roll.wasPressed()) {
+        if (RollingKeybings.roll.isPressed()) {
             if(!rollManager.isRollAvailable()) {
                 return;
             }
@@ -73,7 +75,7 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             if(player.getVehicle() != null) {
                 return;
             }
-            if (player.isUsingItem() || player.isBlocking()) {
+            if (player.isUsingItem() || player.isBlocking() || client.options.attackKey.isPressed() || itemUseCooldown > 0) {
                 return;
             }
             if (!Rolling.config.allow_rolling_while_weapon_cooldown && player.getAttackCooldownProgress(0) < 0.95) {
@@ -95,10 +97,10 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             var slipperiness = block.getSlipperiness();
             var defaultSlipperiness = Blocks.GRASS.getSlipperiness();
             if (slipperiness > defaultSlipperiness) {
-                direction = direction.multiply(defaultSlipperiness / slipperiness);
+                var multiplier = defaultSlipperiness / slipperiness;
+                direction = direction.multiply(multiplier * multiplier);
             }
 
-            // slipperiness
             player.addVelocity(direction.x, direction.y, direction.z);
             rollManager.onRoll(player);
 
