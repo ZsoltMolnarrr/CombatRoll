@@ -8,6 +8,8 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
 import net.rolling.Rolling;
+import net.rolling.api.event.Event;
+import net.rolling.api.event.ServerSideRollEvents;
 
 public class ServerNetwork {
     private static PacketByteBuf configSerialized = PacketByteBufs.create();
@@ -25,6 +27,7 @@ public class ServerNetwork {
                 return;
             }
             final var packet = Packets.RollPublish.read(buf);
+            final var velocity = packet.velocity();
             final var forwardBuffer = new Packets.RollAnimation(player.getId(), packet.visuals(), packet.velocity()).write();
             PlayerLookup.tracking(player).forEach(serverPlayer -> {
                 try {
@@ -34,6 +37,11 @@ public class ServerNetwork {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            });
+
+            world.getServer().executeSync(() -> {
+                var proxy = (Event.Proxy<ServerSideRollEvents.PlayerStartRolling>)ServerSideRollEvents.PLAYER_START_ROLLING;
+                proxy.handlers.forEach(hander -> { hander.onPlayerStartedRolling(player, velocity);});
             });
         });
     }
