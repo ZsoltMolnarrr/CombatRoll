@@ -12,7 +12,7 @@ public class HudConfigScreen extends Screen {
     private Screen previous;
 
     public HudConfigScreen(Screen previous) {
-        super(Text.of("ASD"));
+        super(Text.translatable("gui.rolling.hud"));
         this.previous = previous;
     }
 
@@ -23,13 +23,13 @@ public class HudConfigScreen extends Screen {
         var buttonCenterX = (width / 2) - (buttonWidth / 2);
         var buttonCenterY = (height / 2) - (buttonHeight / 2);
 
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY - 30, buttonWidth, buttonHeight, Text.of("Close"), button -> {
+        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY - 30, buttonWidth, buttonHeight, Text.translatable("gui.rolling.close"), button -> {
             close();
         }));
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY, buttonWidth, buttonHeight, Text.of("Anchor"), button -> {
+        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY, buttonWidth, buttonHeight, Text.translatable("gui.rolling.corner"), button -> {
             nextOrigin();
         }));
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY + 30, buttonWidth, buttonHeight, Text.of("Reset"), button -> {
+        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY + 30, buttonWidth, buttonHeight, Text.translatable("gui.rolling.reset"), button -> {
             reset();
         }));
     }
