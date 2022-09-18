@@ -1,4 +1,4 @@
-package net.rolling.forge.network;
+package net.fabricmc.fabric.api.networking.v1;
 
 import net.minecraft.util.Identifier;
 import net.minecraftforge.network.NetworkRegistry;
@@ -11,7 +11,6 @@ public class NetworkHandler {
 
     public static void registerMessages(){
         INSTANCE = NetworkRegistry.newSimpleChannel(new Identifier(Rolling.MOD_ID, "network"), () -> "1.0", s -> true, s -> true);
-
         INSTANCE.registerMessage(ID++, PacketWrapper.class, PacketWrapper::encode, PacketWrapper::decode, PacketWrapper::handle);
     }
 }

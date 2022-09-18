@@ -1,8 +1,8 @@
 package net.fabricmc.fabric.api.client.networking.v1;
 
-import net.rolling.forge.network.NetworkHandler;
-import net.rolling.forge.network.PacketWrapper;
+import net.fabricmc.fabric.api.networking.v1.NetworkHandler;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.PacketWrapper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.PacketByteBuf;

@@ -1,8 +1,7 @@
-package net.rolling.forge.network;
+package net.fabricmc.fabric.api.networking.v1;
 
 import io.netty.buffer.ByteBuf;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraftforge.network.NetworkEvent;
