@@ -18,7 +18,7 @@ public class HudConfigScreen extends Screen {
 
     @Override
     protected void init() {
-        var buttonWidth = 100;
+        var buttonWidth = 120;
         var buttonHeight = 20;
         var buttonCenterX = (width / 2) - (buttonWidth / 2);
         var buttonCenterY = (height / 2) - (buttonHeight / 2);
