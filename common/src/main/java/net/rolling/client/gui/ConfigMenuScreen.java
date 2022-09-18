@@ -22,10 +22,13 @@ public class ConfigMenuScreen extends Screen {
         var buttonCenterX = (width / 2) - (buttonWidth / 2);
         var buttonCenterY = (height / 2) - (buttonHeight / 2);
 
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY - 15, buttonWidth, buttonHeight, Text.of("Settings"), button -> {
+        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY - 30, buttonWidth, buttonHeight, Text.of("Close"), button -> {
+            close();
+        }));
+        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY, buttonWidth, buttonHeight, Text.of("Settings"), button -> {
             client.setScreen(AutoConfig.getConfigScreen(ClientConfigWrapper.class, this).get());
         }));
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY + 15, buttonWidth, buttonHeight, Text.of("HUD"), button -> {
+        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY + 30, buttonWidth, buttonHeight, Text.of("HUD"), button -> {
             client.setScreen(new HudConfigScreen(this));
         }));
     }
