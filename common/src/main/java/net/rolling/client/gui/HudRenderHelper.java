@@ -1,4 +1,4 @@
-package net.rolling.client.hud;
+package net.rolling.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
@@ -20,11 +20,14 @@ public class HudRenderHelper {
     public static void render(MatrixStack matrixStack, float tickDelta) {
         MinecraftClient client = MinecraftClient.getInstance();
         ClientPlayerEntity player = client.player;
+        ViewModel viewModel;
         if (player == null) {
-            return;
+            viewModel = ViewModel.mock();
+        } else {
+            var cooldownInfo = ((MinecraftClientExtension)client).getRollManager().getCooldown();
+            viewModel = ViewModel.create(cooldownInfo);
         }
-        var cooldownInfo = ((MinecraftClientExtension)client).getRollManager().getCooldown();
-        var viewModel = createViewModel(cooldownInfo);
+
         var config = RollingClient.config;
 
         var screenWidth = client.getWindow().getScaledWidth();
@@ -80,24 +83,37 @@ public class HudRenderHelper {
     }
 
     private record ViewModel(List<Element> elements) {
-        record Element(int color, float full) { }
-    }
-
-    private static ViewModel createViewModel(RollManager.CooldownInfo info) {
-        var config = RollingClient.config;
-        var elements = new ArrayList<ViewModel.Element>();
-        for(int i = 0; i < info.maxRolls(); ++i) {
-            var color = config.hudArrowColor;
-            float full = 0;
-            if (i == (info.availableRolls())) {
-                full = ((float)info.elapsed()) / ((float)info.total());
-                full = Math.min(full, 1F);
-            }
-            if (i < (info.availableRolls())) {
-                full = 1;
-            }
-            elements.add(new ViewModel.Element(color, full));
+        record Element(int color, float full) {
         }
-        return new ViewModel(elements);
+
+        static ViewModel create(RollManager.CooldownInfo info) {
+            var config = RollingClient.config;
+            var elements = new ArrayList<ViewModel.Element>();
+            for (int i = 0; i < info.maxRolls(); ++i) {
+                var color = config.hudArrowColor;
+                float full = 0;
+                if (i == (info.availableRolls())) {
+                    full = ((float) info.elapsed()) / ((float) info.total());
+                    full = Math.min(full, 1F);
+                }
+                if (i < (info.availableRolls())) {
+                    full = 1;
+                }
+                elements.add(new ViewModel.Element(color, full));
+            }
+            return new ViewModel(elements);
+        }
+
+        static ViewModel mock() {
+            var config = RollingClient.config;
+            var color = config.hudArrowColor;
+            return new ViewModel(
+                    List.of(
+                            new ViewModel.Element(color, 1),
+                            new ViewModel.Element(color, 0.5F),
+                            new ViewModel.Element(color, 0)
+                )
+            );
+        }
     }
 }

@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.util.math.MatrixStack;
 import net.rolling.client.RollingClient;
 import net.rolling.client.RollingKeybings;
-import net.rolling.client.hud.HudRenderHelper;
+import net.rolling.client.gui.HudRenderHelper;
 
 public class FabricClientMod implements ClientModInitializer {
     @Override

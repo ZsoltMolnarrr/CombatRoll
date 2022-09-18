@@ -1,4 +1,4 @@
-package net.rolling.client.hud;
+package net.rolling.client.gui;
 
 import net.minecraft.util.math.Vec2f;
 

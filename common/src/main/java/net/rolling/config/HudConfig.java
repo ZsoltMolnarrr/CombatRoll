@@ -1,7 +1,7 @@
 package net.rolling.config;
 
 import net.minecraft.util.math.Vec2f;
-import net.rolling.client.hud.HudElement;
+import net.rolling.client.gui.HudElement;
 
 public class HudConfig {
     public HudElement rollWidget;
