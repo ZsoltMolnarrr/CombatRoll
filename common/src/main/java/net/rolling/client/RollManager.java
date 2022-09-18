@@ -10,6 +10,7 @@ public class RollManager {
     public boolean isEnabled = false;
     public static final int rollDuration = 10;
     private int timeSinceLastRoll = rollDuration;
+    private int currentCooldownProgress = 0;
     private int currentCooldownLength = 0;
     private int maxRolls = 1;
     private int availableRolls = 0;
@@ -19,7 +20,7 @@ public class RollManager {
     public record CooldownInfo(int elapsed, int total, int availableRolls, int maxRolls) { }
 
     public CooldownInfo getCooldown() {
-        return new CooldownInfo(timeSinceLastRoll, currentCooldownLength, availableRolls, maxRolls);
+        return new CooldownInfo(currentCooldownProgress, currentCooldownLength, availableRolls, maxRolls);
     }
 
     public boolean isRollAvailable() {
@@ -40,9 +41,13 @@ public class RollManager {
         maxRolls = (int) player.getAttributeValue(EntityAttributes_Rolling.COUNT);
         timeSinceLastRoll += 1;
         if (availableRolls < maxRolls) {
-            if (timeSinceLastRoll >= currentCooldownLength) {
+            currentCooldownProgress += 1;
+            if (currentCooldownProgress >= currentCooldownLength) {
                 rechargeRoll(player);
             }
+        }
+        if (availableRolls == maxRolls) {
+            currentCooldownProgress = 0;
         }
         if (availableRolls > maxRolls) {
             availableRolls = maxRolls;
@@ -51,7 +56,7 @@ public class RollManager {
 
     private void rechargeRoll(ClientPlayerEntity player) {
         availableRolls += 1;
-        timeSinceLastRoll = 0;
+        currentCooldownProgress = 0;
         updateCooldownLength(player);
         if (RollingClient.config.playCooldownSound) {
             var cooldownReady = Registry.SOUND_EVENT.get(new Identifier("rolling:roll_cooldown_ready"));

@@ -69,7 +69,7 @@ public class HudRenderHelper {
             textureSize = 13;
             var shift = (prevTextureSize - textureSize) / 2;
             width = textureSize;
-            height = (int) ((element.full) * textureSize);
+            height = Math.round((element.full) * textureSize);
             x = drawX + shift;
             y = drawY + textureSize - height + shift;
             u = 0;
