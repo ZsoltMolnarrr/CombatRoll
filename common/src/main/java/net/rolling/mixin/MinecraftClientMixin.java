@@ -11,6 +11,7 @@ import net.rolling.client.MinecraftClientExtension;
 import net.rolling.client.RollEffect;
 import net.rolling.client.RollManager;
 import net.rolling.client.RollingKeybings;
+import net.rolling.compatibility.BetterCombatHelper;
 import net.rolling.network.Packets;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -75,12 +76,23 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             if(player.getVehicle() != null) {
                 return;
             }
-            if (player.isUsingItem() || player.isBlocking() || client.options.attackKey.isPressed() || itemUseCooldown > 0) {
+            if (player.isUsingItem() || player.isBlocking()) {
                 return;
             }
             if (!Rolling.config.allow_rolling_while_weapon_cooldown && player.getAttackCooldownProgress(0) < 0.95) {
                 return;
             }
+            if (BetterCombatHelper.isDoingUpswing()) {
+                BetterCombatHelper.cancelUpswing();
+            } else {
+                if (client.options.attackKey.isPressed()) {
+                    return;
+                }
+            }
+            if (itemUseCooldown > 0) {
+                return;
+            }
+
             var forward = player.input.movementForward;
             var sideways = player.input.movementSideways;
             Vec3d direction;
