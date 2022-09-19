@@ -1,0 +1,23 @@
+{
+  "combatroll.mod_name" : "Combat Roll",
+
+  "keybinds.combatroll.roll" : "Roll",
+
+  "gui.combatroll.config_menu" : "Combat Roll config",
+  "gui.combatroll.close" : "Close",
+  "gui.combatroll.settings" : "Settings",
+  "gui.combatroll.hud" : "Move arrow",
+  "gui.combatroll.corner" : "Corner",
+  "gui.combatroll.reset" : "Reset",
+
+  "attribute.name.combat_roll.distance" : "Roll Distance",
+  "attribute.name.combat_roll.count" : "Extra Roll",
+  "attribute.name.combat_roll.recharge" : "Roll Recharge",
+
+  "text.autoconfig.combatroll.title": "Combat Roll",
+  "text.autoconfig.combatroll.option.client.playCooldownSound" : "Play cooldown ready sound",
+  "text.autoconfig.combatroll.option.client.playCooldownFlash": "Flash arrow when cooldown ready",
+  "text.autoconfig.combatroll.option.client.playRollSound" : "Play roll sound",
+  "text.autoconfig.combatroll.option.client.hudArrowColor" : "Arrow color",
+  "text.autoconfig.combatroll.option.client.hudBackgroundOpacity" : "Arrow background opacity"
+}

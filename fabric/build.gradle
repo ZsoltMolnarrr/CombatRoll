@@ -50,7 +50,7 @@ processResources {
 shadowJar {
     configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"
-    relocate 'net.tinyconfig', 'net.rolling.tinyconfig'
+    relocate 'net.tinyconfig', 'net.combatroll.tinyconfig'
 }
 
 remapJar {

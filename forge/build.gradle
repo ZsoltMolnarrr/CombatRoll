@@ -4,7 +4,7 @@ plugins {
 
 loom {
     forge {
-        mixinConfig "rolling.mixins.json"
+        mixinConfig "combatroll.mixins.json"
     }
 }
 
@@ -52,8 +52,8 @@ shadowJar {
     exclude "fabric.mod.json"
     configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"
-    relocate 'net.fabricmc', 'net.rolling.fabricmc'
-    relocate 'net.tinyconfig', 'net.rolling.tinyconfig'
+    relocate 'net.fabricmc', 'net.combatroll.fabricmc'
+    relocate 'net.tinyconfig', 'net.combatroll.tinyconfig'
 }
 
 remapJar {

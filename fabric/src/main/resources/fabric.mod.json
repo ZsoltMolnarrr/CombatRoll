@@ -1,36 +1,39 @@
 {
   "schemaVersion": 1,
-  "id": "rolling",
+  "id": "combatroll",
   "version": "${version}",
-  "name": "Rolling",
-  "description": "Roll like a ball",
+  "name": "Combat Roll",
+  "description": "Adds combat roll ability, with related attributes.",
   "authors": [
     "Daedelus"
   ],
   "contact": {
-    "repo": "https://github.com/ZsoltMolnarrr/Rolling",
-    "issues": "https://github.com/ZsoltMolnarrr/Rolling/issues"
+    "repo": "https://github.com/ZsoltMolnarrr/CombatRoll",
+    "issues": "https://github.com/ZsoltMolnarrr/CombatRoll/issues"
   },
   "license": "MIT",
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "net.rolling.fabric.client.FabricClientMod"
+      "net.combatroll.fabric.client.FabricClientMod"
     ],
     "main": [
-      "net.rolling.fabric.FabricMod"
+      "net.combatroll.fabric.FabricMod"
     ],
     "modmenu": [
-      "net.rolling.fabric.client.ModMenuIntegration"
+      "net.combatroll.fabric.client.ModMenuIntegration"
     ]
   },
   "mixins": [
-    "rolling.mixins.json"
+    "combatroll.mixins.json"
   ],
   "depends": {
     "minecraft": "1.19.X",
-    "fabricloader": ">=0.14.0"
+    "fabricloader": ">=0.14.0",
+    "fabric": "*",
+    "cloth-config": ">=8.0.0",
+    "player-animator": ">=0.3.5"
   },
   "custom": {
     "modmenu": {
