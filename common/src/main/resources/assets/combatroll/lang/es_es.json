@@ -1,0 +1,23 @@
+{
+  "combatroll.mod_name" : "Voltereta de combate",
+
+  "keybinds.combatroll.roll" : "Dar la vuelta",
+
+  "gui.combatroll.config_menu" : "Menú de ajustes",
+  "gui.combatroll.close" : "Cerrar",
+  "gui.combatroll.settings" : "Ajustes",
+  "gui.combatroll.hud" : "Mover HUD",
+  "gui.combatroll.corner" : "Posición",
+  "gui.combatroll.reset" : "Resetear",
+
+  "attribute.name.combat_roll.distance" : "Distancia de voltereta",
+  "attribute.name.combat_roll.count" : "Volteretas extras",
+  "attribute.name.combat_roll.recharge" : "Voltereta recarga",
+
+  "text.autoconfig.combatroll.title": "Voltereta de combate",
+  "text.autoconfig.combatroll.option.client.playCooldownSound" : "Hacer sonido de recarga completa",
+  "text.autoconfig.combatroll.option.client.playCooldownFlash": "Hacer destello de HUD en recarga completa",
+  "text.autoconfig.combatroll.option.client.playRollSound" : "Hacer sonido de voltereta",
+  "text.autoconfig.combatroll.option.client.hudArrowColor" : "Color de HUD",
+  "text.autoconfig.combatroll.option.client.hudBackgroundOpacity" : "Opacidad de HUD"
+}
