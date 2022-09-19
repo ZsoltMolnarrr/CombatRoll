@@ -1,10 +1,13 @@
 package net.rolling.forge;
 
+import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.networking.v1.NetworkHandler;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -12,6 +15,7 @@ import net.minecraftforge.registries.RegisterEvent;
 import net.rolling.Rolling;
 import net.minecraftforge.fml.common.Mod;
 import net.rolling.api.EntityAttributes_Rolling;
+import net.rolling.client.gui.ConfigMenuScreen;
 import net.rolling.utils.SoundHelper;
 
 @Mod(Rolling.MOD_ID)
@@ -25,6 +29,12 @@ public class ForgeMod {
         NetworkHandler.registerMessages();
         registerSounds();
         SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
+
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> {
+            return new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> {
+                return new ConfigMenuScreen(screen);
+            });
+        });
     }
 
     @SubscribeEvent
