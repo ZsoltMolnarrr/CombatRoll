@@ -76,3 +76,9 @@ mandatory=true
 versionRange="[8.0.0,)"
 ordering="AFTER"
 side="BOTH"
+[[dependencies.combatroll]]
+modId="bettercombat"
+mandatory=false
+versionRange="[1.4.0,)"
+ordering="AFTER"
+side="BOTH"

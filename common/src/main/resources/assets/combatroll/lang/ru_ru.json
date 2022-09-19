@@ -1,0 +1,23 @@
+{
+  "combatroll.mod_name" : "Combat Roll",
+
+  "keybinds.combatroll.roll" : "Сделать кувырок",
+
+  "gui.combatroll.config_menu" : "Меню Combat Roll",
+  "gui.combatroll.close" : "Закрыть",
+  "gui.combatroll.settings" : "Настройки",
+  "gui.combatroll.hud" : "Расположение HUD",
+  "gui.combatroll.corner" : "Угол положения HUD",
+  "gui.combatroll.reset" : "Сбросить",
+
+  "attribute.name.combat_roll.distance" : "Дальность кувырка",
+  "attribute.name.combat_roll.count" : "Дополнитеьный кувырок",
+  "attribute.name.combat_roll.recharge" : "Перезарядка кувырка",
+
+  "text.autoconfig.combatroll.title": "Combat Roll",
+  "text.autoconfig.combatroll.option.client.playCooldownSound" : "Проигрывать звук полной перезарядки",
+  "text.autoconfig.combatroll.option.client.playCooldownFlash": "Мигание элементов HUD при полной перезарядке",
+  "text.autoconfig.combatroll.option.client.playRollSound" : "Проигрывать звук кувырка",
+  "text.autoconfig.combatroll.option.client.hudArrowColor" : "Цвет интерфейса",
+  "text.autoconfig.combatroll.option.client.hudBackgroundOpacity" : "Прозрачность интерфейса"
+}
