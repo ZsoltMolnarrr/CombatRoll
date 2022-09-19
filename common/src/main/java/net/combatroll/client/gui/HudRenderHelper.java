@@ -25,7 +25,7 @@ public class HudRenderHelper {
             viewModel = ViewModel.mock();
         } else {
             var cooldownInfo = ((MinecraftClientExtension)client).getRollManager().getCooldown();
-            viewModel = ViewModel.create(cooldownInfo, 0);
+            viewModel = ViewModel.create(cooldownInfo, tickDelta);
         }
 
         var config = CombatRollClient.config;
@@ -42,6 +42,7 @@ public class HudRenderHelper {
         int widgetHeight = biggestTextureSize;
         int drawX = (int) (originPoint.x + drawOffset.x); // Growing to right by removing `- (widgetWidth) / 2`
         int drawY = (int) (originPoint.y + drawOffset.y - (widgetHeight) / 2);
+        RenderSystem.enableBlend();
         for(var element: viewModel.elements()) {
             int x = 0;
             int y = 0;
@@ -83,8 +84,7 @@ public class HudRenderHelper {
     }
 
     private record ViewModel(List<Element> elements) {
-        record Element(int color, float full) {
-        }
+        record Element(int color, float full) { }
 
         static ViewModel create(RollManager.CooldownInfo info, float tickDelta) {
             var config = CombatRollClient.config;
@@ -92,7 +92,7 @@ public class HudRenderHelper {
             for (int i = 0; i < info.maxRolls(); ++i) {
                 var color = config.hudArrowColor;
                 float full = 0;
-                if ((i == info.availableRolls()) || info.elapsed() == 0) {
+                if ((i == info.availableRolls())) {
                     full = ((float) info.elapsed()) / ((float) info.total());
                     full = Math.min(full, 1F);
 
@@ -100,14 +100,18 @@ public class HudRenderHelper {
                         var missingTicks = info.total() - info.elapsed();
                         var sparkleTicks = 2;
                         if (missingTicks <= sparkleTicks) {
-                            float sparkle = (missingTicks + tickDelta) / (sparkleTicks);
+                            float sparkle = ((sparkleTicks / 2) - ((missingTicks - 1 + (1F - tickDelta)) / (sparkleTicks))); // This is really messy, someone improve pls xD
                             float red = ((float) ((color >> 16) & 0xFF)) / 255F;
                             float green = ((float) ((color >> 8) & 0xFF)) / 255F;
                             float blue = ((float) (color & 0xFF)) / 255F;
-                            int redBits = (int) (Math.min(red + sparkle * 0.5F, 1F) * 255F);
-                            int greenBits = (int) (Math.min(green + sparkle * 0.5F, 1F) * 255F);
-                            int blueBits = (int) (Math.min(blue + sparkle * 0.5F, 1F) * 255F);
-                            color = redBits * 0xFFFF + greenBits * 0xFF + blueBits;
+                            System.out.println("Sparkle: " + sparkle + " | info.elapsed():" + info.elapsed() + " | missingTicks:" + missingTicks + " | delta:" + tickDelta);
+                            int redBits = (int) (mixNumberFloat(red, 1, sparkle) * 255F);
+                            int greenBits = (int) (mixNumberFloat(green, 1, sparkle) * 255F);
+                            int blueBits = (int) (mixNumberFloat(blue, 1, sparkle) * 255F);
+                            System.out.println("Blend -" + " R:" + redBits + " G:" + greenBits + " B:" + blueBits);
+                            color = redBits;
+                            color = (color << 8) + greenBits;
+                            color = (color << 8) + blueBits;
                         }
                     }
                 }
@@ -129,6 +133,10 @@ public class HudRenderHelper {
                             new ViewModel.Element(color, 0)
                 )
             );
+        }
+        
+        private static float mixNumberFloat(float a, float b, float bias) {
+            return a + (b - a) * bias;
         }
     }
 }
