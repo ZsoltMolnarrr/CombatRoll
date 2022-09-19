@@ -25,7 +25,7 @@ public class HudRenderHelper {
             viewModel = ViewModel.mock();
         } else {
             var cooldownInfo = ((MinecraftClientExtension)client).getRollManager().getCooldown();
-            viewModel = ViewModel.create(cooldownInfo);
+            viewModel = ViewModel.create(cooldownInfo, 0);
         }
 
         var config = RollingClient.config;
@@ -86,15 +86,30 @@ public class HudRenderHelper {
         record Element(int color, float full) {
         }
 
-        static ViewModel create(RollManager.CooldownInfo info) {
+        static ViewModel create(RollManager.CooldownInfo info, float tickDelta) {
             var config = RollingClient.config;
             var elements = new ArrayList<ViewModel.Element>();
             for (int i = 0; i < info.maxRolls(); ++i) {
                 var color = config.hudArrowColor;
                 float full = 0;
-                if (i == (info.availableRolls())) {
+                if ((i == info.availableRolls()) || info.elapsed() == 0) {
                     full = ((float) info.elapsed()) / ((float) info.total());
                     full = Math.min(full, 1F);
+
+                    if (config.playCooldownFlash) {
+                        var missingTicks = info.total() - info.elapsed();
+                        var sparkleTicks = 2;
+                        if (missingTicks <= sparkleTicks) {
+                            float sparkle = (missingTicks + tickDelta) / (sparkleTicks);
+                            float red = ((float) ((color >> 16) & 0xFF)) / 255F;
+                            float green = ((float) ((color >> 8) & 0xFF)) / 255F;
+                            float blue = ((float) (color & 0xFF)) / 255F;
+                            int redBits = (int) (Math.min(red + sparkle * 0.5F, 1F) * 255F);
+                            int greenBits = (int) (Math.min(green + sparkle * 0.5F, 1F) * 255F);
+                            int blueBits = (int) (Math.min(blue + sparkle * 0.5F, 1F) * 255F);
+                            color = redBits * 0xFFFF + greenBits * 0xFF + blueBits;
+                        }
+                    }
                 }
                 if (i < (info.availableRolls())) {
                     full = 1;

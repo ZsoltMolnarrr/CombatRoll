@@ -16,6 +16,7 @@
 
   "text.autoconfig.rolling.title": "Rolling",
   "text.autoconfig.rolling.option.client.playCooldownSound" : "Play cooldown ready sound",
+  "text.autoconfig.rolling.option.client.playCooldownFlash": "Flash arrow when cooldown ready",
   "text.autoconfig.rolling.option.client.playRollSound" : "Play roll sound",
   "text.autoconfig.rolling.option.client.hudArrowColor" : "Arrow color",
   "text.autoconfig.rolling.option.client.hudBackgroundOpacity" : "Arrow background opacity"

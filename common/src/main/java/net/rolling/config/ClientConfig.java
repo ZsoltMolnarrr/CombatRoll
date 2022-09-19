@@ -7,6 +7,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 @Config(name = "client")
 public class ClientConfig implements ConfigData {
     public boolean playCooldownSound = true;
+    public boolean playCooldownFlash = true;
     public boolean playRollSound = true;
     @ConfigEntry.ColorPicker
     public int hudArrowColor = 0x5488e3;
