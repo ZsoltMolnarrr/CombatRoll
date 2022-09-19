@@ -40,6 +40,7 @@ public class ServerNetwork {
             });
 
             world.getServer().executeSync(() -> {
+                player.addExhaustion(Rolling.config.exhaust_on_roll);
                 var proxy = (Event.Proxy<ServerSideRollEvents.PlayerStartRolling>)ServerSideRollEvents.PLAYER_START_ROLLING;
                 proxy.handlers.forEach(hander -> { hander.onPlayerStartedRolling(player, velocity);});
             });
