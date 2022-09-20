@@ -10,6 +10,15 @@
   "gui.combatroll.corner" : "Corner",
   "gui.combatroll.reset" : "Reset",
 
+  "enchantment.combatroll.longfooted" : "Longfooted",
+  "enchantment.combatroll.longfooted.desc" : "Increases the distance of your rolls",
+  "enchantment.combatroll.acrobat_chest" : "Acrobat's shirt",
+  "enchantment.combatroll.acrobat_chest.desc" : "Reduces the cooldown time between your rolls",
+  "enchantment.combatroll.acrobat_legs" : "Acrobat's pants",
+  "enchantment.combatroll.acrobat_legs.desc" : "Reduces the cooldown time between your rolls",
+  "enchantment.combatroll.multi_roll" : "Multi-Roll",
+  "enchantment.combatroll.multi_roll.desc" : "Grants extra rolls",
+
   "attribute.name.combat_roll.distance" : "Roll Distance",
   "attribute.name.combat_roll.count" : "Extra Roll",
   "attribute.name.combat_roll.recharge" : "Roll Recharge",

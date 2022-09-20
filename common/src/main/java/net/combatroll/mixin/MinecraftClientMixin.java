@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
 
+import static net.combatroll.api.EntityAttributes_CombatRoll.Type.DISTANCE;
 import static net.combatroll.client.RollEffect.Particles.PUFF;
 
 @Mixin(value = MinecraftClient.class, priority = 449)
@@ -103,7 +104,7 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             }
             direction = direction.rotateY((float) Math.toRadians((-1.0) * player.getYaw()));
             var distance = 0.475 *
-                    (player.getAttributeValue(EntityAttributes_CombatRoll.DISTANCE)
+                    (EntityAttributes_CombatRoll.getAttributeValue(player, DISTANCE)
                     + CombatRoll.config.additional_roll_distance);
             direction = direction.multiply(distance);
 
@@ -118,7 +119,7 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             player.addVelocity(direction.x, direction.y, direction.z);
             rollManager.onRoll(player);
 
-            var rollVisuals = new RollEffect.Visuals("combatroll:roll", PUFF);
+            var rollVisuals = new RollEffect.Visuals(CombatRoll.MOD_ID + ":roll", PUFF);
             ClientPlayNetworking.send(
                     Packets.RollPublish.ID,
                     new Packets.RollPublish(player.getId(), rollVisuals, direction).write());

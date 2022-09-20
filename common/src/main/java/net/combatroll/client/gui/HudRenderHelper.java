@@ -104,11 +104,11 @@ public class HudRenderHelper {
                             float red = ((float) ((color >> 16) & 0xFF)) / 255F;
                             float green = ((float) ((color >> 8) & 0xFF)) / 255F;
                             float blue = ((float) (color & 0xFF)) / 255F;
-                            System.out.println("Sparkle: " + sparkle + " | info.elapsed():" + info.elapsed() + " | missingTicks:" + missingTicks + " | delta:" + tickDelta);
+//                            System.out.println("Sparkle: " + sparkle + " | info.elapsed():" + info.elapsed() + " | missingTicks:" + missingTicks + " | delta:" + tickDelta);
                             int redBits = (int) (mixNumberFloat(red, 1, sparkle) * 255F);
                             int greenBits = (int) (mixNumberFloat(green, 1, sparkle) * 255F);
                             int blueBits = (int) (mixNumberFloat(blue, 1, sparkle) * 255F);
-                            System.out.println("Blend -" + " R:" + redBits + " G:" + greenBits + " B:" + blueBits);
+//                            System.out.println("Blend -" + " R:" + redBits + " G:" + greenBits + " B:" + blueBits);
                             color = redBits;
                             color = (color << 8) + greenBits;
                             color = (color << 8) + blueBits;
