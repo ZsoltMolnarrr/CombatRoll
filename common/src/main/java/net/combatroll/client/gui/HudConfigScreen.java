@@ -4,6 +4,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.Vec2f;
 import net.combatroll.client.CombatRollClient;
 import net.combatroll.config.HudConfig;
@@ -12,7 +13,7 @@ public class HudConfigScreen extends Screen {
     private Screen previous;
 
     public HudConfigScreen(Screen previous) {
-        super(Text.translatable("gui.combatroll.hud"));
+        super(new TranslatableText("gui.combatroll.hud"));
         this.previous = previous;
     }
 
@@ -23,13 +24,13 @@ public class HudConfigScreen extends Screen {
         var buttonCenterX = (width / 2) - (buttonWidth / 2);
         var buttonCenterY = (height / 2) - (buttonHeight / 2);
 
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY - 30, buttonWidth, buttonHeight, Text.translatable("gui.combatroll.close"), button -> {
+        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY - 30, buttonWidth, buttonHeight, new TranslatableText("gui.combatroll.close"), button -> {
             close();
         }));
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY, buttonWidth, buttonHeight, Text.translatable("gui.combatroll.corner"), button -> {
+        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY, buttonWidth, buttonHeight, new TranslatableText("gui.combatroll.corner"), button -> {
             nextOrigin();
         }));
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY + 30, buttonWidth, buttonHeight, Text.translatable("gui.combatroll.reset"), button -> {
+        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY + 30, buttonWidth, buttonHeight, new TranslatableText("gui.combatroll.reset"), button -> {
             reset();
         }));
     }

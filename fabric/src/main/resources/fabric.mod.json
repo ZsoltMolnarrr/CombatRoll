@@ -29,10 +29,10 @@
     "combatroll.mixins.json"
   ],
   "depends": {
-    "minecraft": "1.19.X",
+    "minecraft": "1.18.2",
     "fabricloader": ">=0.14.0",
     "fabric": "*",
-    "cloth-config": ">=8.0.0",
+    "cloth-config": ">=6.0.0",
     "player-animator": ">=0.3.5"
   },
   "breaks": {
