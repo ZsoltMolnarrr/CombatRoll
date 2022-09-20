@@ -14,6 +14,7 @@ public class RegistryMixin {
     private static void pre_freezeRegistries(CallbackInfo ci) {
         if (Platform.Forge) {
             CombatRoll.registerAttributes();
+            CombatRoll.registerEnchantments();
         }
     }
 }

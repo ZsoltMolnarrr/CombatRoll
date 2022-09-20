@@ -1,9 +1,11 @@
 package net.combatroll.forge;
 
+import net.combatroll.api.Enchantments_CombatRoll;
 import net.combatroll.api.EntityAttributes_CombatRoll;
 import net.fabricmc.fabric.api.networking.v1.NetworkHandler;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -37,11 +39,20 @@ public class ForgeMod {
 
     @SubscribeEvent
     public void register(RegisterEvent event) {
+        // These don't seem to do anything :D
         event.register(ForgeRegistries.Keys.ATTRIBUTES,
             helper -> {
                 helper.register(EntityAttributes_CombatRoll.distanceId, EntityAttributes_CombatRoll.DISTANCE);
                 helper.register(EntityAttributes_CombatRoll.rechargeId, EntityAttributes_CombatRoll.RECHARGE);
                 helper.register(EntityAttributes_CombatRoll.countId, EntityAttributes_CombatRoll.COUNT);
+            }
+        );
+        event.register(ForgeRegistries.Keys.ENCHANTMENTS,
+            helper -> {
+                helper.register(Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
+                helper.register(Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
+                helper.register(Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
+                helper.register(Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
             }
         );
     }

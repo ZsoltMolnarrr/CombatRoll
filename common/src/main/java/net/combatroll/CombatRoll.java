@@ -33,17 +33,9 @@ public class CombatRoll {
     }
 
     public static void registerEnchantments() {
-        Registry.register(Registry.ENCHANTMENT,
-                new Identifier(CombatRoll.MOD_ID + ":" + Enchantments_CombatRoll.distanceId),
-                Enchantments_CombatRoll.DISTANCE);
-        Registry.register(Registry.ENCHANTMENT,
-                new Identifier(CombatRoll.MOD_ID + ":" +Enchantments_CombatRoll.rechargeChestId),
-                Enchantments_CombatRoll.RECHARGE_CHEST);
-        Registry.register(Registry.ENCHANTMENT,
-                new Identifier(CombatRoll.MOD_ID + ":" +Enchantments_CombatRoll.rechargeLegsId),
-                Enchantments_CombatRoll.RECHARGE_LEGS);
-        Registry.register(Registry.ENCHANTMENT,
-                new Identifier(CombatRoll.MOD_ID + ":" + Enchantments_CombatRoll.countId),
-                Enchantments_CombatRoll.COUNT);
+        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
+        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
+        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
+        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
     }
 }
