@@ -11,7 +11,7 @@
     "repo": "https://github.com/ZsoltMolnarrr/CombatRoll",
     "issues": "https://github.com/ZsoltMolnarrr/CombatRoll/issues"
   },
-  "license": "MIT",
+  "license": "GPL-3.0",
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
