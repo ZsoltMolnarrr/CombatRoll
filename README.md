@@ -40,7 +40,7 @@ Client side settings can be accessed via the [Mod Menu](https://github.com/Terra
 
 Client side settings can be accessed in Main Menu > Mods > Combat Roll > Config.
 
-## Server
+### Server
 
 **Server side** configuration can be found in the `config` directory, after running the game with the mod installed.
 
