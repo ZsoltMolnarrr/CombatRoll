@@ -10,6 +10,15 @@
   "gui.combatroll.corner" : "Угол положения HUD",
   "gui.combatroll.reset" : "Сбросить",
 
+  "enchantment.combatroll.longfooted" : "Акробатика",
+  "enchantment.combatroll.longfooted.desc" : "Повышает дальность кувырка",
+  "enchantment.combatroll.acrobat_chest" : "Акробатская кираса",
+  "enchantment.combatroll.acrobat_chest.desc" : "Уменьшает время перезарядки кувырка",
+  "enchantment.combatroll.acrobat_legs" : "Акробатские поножи",
+  "enchantment.combatroll.acrobat_legs.desc" : "Уменьшает время перезарядки кувырка",
+  "enchantment.combatroll.multi_roll" : "Повторные кувырки",
+  "enchantment.combatroll.multi_roll.desc" : "Предоставляет дополнительный кувырок",
+
   "attribute.name.combat_roll.distance" : "Дальность кувырка",
   "attribute.name.combat_roll.count" : "Дополнитеьный кувырок",
   "attribute.name.combat_roll.recharge" : "Перезарядка кувырка",
