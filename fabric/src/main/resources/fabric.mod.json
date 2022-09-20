@@ -3,7 +3,7 @@
   "id": "combatroll",
   "version": "${version}",
   "name": "Combat Roll",
-  "description": "Adds combat roll ability, with related attributes.",
+  "description": "Adds combat roll ability, with related attributes and enchantments.",
   "authors": [
     "Daedelus"
   ],
