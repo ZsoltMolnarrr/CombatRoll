@@ -102,7 +102,9 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
                 direction = new Vec3d(sideways, 0, forward).normalize();
             }
             direction = direction.rotateY((float) Math.toRadians((-1.0) * player.getYaw()));
-            var distance = 0.475 * player.getAttributeValue(EntityAttributes_CombatRoll.DISTANCE);
+            var distance = 0.475 *
+                    (player.getAttributeValue(EntityAttributes_CombatRoll.DISTANCE)
+                    + CombatRoll.config.additional_roll_distance);
             direction = direction.multiply(distance);
 
             var block = player.world.getBlockState(player.getBlockPos().down()).getBlock();

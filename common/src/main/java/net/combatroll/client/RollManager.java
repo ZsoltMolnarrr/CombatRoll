@@ -1,5 +1,6 @@
 package net.combatroll.client;
 
+import net.combatroll.CombatRoll;
 import net.combatroll.api.EntityAttributes_CombatRoll;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -67,6 +68,7 @@ public class RollManager {
     }
 
     private void updateCooldownLength(ClientPlayerEntity player) {
-        currentCooldownLength = (int) Math.round(4F * 20F * (20F / player.getAttributeValue(EntityAttributes_CombatRoll.RECHARGE)));
+        var duration = CombatRoll.config.roll_cooldown;
+        currentCooldownLength = (int) Math.round(duration * 20F * (20F / player.getAttributeValue(EntityAttributes_CombatRoll.RECHARGE)));
     }
 }
