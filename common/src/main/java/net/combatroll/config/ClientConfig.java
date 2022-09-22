@@ -13,4 +13,5 @@ public class ClientConfig implements ConfigData {
     public int hudArrowColor = 0x5488e3;
     @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
     public int hudBackgroundOpacity = 75;
+    public boolean showHUDInCreative = false;
 }

@@ -28,5 +28,6 @@
   "text.autoconfig.combatroll.option.client.playCooldownFlash": "Flash arrow when cooldown ready",
   "text.autoconfig.combatroll.option.client.playRollSound" : "Play roll sound",
   "text.autoconfig.combatroll.option.client.hudArrowColor" : "Arrow color",
-  "text.autoconfig.combatroll.option.client.hudBackgroundOpacity" : "Arrow background opacity"
+  "text.autoconfig.combatroll.option.client.hudBackgroundOpacity" : "Arrow background opacity",
+  "text.autoconfig.combatroll.option.client.showHUDInCreative" : "Show Arrow in Creative mode"
 }
