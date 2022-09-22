@@ -1,22 +1,18 @@
 package net.combatroll.forge;
 
+import net.combatroll.CombatRoll;
 import net.combatroll.api.Enchantments_CombatRoll;
 import net.combatroll.api.EntityAttributes_CombatRoll;
+import net.combatroll.utils.SoundHelper;
 import net.fabricmc.fabric.api.networking.v1.NetworkHandler;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
-import net.combatroll.CombatRoll;
-import net.minecraftforge.fml.common.Mod;
-import net.combatroll.client.gui.ConfigMenuScreen;
-import net.combatroll.utils.SoundHelper;
 
 @Mod(CombatRoll.MOD_ID)
 public class ForgeMod {
@@ -29,12 +25,6 @@ public class ForgeMod {
         NetworkHandler.registerMessages();
         registerSounds();
         SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
-
-        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> {
-            return new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> {
-                return new ConfigMenuScreen(screen);
-            });
-        });
     }
 
     @SubscribeEvent
