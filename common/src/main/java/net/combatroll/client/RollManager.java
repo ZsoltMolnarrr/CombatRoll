@@ -12,8 +12,10 @@ import static net.combatroll.api.EntityAttributes_CombatRoll.Type.RECHARGE;
 
 public class RollManager {
     public boolean isEnabled = false;
-    public static final int rollDuration = 10;
-    private int timeSinceLastRoll = rollDuration;
+    public static int rollDuration() {
+        return CombatRoll.config.roll_duration;
+    }
+    private int timeSinceLastRoll = 10;
     private int currentCooldownProgress = 0;
     private int currentCooldownLength = 0;
     private int maxRolls = 1;
@@ -32,7 +34,7 @@ public class RollManager {
     }
 
     public boolean isRolling() {
-        return timeSinceLastRoll <= rollDuration;
+        return timeSinceLastRoll <= rollDuration();
     }
 
     public void onRoll(ClientPlayerEntity player) {

@@ -6,6 +6,10 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
 @Config(name = "server")
 public class ServerConfig implements ConfigData {
+    @Comment("The duration of the roll ability, expressed as a number of ticks, during which the player cannot use item/attack/jump etc...")
+    public int roll_duration = 10;
+    @Comment("Allows Vanilla Minecraft auto jump feature to work while rolling")
+    public boolean allow_auto_jump_while_rolling = true;
     @Comment("Allows combatroll while the player has its weapon on cooldown")
     public boolean allow_rolling_while_weapon_cooldown = false;
     @Comment("The amount of exhaust (hunger) to be added to the player on every roll")
