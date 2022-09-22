@@ -37,7 +37,9 @@ public class CombatRoll {
         Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
         Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
         Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
+    }
 
+    public static void configureEnchantments() {
         if (config != null) {
             Enchantments_CombatRoll.DISTANCE.amplifierScale = config.enchantment_longfooted_distance_per_level;
             Enchantments_CombatRoll.RECHARGE_CHEST.amplifierScale = config.enchantment_acrobat_chest_recharge_per_level;

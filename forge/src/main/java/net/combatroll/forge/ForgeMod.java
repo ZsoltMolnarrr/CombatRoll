@@ -25,6 +25,7 @@ public class ForgeMod {
         NetworkHandler.registerMessages();
         registerSounds();
         SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        CombatRoll.configureEnchantments();
     }
 
     @SubscribeEvent
