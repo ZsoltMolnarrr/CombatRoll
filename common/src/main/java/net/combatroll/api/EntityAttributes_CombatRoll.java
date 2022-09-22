@@ -39,21 +39,21 @@ public class EntityAttributes_CombatRoll {
             case DISTANCE -> {
                 var value = player.getAttributeValue(DISTANCE);
                 var level = EnchantmentHelper.getEquipmentLevel(Enchantments_CombatRoll.DISTANCE, player);
-                value += Enchantments_CombatRoll.DISTANCE.getAdditionValue(level);
+                value += Enchantments_CombatRoll.DISTANCE.getAmplifierValue(level);
                 return value;
             }
             case RECHARGE -> {
                 var value = player.getAttributeValue(RECHARGE);
                 var chestLevel = EnchantmentHelper.getEquipmentLevel(Enchantments_CombatRoll.RECHARGE_CHEST, player);
-                value *= Enchantments_CombatRoll.RECHARGE_CHEST.getMultiplierValue(chestLevel);
+                value *= Enchantments_CombatRoll.RECHARGE_CHEST.getAmplifierValue(chestLevel);
                 var legsLevel = EnchantmentHelper.getEquipmentLevel(Enchantments_CombatRoll.RECHARGE_LEGS, player);
-                value *= Enchantments_CombatRoll.RECHARGE_LEGS.getMultiplierValue(legsLevel);
+                value *= Enchantments_CombatRoll.RECHARGE_LEGS.getAmplifierValue(legsLevel);
                 return value;
             }
             case COUNT -> {
                 var value = player.getAttributeValue(COUNT);
                 var level = EnchantmentHelper.getEquipmentLevel(Enchantments_CombatRoll.COUNT, player);
-                value += Enchantments_CombatRoll.COUNT.getAdditionValue(level);
+                value += Enchantments_CombatRoll.COUNT.getAmplifierValue(level);
                 return value;
             }
         }
