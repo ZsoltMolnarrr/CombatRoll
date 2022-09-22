@@ -1,17 +1,14 @@
 package net.combatroll.forge;
 
 import net.combatroll.CombatRoll;
-import net.combatroll.client.gui.ConfigMenuScreen;
 import net.combatroll.utils.SoundHelper;
 import net.fabricmc.fabric.api.networking.v1.NetworkHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraftforge.client.ConfigGuiHandler;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -28,12 +25,6 @@ public class ForgeMod {
         NetworkHandler.registerMessages();
         registerSounds();
         SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
-
-        ModLoadingContext.get().registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory.class, () -> {
-            return new ConfigGuiHandler.ConfigGuiFactory((minecraft, screen) -> {
-                return new ConfigMenuScreen(screen);
-            });
-        });
     }
 
     @SubscribeEvent

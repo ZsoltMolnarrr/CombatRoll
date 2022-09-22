@@ -18,17 +18,19 @@ public class HudRenderHelper {
     private static final Identifier ARROW_BACKGROUND = new Identifier("combatroll", "textures/hud/arrow_background.png");
 
     public static void render(MatrixStack matrixStack, float tickDelta) {
+        var config = CombatRollClient.config;
         MinecraftClient client = MinecraftClient.getInstance();
         ClientPlayerEntity player = client.player;
         ViewModel viewModel;
         if (player == null) {
             viewModel = ViewModel.mock();
         } else {
+            if (player.isCreative() && !config.showHUDInCreative) {
+                return;
+            }
             var cooldownInfo = ((MinecraftClientExtension)client).getRollManager().getCooldown();
             viewModel = ViewModel.create(cooldownInfo, tickDelta);
         }
-
-        var config = CombatRollClient.config;
 
         var screenWidth = client.getWindow().getScaledWidth();
         var screenHeight = client.getWindow().getScaledHeight();
