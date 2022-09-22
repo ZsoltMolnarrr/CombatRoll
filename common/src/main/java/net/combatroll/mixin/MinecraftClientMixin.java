@@ -71,7 +71,7 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             if(!rollManager.isRollAvailable()) {
                 return;
             }
-            if(!player.isOnGround() || player.isSwimming()) {
+            if(!player.isOnGround() || player.isSwimming() || player.isCrawling()) {
                 return;
             }
             if(player.getVehicle() != null) {
