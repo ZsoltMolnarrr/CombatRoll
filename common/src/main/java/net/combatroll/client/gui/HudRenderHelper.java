@@ -1,6 +1,7 @@
 package net.combatroll.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -83,6 +84,8 @@ public class HudRenderHelper {
 
             drawX += horizontalSpacing;
         }
+
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     private record ViewModel(List<Element> elements) {
