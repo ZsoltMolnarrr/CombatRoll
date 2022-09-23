@@ -6,6 +6,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.Identifier;
 
+import static net.combatroll.enchantments.AmplifierEnchantment.Operation.ADD;
+import static net.combatroll.enchantments.AmplifierEnchantment.Operation.MULTIPLY;
 import static net.minecraft.enchantment.EnchantmentTarget.*;
 
 public class Enchantments_CombatRoll {
@@ -14,8 +16,8 @@ public class Enchantments_CombatRoll {
     public static final Identifier distanceId = new Identifier(CombatRoll.MOD_ID + ":" + distanceName);
     public static final AmplifierEnchantment DISTANCE = new AmplifierEnchantment(
             Enchantment.Rarity.UNCOMMON,
-            5, 10, 9,
-            0, 1F,
+            ADD,
+            CombatRoll.enchantmentConfig.currentConfig.longfooted,
             ARMOR_FEET,
             new EquipmentSlot[]{ EquipmentSlot.FEET });
 
@@ -24,8 +26,8 @@ public class Enchantments_CombatRoll {
     public static final Identifier rechargeChestId = new Identifier(CombatRoll.MOD_ID + ":" + rechargeChestName);
     public static final AmplifierEnchantment RECHARGE_CHEST = new AmplifierEnchantment(
             Enchantment.Rarity.RARE,
-            10, 15, 9,
-            1, 0.1F,
+            MULTIPLY,
+            CombatRoll.enchantmentConfig.currentConfig.acrobat_chest,
             ARMOR_CHEST,
             new EquipmentSlot[]{ EquipmentSlot.CHEST });
 
@@ -33,8 +35,8 @@ public class Enchantments_CombatRoll {
     public static final Identifier rechargeLegsId = new Identifier(CombatRoll.MOD_ID + ":" + rechargeLegsName);
     public static final AmplifierEnchantment RECHARGE_LEGS = new AmplifierEnchantment(
             Enchantment.Rarity.RARE,
-            10, 15, 9,
-            1, 0.1F,
+            MULTIPLY,
+            CombatRoll.enchantmentConfig.currentConfig.acrobat_legs,
             ARMOR_LEGS,
             new EquipmentSlot[]{ EquipmentSlot.LEGS });
 
@@ -43,8 +45,8 @@ public class Enchantments_CombatRoll {
     public static final Identifier countId = new Identifier(CombatRoll.MOD_ID + ":" + countName);
     public static final AmplifierEnchantment COUNT = new AmplifierEnchantment(
             Enchantment.Rarity.VERY_RARE,
-            4, 15, 9,
-            0, 1F,
+            ADD,
+            CombatRoll.enchantmentConfig.currentConfig.multi_roll,
             ARMOR_HEAD,
             new EquipmentSlot[]{ EquipmentSlot.HEAD });
 }
