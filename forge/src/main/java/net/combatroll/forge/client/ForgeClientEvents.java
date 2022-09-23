@@ -4,6 +4,7 @@ import net.combatroll.CombatRoll;
 import net.combatroll.client.gui.HudRenderHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -11,6 +12,8 @@ import net.minecraftforge.fml.common.Mod;
 public class ForgeClientEvents {
     @SubscribeEvent
     public static void onRenderHud(RenderGameOverlayEvent.Post event) {
-        HudRenderHelper.render(event.getMatrixStack(), event.getPartialTicks());
+    	if(ElementType.ALL == event.getType()) {
+            HudRenderHelper.render(event.getMatrixStack(), event.getPartialTicks());
+    	}
     }
 }
