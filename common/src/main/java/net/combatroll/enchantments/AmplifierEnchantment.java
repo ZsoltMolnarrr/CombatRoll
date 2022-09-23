@@ -5,31 +5,53 @@ import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 
 public class AmplifierEnchantment extends Enchantment {
-    private int maxLevel;
-    private int minCost;
-    private int stepCost;
-    public float amplifierBase = 1F;
-    public float amplifierScale = 0.1F;
-
-    public float getAmplifierValue(int level) {
-        return amplifierBase + ((float)level) * amplifierScale;
+    public Operation operation;
+    public enum Operation {
+        ADD, MULTIPLY;
     }
 
-    public AmplifierEnchantment(Rarity weight, int maxLevel, int minCost, int stepCost, float amplifierBase, float amplifierScale, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
+    public Properties properties;
+    public static class Properties {
+        public int max_level = 0;
+        public int min_cost = 0;
+        public int step_cost = 0;
+        public float bonus_per_level = 0;
+
+        public Properties() { }
+
+        public Properties(int max_level, int min_cost, int step_cost, float bonus_per_level) {
+            this.max_level = max_level;
+            this.min_cost = min_cost;
+            this.step_cost = step_cost;
+            this.bonus_per_level = bonus_per_level;
+        }
+    }
+
+    public double apply(double value, int level) {
+        switch (operation) {
+            case ADD -> {
+                return value += ((float)level) * properties.bonus_per_level;
+            }
+            case MULTIPLY -> {
+                return value *= 1F + ((float)level) * properties.bonus_per_level;
+            }
+        }
+        assert true;
+        return 0F;
+    }
+
+    public AmplifierEnchantment(Rarity weight, Operation operation, Properties properties, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
         super(weight, type, slotTypes);
-        this.maxLevel = maxLevel;
-        this.minCost = minCost;
-        this.stepCost = stepCost;
-        this.amplifierBase = amplifierBase;
-        this.amplifierScale = amplifierScale;
+        this.operation = operation;
+        this.properties = properties;
     }
 
     public int getMaxLevel() {
-        return maxLevel;
+        return properties.max_level;
     }
 
     public int getMinPower(int level) {
-        return minCost + (level - 1) * stepCost;
+        return properties.min_cost + (level - 1) * properties.step_cost;
     }
 
     public int getMaxPower(int level) {

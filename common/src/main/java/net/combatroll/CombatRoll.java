@@ -5,12 +5,13 @@ import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import net.combatroll.api.Enchantments_CombatRoll;
 import net.combatroll.api.EntityAttributes_CombatRoll;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.combatroll.config.EnchantmentConfig;
 import net.combatroll.config.ServerConfig;
 import net.combatroll.config.ServerConfigWrapper;
 import net.combatroll.network.ServerNetwork;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.util.registry.Registry;
+import net.tinyconfig.ConfigManager;
 
 public class CombatRoll {
     public static final String MOD_ID = "combatroll";
@@ -19,10 +20,18 @@ public class CombatRoll {
     }
 
     public static ServerConfig config;
+    public static ConfigManager<EnchantmentConfig> enchantmentConfig = new ConfigManager<EnchantmentConfig>
+            ("enchantments", new EnchantmentConfig())
+            .builder()
+            .setDirectory(CombatRoll.MOD_ID)
+            .sanitize(true)
+            .build();
+
 
     public static void init() {
         AutoConfig.register(ServerConfigWrapper.class, PartitioningSerializer.wrap(JanksonConfigSerializer::new));
         config = AutoConfig.getConfigHolder(ServerConfigWrapper.class).getConfig().server;
+        enchantmentConfig.refresh();
         ServerNetwork.initializeHandlers();
     }
 
@@ -40,11 +49,10 @@ public class CombatRoll {
     }
 
     public static void configureEnchantments() {
-        if (config != null) {
-            Enchantments_CombatRoll.DISTANCE.amplifierScale = config.enchantment_longfooted_distance_per_level;
-            Enchantments_CombatRoll.RECHARGE_CHEST.amplifierScale = config.enchantment_acrobat_chest_recharge_per_level;
-            Enchantments_CombatRoll.RECHARGE_LEGS.amplifierScale = config.enchantment_acrobat_legs_recharge_per_level;
-            Enchantments_CombatRoll.COUNT.amplifierScale = config.enchantment_multi_roll_count_per_level;
-        }
+        var config = enchantmentConfig.currentConfig;
+        Enchantments_CombatRoll.DISTANCE.properties = config.longfooted;
+        Enchantments_CombatRoll.RECHARGE_CHEST.properties = config.acrobat_chest;
+        Enchantments_CombatRoll.RECHARGE_LEGS.properties = config.acrobat_legs;
+        Enchantments_CombatRoll.COUNT.properties = config.multi_roll;
     }
 }

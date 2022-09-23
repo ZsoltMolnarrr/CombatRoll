@@ -18,12 +18,4 @@ public class ServerConfig implements ConfigData {
     public float roll_cooldown = 4F;
     @Comment("Default roll distance attribute is `3`. Settings this to `1` will make it `4`. Warning! Attribute based scaling does not effect this.")
     public float additional_roll_distance = 0;
-    @Comment("Determines how much extra distance one level of Longfooted enchant grants. For exmple 1.0 results in 1 block")
-    public float enchantment_longfooted_distance_per_level = 1F;
-    @Comment("Determines how much recharge speed boost one level of Acrobat's chest enchant grants. For exmple 0.1 results in +10%")
-    public float enchantment_acrobat_chest_recharge_per_level = 0.1F;
-    @Comment("Determines how much recharge speed boost one level of Acrobat's chest enchant grants. For exmple 0.1 results in +10%")
-    public float enchantment_acrobat_legs_recharge_per_level = 0.1F;
-    @Comment("Determines how much many extra rolls the Multi-Roll enchant grants. Only integer value is accepted!")
-    public int enchantment_multi_roll_count_per_level = 1;
 }
