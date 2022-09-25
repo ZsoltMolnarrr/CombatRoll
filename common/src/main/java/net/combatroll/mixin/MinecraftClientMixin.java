@@ -1,5 +1,6 @@
 package net.combatroll.mixin;
 
+import net.combatroll.Platform;
 import net.combatroll.api.EntityAttributes_CombatRoll;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.block.Blocks;
@@ -67,6 +68,9 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
         }
         rollManager.tick(player);
         if (RollKeybings.roll.isPressed()) {
+            if (Platform.Forge && client.currentScreen != null) {
+                return;
+            }
             if(!rollManager.isRollAvailable()) {
                 return;
             }
