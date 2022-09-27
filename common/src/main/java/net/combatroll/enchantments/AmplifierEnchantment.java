@@ -12,6 +12,7 @@ public class AmplifierEnchantment extends Enchantment {
 
     public Properties properties;
     public static class Properties {
+        public boolean enabled = true;
         public int max_level = 0;
         public int min_cost = 0;
         public int step_cost = 0;

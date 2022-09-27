@@ -7,6 +7,7 @@ import net.combatroll.utils.SoundHelper;
 import net.fabricmc.fabric.api.networking.v1.NetworkHandler;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -40,10 +41,20 @@ public class ForgeMod {
         );
         event.register(ForgeRegistries.Keys.ENCHANTMENTS,
             helper -> {
-                helper.register(Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
-                helper.register(Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
-                helper.register(Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
-                helper.register(Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
+                CombatRoll.configureEnchantments();
+                var config = CombatRoll.enchantmentConfig.currentConfig;
+                if (config.longfooted.enabled) {
+                    helper.register(Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
+                }
+                if (config.acrobat_chest.enabled) {
+                    helper.register(Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
+                }
+                if (config.acrobat_legs.enabled) {
+                    helper.register(Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
+                }
+                if (config.multi_roll.enabled) {
+                    helper.register(Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
+                }
             }
         );
     }

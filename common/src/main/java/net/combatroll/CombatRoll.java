@@ -41,18 +41,27 @@ public class CombatRoll {
         Registry.register(Registry.ATTRIBUTE, EntityAttributes_CombatRoll.countId, EntityAttributes_CombatRoll.COUNT);
     }
 
-    public static void registerEnchantments() {
-        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
-        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
-        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
-        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
-    }
-
     public static void configureEnchantments() {
         var config = enchantmentConfig.currentConfig;
         Enchantments_CombatRoll.DISTANCE.properties = config.longfooted;
         Enchantments_CombatRoll.RECHARGE_CHEST.properties = config.acrobat_chest;
         Enchantments_CombatRoll.RECHARGE_LEGS.properties = config.acrobat_legs;
         Enchantments_CombatRoll.COUNT.properties = config.multi_roll;
+    }
+
+    public static void registerEnchantments() {
+        var config = enchantmentConfig.currentConfig;
+        if (config.longfooted.enabled) {
+            Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
+        }
+        if (config.acrobat_chest.enabled) {
+            Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
+        }
+        if (config.acrobat_legs.enabled) {
+            Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
+        }
+        if (config.multi_roll.enabled) {
+            Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
+        }
     }
 }
