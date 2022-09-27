@@ -10,8 +10,12 @@ public class ServerConfig implements ConfigData {
     public int roll_duration = 10;
     @Comment("Allows Vanilla Minecraft auto jump feature to work while rolling")
     public boolean allow_auto_jump_while_rolling = true;
-    @Comment("Allows combatroll while the player has its weapon on cooldown")
+    @Comment("Allows jumping while rolling. WARNING! Setting this to `true` breaks roll distance attribute and enchantment")
+    public boolean allow_jump_while_rolling = false;
+    @Comment("Allows combat roll while the player has its weapon on cooldown")
     public boolean allow_rolling_while_weapon_cooldown = false;
+    @Comment("Allows combat roll while the player is in the air. WARNING! Setting this to `true` breaks roll distance attribute and enchantment")
+    public boolean allow_rolling_while_airborn = false;
     @Comment("The amount of exhaust (hunger) to be added to the player on every roll")
     public float exhaust_on_roll = 0.1F;
     @Comment("The cooldown duration of the combat roll ability expressed in seconds")

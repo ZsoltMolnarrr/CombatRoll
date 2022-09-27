@@ -74,13 +74,16 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             if(!rollManager.isRollAvailable()) {
                 return;
             }
-            if(!player.isOnGround() || player.isSwimming() || player.isCrawling()) {
+            if(!CombatRoll.config.allow_rolling_while_airborn && !player.isOnGround()) {
+                return;
+            }
+            if(player.isSwimming() || player.isCrawling()) {
                 return;
             }
             if(player.getVehicle() != null) {
                 return;
             }
-            if (player.isUsingItem() || player.isBlocking()) {
+            if(player.isUsingItem() || player.isBlocking()) {
                 return;
             }
             if (!CombatRoll.config.allow_rolling_while_weapon_cooldown && player.getAttackCooldownProgress(0) < 0.95) {
