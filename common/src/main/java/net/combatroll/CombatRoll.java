@@ -50,18 +50,9 @@ public class CombatRoll {
     }
 
     public static void registerEnchantments() {
-        var config = enchantmentConfig.currentConfig;
-        if (config.longfooted.enabled) {
-            Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
-        }
-        if (config.acrobat_chest.enabled) {
-            Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
-        }
-        if (config.acrobat_legs.enabled) {
-            Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
-        }
-        if (config.multi_roll.enabled) {
-            Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
-        }
+        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
+        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
+        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
+        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
     }
 }
