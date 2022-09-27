@@ -42,19 +42,10 @@ public class ForgeMod {
         event.register(ForgeRegistries.Keys.ENCHANTMENTS,
             helper -> {
                 CombatRoll.configureEnchantments();
-                var config = CombatRoll.enchantmentConfig.currentConfig;
-                if (config.longfooted.enabled) {
-                    helper.register(Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
-                }
-                if (config.acrobat_chest.enabled) {
-                    helper.register(Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
-                }
-                if (config.acrobat_legs.enabled) {
-                    helper.register(Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
-                }
-                if (config.multi_roll.enabled) {
-                    helper.register(Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
-                }
+                helper.register(Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
+                helper.register(Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
+                helper.register(Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
+                helper.register(Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
             }
         );
     }
