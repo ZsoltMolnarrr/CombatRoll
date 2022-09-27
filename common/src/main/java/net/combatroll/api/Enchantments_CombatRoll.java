@@ -6,6 +6,9 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static net.combatroll.enchantments.AmplifierEnchantment.Operation.ADD;
 import static net.combatroll.enchantments.AmplifierEnchantment.Operation.MULTIPLY;
 import static net.minecraft.enchantment.EnchantmentTarget.*;

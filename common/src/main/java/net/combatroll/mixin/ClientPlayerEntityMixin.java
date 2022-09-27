@@ -22,7 +22,8 @@ public class ClientPlayerEntityMixin {
     private void tickMovement_ModifyInput(CallbackInfo ci) {
         var client = (MinecraftClientExtension) MinecraftClient.getInstance();
         var clientPlayer = (ClientPlayerEntity) ((Object) this);
-        if (client.getRollManager().isRolling()) {
+        var config = CombatRoll.config;
+        if (!config.allow_jump_while_rolling && client.getRollManager().isRolling()) {
             clientPlayer.input.jumping = false;
         }
     }

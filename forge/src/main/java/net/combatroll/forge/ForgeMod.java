@@ -35,6 +35,7 @@ public class ForgeMod {
 
     @SubscribeEvent
     public void registerEnchantments(RegistryEvent.Register<Enchantment> event) {
+        CombatRoll.configureEnchantments();
         CombatRoll.registerEnchantments();
     }
 
