@@ -29,6 +29,9 @@ public class HudRenderHelper {
             if (player.isCreative() && !config.showHUDInCreative) {
                 return;
             }
+            if (player.isSpectator()) {
+                return;
+            }
             var cooldownInfo = ((MinecraftClientExtension)client).getRollManager().getCooldown();
             viewModel = ViewModel.create(cooldownInfo, tickDelta);
         }
