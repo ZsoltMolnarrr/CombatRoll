@@ -33,6 +33,9 @@ public class HudRenderHelper {
                 return;
             }
             var cooldownInfo = ((MinecraftClientExtension)client).getRollManager().getCooldown();
+            if (!config.showWhenFull && cooldownInfo.availableRolls() == cooldownInfo.maxRolls()) {
+                return;
+            }
             viewModel = ViewModel.create(cooldownInfo, tickDelta);
         }
 
