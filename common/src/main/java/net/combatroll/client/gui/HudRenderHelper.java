@@ -41,7 +41,7 @@ public class HudRenderHelper {
 
         var screenWidth = client.getWindow().getScaledWidth();
         var screenHeight = client.getWindow().getScaledHeight();
-        var rollWidget = CombatRollClient.hudConfig.currentConfig.rollWidget;
+        var rollWidget = CombatRollClient.hudConfig.value.rollWidget;
         var originPoint = rollWidget.origin.getPoint(screenWidth, screenHeight);
         var drawOffset = rollWidget.offset;
 
