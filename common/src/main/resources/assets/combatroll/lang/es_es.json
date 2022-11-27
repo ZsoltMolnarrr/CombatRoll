@@ -12,10 +12,8 @@
   
   "enchantment.combatroll.longfooted" : "Piernas largas",
   "enchantment.combatroll.longfooted.desc" : "Aumenta la distancia de volteretas",
-  "enchantment.combatroll.acrobat_chest" : "Camisa de acróbata",
-  "enchantment.combatroll.acrobat_chest.desc" : "Reduce recarga entre volteretas",
-  "enchantment.combatroll.acrobat_legs" : "Pantalones de acróbata",
-  "enchantment.combatroll.acrobat_legs.desc" : "Reduce recarga entre volteretas",
+  "enchantment.combatroll.acrobat" : "Acróbata",
+  "enchantment.combatroll.acrobat.desc" : "Reduce recarga entre volteretas",
   "enchantment.combatroll.multi_roll" : "Multi-Voltereta",
   "enchantment.combatroll.multi_roll.desc" : "Permite volteretas extras",
 

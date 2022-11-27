@@ -49,7 +49,7 @@ public class HudConfigScreen extends Screen {
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         if (!this.isDragging() && button == 0) {
-            var config = CombatRollClient.hudConfig.currentConfig;
+            var config = CombatRollClient.hudConfig.value;
             config.rollWidget.offset = new Vec2f(
                     (float) (config.rollWidget.offset.x + deltaX),
                     (float) (config.rollWidget.offset.y + deltaY));
@@ -58,7 +58,7 @@ public class HudConfigScreen extends Screen {
     }
 
     public static void nextOrigin() {
-        var config = CombatRollClient.hudConfig.currentConfig;
+        var config = CombatRollClient.hudConfig.value;
         HudElement.Origin origin;
         try {
             origin = HudElement.Origin.values()[(config.rollWidget.origin.ordinal() + 1)];
@@ -74,7 +74,7 @@ public class HudConfigScreen extends Screen {
     }
 
     public void reset() {
-        var config = CombatRollClient.hudConfig.currentConfig;
+        var config = CombatRollClient.hudConfig.value;
         config.rollWidget = HudConfig.createDefaultRollWidget();
     }
 }

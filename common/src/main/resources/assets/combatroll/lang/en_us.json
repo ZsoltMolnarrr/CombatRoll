@@ -12,10 +12,8 @@
 
   "enchantment.combatroll.longfooted" : "Longfooted",
   "enchantment.combatroll.longfooted.desc" : "Increases the distance of your rolls",
-  "enchantment.combatroll.acrobat_chest" : "Acrobat's Shirt",
-  "enchantment.combatroll.acrobat_chest.desc" : "Reduces the cooldown time between your rolls",
-  "enchantment.combatroll.acrobat_legs" : "Acrobat's Pants",
-  "enchantment.combatroll.acrobat_legs.desc" : "Reduces the cooldown time between your rolls",
+  "enchantment.combatroll.acrobat" : "Acrobat",
+  "enchantment.combatroll.acrobat.desc" : "Reduces the cooldown time between your rolls",
   "enchantment.combatroll.multi_roll" : "Multi-Roll",
   "enchantment.combatroll.multi_roll.desc" : "Grants extra rolls",
 
@@ -29,5 +27,6 @@
   "text.autoconfig.combatroll.option.client.playRollSound" : "Play roll sound",
   "text.autoconfig.combatroll.option.client.hudArrowColor" : "Arrow color",
   "text.autoconfig.combatroll.option.client.hudBackgroundOpacity" : "Arrow background opacity",
-  "text.autoconfig.combatroll.option.client.showHUDInCreative" : "Show Arrow in Creative mode"
+  "text.autoconfig.combatroll.option.client.showHUDInCreative" : "Show Arrow in Creative mode",
+  "text.autoconfig.combatroll.option.client.showWhenFull" : "Show Arrow when full"
 }

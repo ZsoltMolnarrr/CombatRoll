@@ -5,7 +5,7 @@ import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import net.combatroll.api.Enchantments_CombatRoll;
 import net.combatroll.api.EntityAttributes_CombatRoll;
-import net.combatroll.config.EnchantmentConfig;
+import net.combatroll.config.EnchantmentsConfig;
 import net.combatroll.config.ServerConfig;
 import net.combatroll.config.ServerConfigWrapper;
 import net.combatroll.network.ServerNetwork;
@@ -20,8 +20,8 @@ public class CombatRoll {
     }
 
     public static ServerConfig config;
-    public static ConfigManager<EnchantmentConfig> enchantmentConfig = new ConfigManager<EnchantmentConfig>
-            ("enchantments", new EnchantmentConfig())
+    public static ConfigManager<EnchantmentsConfig> enchantmentConfig = new ConfigManager<EnchantmentsConfig>
+            ("enchantments", new EnchantmentsConfig())
             .builder()
             .setDirectory(CombatRoll.MOD_ID)
             .sanitize(true)
@@ -42,17 +42,15 @@ public class CombatRoll {
     }
 
     public static void configureEnchantments() {
-        var config = enchantmentConfig.currentConfig;
+        var config = enchantmentConfig.value;
         Enchantments_CombatRoll.DISTANCE.properties = config.longfooted;
-        Enchantments_CombatRoll.RECHARGE_CHEST.properties = config.acrobat_chest;
-        Enchantments_CombatRoll.RECHARGE_LEGS.properties = config.acrobat_legs;
+        Enchantments_CombatRoll.RECHARGE.properties = config.acrobat;
         Enchantments_CombatRoll.COUNT.properties = config.multi_roll;
     }
 
     public static void registerEnchantments() {
         Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
-        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
-        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
+        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeId, Enchantments_CombatRoll.RECHARGE);
         Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
     }
 }

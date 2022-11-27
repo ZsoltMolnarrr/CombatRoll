@@ -33,12 +33,15 @@ public class HudRenderHelper {
                 return;
             }
             var cooldownInfo = ((MinecraftClientExtension)client).getRollManager().getCooldown();
+            if (!config.showWhenFull && cooldownInfo.availableRolls() == cooldownInfo.maxRolls()) {
+                return;
+            }
             viewModel = ViewModel.create(cooldownInfo, tickDelta);
         }
 
         var screenWidth = client.getWindow().getScaledWidth();
         var screenHeight = client.getWindow().getScaledHeight();
-        var rollWidget = CombatRollClient.hudConfig.currentConfig.rollWidget;
+        var rollWidget = CombatRollClient.hudConfig.value.rollWidget;
         var originPoint = rollWidget.origin.getPoint(screenWidth, screenHeight);
         var drawOffset = rollWidget.offset;
 

@@ -2,12 +2,12 @@ package net.combatroll.api;
 
 import net.combatroll.CombatRoll;
 import net.combatroll.enchantments.AmplifierEnchantment;
+import net.combatroll.enchantments.CustomConditionalEnchantment;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static net.combatroll.enchantments.AmplifierEnchantment.Operation.ADD;
 import static net.combatroll.enchantments.AmplifierEnchantment.Operation.MULTIPLY;
@@ -18,30 +18,25 @@ public class Enchantments_CombatRoll {
     public static final String distanceName = "longfooted";
     public static final Identifier distanceId = new Identifier(CombatRoll.MOD_ID + ":" + distanceName);
     public static final AmplifierEnchantment DISTANCE = new AmplifierEnchantment(
-            Enchantment.Rarity.UNCOMMON,
+            Enchantment.Rarity.RARE,
             ADD,
-            CombatRoll.enchantmentConfig.currentConfig.longfooted,
+            CombatRoll.enchantmentConfig.value.longfooted,
             ARMOR_FEET,
             new EquipmentSlot[]{ EquipmentSlot.FEET });
 
     // Acrobat
-    public static final String rechargeChestName = "acrobat_chest";
-    public static final Identifier rechargeChestId = new Identifier(CombatRoll.MOD_ID + ":" + rechargeChestName);
-    public static final AmplifierEnchantment RECHARGE_CHEST = new AmplifierEnchantment(
+    public static final String rechargeName = "acrobat";
+    public static final Identifier rechargeId = new Identifier(CombatRoll.MOD_ID + ":" + rechargeName);
+    public static final AmplifierEnchantment RECHARGE = new AmplifierEnchantment(
             Enchantment.Rarity.RARE,
             MULTIPLY,
-            CombatRoll.enchantmentConfig.currentConfig.acrobat_chest,
-            ARMOR_CHEST,
-            new EquipmentSlot[]{ EquipmentSlot.CHEST });
-
-    public static final String rechargeLegsName = "acrobat_legs";
-    public static final Identifier rechargeLegsId = new Identifier(CombatRoll.MOD_ID + ":" + rechargeLegsName);
-    public static final AmplifierEnchantment RECHARGE_LEGS = new AmplifierEnchantment(
-            Enchantment.Rarity.RARE,
-            MULTIPLY,
-            CombatRoll.enchantmentConfig.currentConfig.acrobat_legs,
-            ARMOR_LEGS,
-            new EquipmentSlot[]{ EquipmentSlot.LEGS });
+            CombatRoll.enchantmentConfig.value.acrobat,
+            WEARABLE,
+            new EquipmentSlot[]{ EquipmentSlot.CHEST, EquipmentSlot.LEGS })
+            .condition(stack ->
+                    ARMOR_CHEST.isAcceptableItem(stack.getItem())
+                    || ARMOR_LEGS.isAcceptableItem(stack.getItem())
+            );
 
     // Multi-Roll
     public static final String countName = "multi_roll";
@@ -49,7 +44,7 @@ public class Enchantments_CombatRoll {
     public static final AmplifierEnchantment COUNT = new AmplifierEnchantment(
             Enchantment.Rarity.VERY_RARE,
             ADD,
-            CombatRoll.enchantmentConfig.currentConfig.multi_roll,
+            CombatRoll.enchantmentConfig.value.multi_roll,
             ARMOR_HEAD,
             new EquipmentSlot[]{ EquipmentSlot.HEAD });
 }
