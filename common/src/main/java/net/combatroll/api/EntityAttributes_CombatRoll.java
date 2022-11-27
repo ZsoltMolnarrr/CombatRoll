@@ -21,7 +21,7 @@ public class EntityAttributes_CombatRoll {
 
     public static final String countName = "count";
     public static final Identifier countId = new Identifier(CombatRoll.MOD_ID + ":" + countName);
-    public static final EntityAttribute COUNT = (new ClampedEntityAttribute("attribute.name.combat_roll." + countName, 1, 1, 20.0)).setTracked(true);
+    public static final EntityAttribute COUNT = (new ClampedEntityAttribute("attribute.name.combat_roll." + countName, 1, 0, 20.0)).setTracked(true);
 
     public static List<EntityAttribute> all;
     static {
