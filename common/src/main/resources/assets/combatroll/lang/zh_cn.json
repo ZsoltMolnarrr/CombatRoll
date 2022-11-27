@@ -12,10 +12,8 @@
 
   "enchantment.combatroll.longfooted" : "跃进",
   "enchantment.combatroll.longfooted.desc" : "增加翻滚的距离",
-  "enchantment.combatroll.acrobat_chest" : "杂技",
-  "enchantment.combatroll.acrobat_chest.desc" : "减少翻滚的冷却时间",
-  "enchantment.combatroll.acrobat_legs" : "杂技",
-  "enchantment.combatroll.acrobat_legs.desc" : "减少翻滚的冷却时间",
+  "enchantment.combatroll.acrobat" : "杂技",
+  "enchantment.combatroll.acrobat.desc" : "减少翻滚的冷却时间",
   "enchantment.combatroll.multi_roll" : "连续翻滚",
   "enchantment.combatroll.multi_roll.desc" : "增加翻滚的次数",
 

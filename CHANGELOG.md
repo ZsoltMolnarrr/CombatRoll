@@ -3,6 +3,7 @@
 - Add hide cooldown indicator when no cooldown (client side configurable)
 - Enchantments can be disabled via config (server side only)
 - Roll ability can now be revoked from players #14
+- Add some chinese translations
 
 # 1.0.8
 - Disable HUD widget in spectator mode
