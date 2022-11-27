@@ -7,7 +7,6 @@ import net.combatroll.utils.SoundHelper;
 import net.fabricmc.fabric.api.networking.v1.NetworkHandler;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -43,8 +42,7 @@ public class ForgeMod {
             helper -> {
                 CombatRoll.configureEnchantments();
                 helper.register(Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
-                helper.register(Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
-                helper.register(Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
+                helper.register(Enchantments_CombatRoll.rechargeId, Enchantments_CombatRoll.RECHARGE);
                 helper.register(Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
             }
         );

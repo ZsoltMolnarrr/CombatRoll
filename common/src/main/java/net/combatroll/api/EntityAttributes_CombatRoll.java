@@ -44,10 +44,8 @@ public class EntityAttributes_CombatRoll {
             }
             case RECHARGE -> {
                 var value = player.getAttributeValue(RECHARGE);
-                var chestLevel = EnchantmentHelper.getEquipmentLevel(Enchantments_CombatRoll.RECHARGE_CHEST, player);
-                value = Enchantments_CombatRoll.RECHARGE_CHEST.apply(value, chestLevel);
-                var legsLevel = EnchantmentHelper.getEquipmentLevel(Enchantments_CombatRoll.RECHARGE_LEGS, player);
-                value = Enchantments_CombatRoll.RECHARGE_LEGS.apply(value, legsLevel);
+                var chestLevel = EnchantmentHelper.getEquipmentLevel(Enchantments_CombatRoll.RECHARGE, player);
+                value = Enchantments_CombatRoll.RECHARGE.apply(value, chestLevel);
                 return value;
             }
             case COUNT -> {

@@ -4,6 +4,7 @@
   "package": "net.combatroll.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "EnchantmentHelperMixin",
     "PlayerEntityMixin",
     "RegistryMixin"
   ],

@@ -3,8 +3,9 @@ package net.combatroll.enchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ItemStack;
 
-public class AmplifierEnchantment extends Enchantment {
+public class AmplifierEnchantment extends Enchantment implements CustomConditionalEnchantment {
     public Operation operation;
     public enum Operation {
         ADD, MULTIPLY;
@@ -56,5 +57,27 @@ public class AmplifierEnchantment extends Enchantment {
 
     public int getMaxPower(int level) {
         return super.getMinPower(level) + 50;
+    }
+
+    // MARK: CustomConditionalEnchantment
+
+    @Override
+    public boolean isAcceptableItem(ItemStack stack) {
+        if (condition != null) {
+            return condition.isAcceptableItem(stack);
+        }
+        return super.isAcceptableItem(stack);
+    }
+
+    private Condition condition;
+
+    @Override
+    public void setCondition(Condition condition) {
+        this.condition = condition;
+    }
+
+    public AmplifierEnchantment condition(Condition condition) {
+        setCondition(condition);
+        return this;
     }
 }

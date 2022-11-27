@@ -44,15 +44,13 @@ public class CombatRoll {
     public static void configureEnchantments() {
         var config = enchantmentConfig.currentConfig;
         Enchantments_CombatRoll.DISTANCE.properties = config.longfooted;
-        Enchantments_CombatRoll.RECHARGE_CHEST.properties = config.acrobat_chest;
-        Enchantments_CombatRoll.RECHARGE_LEGS.properties = config.acrobat_legs;
+        Enchantments_CombatRoll.RECHARGE.properties = config.acrobat;
         Enchantments_CombatRoll.COUNT.properties = config.multi_roll;
     }
 
     public static void registerEnchantments() {
         Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
-        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeChestId, Enchantments_CombatRoll.RECHARGE_CHEST);
-        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeLegsId, Enchantments_CombatRoll.RECHARGE_LEGS);
+        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeId, Enchantments_CombatRoll.RECHARGE);
         Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
     }
 }
