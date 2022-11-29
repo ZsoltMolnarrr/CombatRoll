@@ -9,6 +9,7 @@ import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.impl.IAnimatedPlayer;
+import net.combatroll.CombatRoll;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
@@ -55,6 +56,8 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
             lastRollDirection = direction;
 
             var fadeIn = copy.beginTick;
+            float length = copy.endTick;
+            speedModifier.speed = length / ((float) CombatRoll.config.roll_duration);
             base.replaceAnimationWithFade(
                     AbstractFadeModifier.standardFadeIn(fadeIn, Ease.INOUTSINE),
                     new KeyframeAnimationPlayer(copy.build(), 0));
