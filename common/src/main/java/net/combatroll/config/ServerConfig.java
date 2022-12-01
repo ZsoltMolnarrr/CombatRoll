@@ -7,7 +7,7 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 @Config(name = "server")
 public class ServerConfig implements ConfigData {
     @Comment("The duration of the roll ability, expressed as a number of ticks, during which the player cannot use item/attack/jump etc...")
-    public int roll_duration = 10;
+    public int roll_duration = 8;
     @Comment("Allows Vanilla Minecraft auto jump feature to work while rolling")
     public boolean allow_auto_jump_while_rolling = true;
     @Comment("Allows jumping while rolling. WARNING! Setting this to `true` breaks roll distance attribute and enchantment")
