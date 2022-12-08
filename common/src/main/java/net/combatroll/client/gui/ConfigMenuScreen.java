@@ -12,7 +12,7 @@ public class ConfigMenuScreen extends Screen {
 
     public ConfigMenuScreen(Screen parent) {
         super(Text.translatable("gui.combatroll.config_menu"));
-        this.previous = previous;
+        this.previous = parent;
     }
 
     @Override
@@ -22,15 +22,28 @@ public class ConfigMenuScreen extends Screen {
         var buttonCenterX = (width / 2) - (buttonWidth / 2);
         var buttonCenterY = (height / 2) - (buttonHeight / 2);
 
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY - 30, buttonWidth, buttonHeight, Text.translatable("gui.combatroll.close"), button -> {
-            close();
-        }));
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY, buttonWidth, buttonHeight, Text.translatable("gui.combatroll.settings"), button -> {
-            client.setScreen(AutoConfig.getConfigScreen(ClientConfigWrapper.class, this).get());
-        }));
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY + 30, buttonWidth, buttonHeight, Text.translatable("gui.combatroll.hud"), button -> {
-            client.setScreen(new HudConfigScreen(this));
-        }));
+        addDrawableChild(
+                ButtonWidget.builder(Text.translatable("gui.combatroll.close"), button -> { close(); })
+                        .position(buttonCenterX, buttonCenterY - 30)
+                        .size(buttonWidth, buttonHeight)
+                        .build()
+        );
+        addDrawableChild(
+                ButtonWidget.builder(Text.translatable("gui.combatroll.settings"), button -> {
+                            client.setScreen(AutoConfig.getConfigScreen(ClientConfigWrapper.class, this).get());
+                        })
+                        .position(buttonCenterX, buttonCenterY)
+                        .size(buttonWidth, buttonHeight)
+                        .build()
+        );
+        addDrawableChild(
+                ButtonWidget.builder(Text.translatable("gui.combatroll.hud"), button -> {
+                            client.setScreen(new HudConfigScreen(this));
+                        })
+                        .position(buttonCenterX, buttonCenterY + 30)
+                        .size(buttonWidth, buttonHeight)
+                        .build()
+        );
     }
 
     public void close() {

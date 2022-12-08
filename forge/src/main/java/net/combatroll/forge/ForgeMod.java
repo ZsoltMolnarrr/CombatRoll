@@ -50,7 +50,7 @@ public class ForgeMod {
 
     private void registerSounds() {
         for (var soundKey: SoundHelper.soundKeys) {
-            SOUNDS.register(soundKey, () -> new SoundEvent(new Identifier(CombatRoll.MOD_ID, soundKey)));
+            SOUNDS.register(soundKey, () -> SoundEvent.of(new Identifier(CombatRoll.MOD_ID, soundKey)));
         }
     }
 }

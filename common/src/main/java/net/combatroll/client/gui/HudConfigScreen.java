@@ -23,15 +23,24 @@ public class HudConfigScreen extends Screen {
         var buttonCenterX = (width / 2) - (buttonWidth / 2);
         var buttonCenterY = (height / 2) - (buttonHeight / 2);
 
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY - 30, buttonWidth, buttonHeight, Text.translatable("gui.combatroll.close"), button -> {
-            close();
-        }));
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY, buttonWidth, buttonHeight, Text.translatable("gui.combatroll.corner"), button -> {
-            nextOrigin();
-        }));
-        addDrawableChild(new ButtonWidget(buttonCenterX, buttonCenterY + 30, buttonWidth, buttonHeight, Text.translatable("gui.combatroll.reset"), button -> {
-            reset();
-        }));
+        addDrawableChild(
+            ButtonWidget.builder(Text.translatable("gui.combatroll.close"), button -> { close(); })
+                .position(buttonCenterX, buttonCenterY - 30)
+                .size(buttonWidth, buttonHeight)
+                .build()
+        );
+        addDrawableChild(
+            ButtonWidget.builder(Text.translatable("gui.combatroll.corner"), button -> { nextOrigin(); })
+                .position(buttonCenterX, buttonCenterY)
+                .size(buttonWidth, buttonHeight)
+                .build()
+        );
+        addDrawableChild(
+            ButtonWidget.builder(Text.translatable("gui.combatroll.reset"), button -> { reset(); })
+                .position(buttonCenterX, buttonCenterY + 30)
+                .size(buttonWidth, buttonHeight)
+                .build()
+        );
     }
 
     public void close() {

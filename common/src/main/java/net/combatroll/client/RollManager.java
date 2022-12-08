@@ -3,9 +3,9 @@ package net.combatroll.client;
 import net.combatroll.CombatRoll;
 import net.combatroll.api.EntityAttributes_CombatRoll;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import static net.combatroll.api.EntityAttributes_CombatRoll.Type.COUNT;
 import static net.combatroll.api.EntityAttributes_CombatRoll.Type.RECHARGE;
@@ -65,7 +65,7 @@ public class RollManager {
         currentCooldownProgress = 0;
         updateCooldownLength(player);
         if (CombatRollClient.config.playCooldownSound) {
-            var cooldownReady = Registry.SOUND_EVENT.get(new Identifier("combatroll:roll_cooldown_ready"));
+            var cooldownReady = Registries.SOUND_EVENT.get(new Identifier("combatroll:roll_cooldown_ready"));
             if (cooldownReady != null) {
                 player.world.playSound(player.getX(), player.getY(), player.getZ(), cooldownReady, SoundCategory.PLAYERS, 1, 1, false);
             }

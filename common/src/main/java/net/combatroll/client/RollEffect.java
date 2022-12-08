@@ -2,10 +2,10 @@ package net.combatroll.client;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.combatroll.client.animation.AnimatablePlayer;
 
 import java.util.Random;
@@ -20,7 +20,7 @@ public record RollEffect(Visuals visuals, String soundId) {
     public static void playVisuals(Visuals visuals, PlayerEntity player, Vec3d direction) {
         ((AnimatablePlayer)player).playRollAnimation(visuals.animationName(), direction);
         if (CombatRollClient.config.playRollSound) {
-            var sound = Registry.SOUND_EVENT.get(new Identifier("combatroll:roll"));
+            var sound = Registries.SOUND_EVENT.get(new Identifier("combatroll:roll"));
             if (sound != null) {
                 player.world.playSound(player.getX(), player.getY(), player.getZ(), sound, SoundCategory.PLAYERS, 1, 1, true);
             }

@@ -6,7 +6,7 @@
   "mixins": [
     "EnchantmentHelperMixin",
     "PlayerEntityMixin",
-    "RegistryMixin"
+    "RegistriesMixin"
   ],
   "client": [
     "AbstractClientPlayerEntityMixin",

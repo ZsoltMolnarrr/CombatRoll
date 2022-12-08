@@ -10,7 +10,8 @@ import net.combatroll.config.ServerConfig;
 import net.combatroll.config.ServerConfigWrapper;
 import net.combatroll.network.ServerNetwork;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.tinyconfig.ConfigManager;
 
 public class CombatRoll {
@@ -36,9 +37,9 @@ public class CombatRoll {
     }
 
     public static void registerAttributes() {
-        Registry.register(Registry.ATTRIBUTE, EntityAttributes_CombatRoll.distanceId, EntityAttributes_CombatRoll.DISTANCE);
-        Registry.register(Registry.ATTRIBUTE, EntityAttributes_CombatRoll.rechargeId, EntityAttributes_CombatRoll.RECHARGE);
-        Registry.register(Registry.ATTRIBUTE, EntityAttributes_CombatRoll.countId, EntityAttributes_CombatRoll.COUNT);
+        Registry.register(Registries.ATTRIBUTE, EntityAttributes_CombatRoll.distanceId, EntityAttributes_CombatRoll.DISTANCE);
+        Registry.register(Registries.ATTRIBUTE, EntityAttributes_CombatRoll.rechargeId, EntityAttributes_CombatRoll.RECHARGE);
+        Registry.register(Registries.ATTRIBUTE, EntityAttributes_CombatRoll.countId, EntityAttributes_CombatRoll.COUNT);
     }
 
     public static void configureEnchantments() {
@@ -49,8 +50,8 @@ public class CombatRoll {
     }
 
     public static void registerEnchantments() {
-        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
-        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.rechargeId, Enchantments_CombatRoll.RECHARGE);
-        Registry.register(Registry.ENCHANTMENT, Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
+        Registry.register(Registries.ENCHANTMENT, Enchantments_CombatRoll.distanceId, Enchantments_CombatRoll.DISTANCE);
+        Registry.register(Registries.ENCHANTMENT, Enchantments_CombatRoll.rechargeId, Enchantments_CombatRoll.RECHARGE);
+        Registry.register(Registries.ENCHANTMENT, Enchantments_CombatRoll.countId, Enchantments_CombatRoll.COUNT);
     }
 }
