@@ -1,3 +1,6 @@
+# 1.1.2
+- Disable rolling when movement speed at zero
+
 # 1.1.1
 - Playback speed of the rolling animation scales to match server config entry: `roll_duration`
 - Reduce default value of `roll_duration` (10 -> 8)

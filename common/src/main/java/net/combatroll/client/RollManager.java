@@ -3,6 +3,8 @@ package net.combatroll.client;
 import net.combatroll.CombatRoll;
 import net.combatroll.api.EntityAttributes_CombatRoll;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -29,8 +31,11 @@ public class RollManager {
         return new CooldownInfo(currentCooldownProgress, currentCooldownLength, availableRolls, maxRolls);
     }
 
-    public boolean isRollAvailable() {
-        return isEnabled && !isRolling() && availableRolls > 0;
+    public boolean isRollAvailable(PlayerEntity player) {
+        return isEnabled
+                && !isRolling()
+                && availableRolls > 0
+                && player.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED) > 0;
     }
 
     public boolean isRolling() {

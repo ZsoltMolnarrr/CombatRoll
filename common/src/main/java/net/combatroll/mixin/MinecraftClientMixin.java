@@ -77,7 +77,7 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             if (Platform.Forge && client.currentScreen != null) {
                 return;
             }
-            if(!rollManager.isRollAvailable()) {
+            if(!rollManager.isRollAvailable(player)) {
                 return;
             }
             if(!CombatRoll.config.allow_rolling_while_airborn && !player.isOnGround()) {
