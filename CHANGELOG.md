@@ -1,3 +1,6 @@
+# 1.1.3
+- Disable rolling when player cannot move voluntarily
+
 # 1.1.2
 - Disable rolling when movement speed at zero
 
