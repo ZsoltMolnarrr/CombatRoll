@@ -35,6 +35,7 @@ public class RollManager {
         return isEnabled
                 && !isRolling()
                 && availableRolls > 0
+                && player.canMoveVoluntarily()
                 && player.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED) > 0;
     }
 
