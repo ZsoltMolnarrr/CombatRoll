@@ -2,6 +2,7 @@ package net.combatroll.client;
 
 import net.combatroll.CombatRoll;
 import net.combatroll.api.EntityAttributes_CombatRoll;
+import net.combatroll.mixin.PlayerEntityAccessor;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,6 +36,7 @@ public class RollManager {
         return isEnabled
                 && !isRolling()
                 && availableRolls > 0
+                && ((PlayerEntityAccessor)player).invokeIsImmobile_CombatRoll()
                 && player.canMoveVoluntarily()
                 && player.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED) > 0;
     }
