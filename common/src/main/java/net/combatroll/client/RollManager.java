@@ -36,7 +36,7 @@ public class RollManager {
         return isEnabled
                 && !isRolling()
                 && availableRolls > 0
-                && ((PlayerEntityAccessor)player).invokeIsImmobile_CombatRoll()
+                && !((PlayerEntityAccessor)player).invokeIsImmobile_CombatRoll()
                 && player.canMoveVoluntarily()
                 && player.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED) > 0;
     }

@@ -1,3 +1,6 @@
+# 1.1.4
+- Disable rolling when player is immobile
+
 # 1.1.3
 - Disable rolling when player cannot move voluntarily
 
