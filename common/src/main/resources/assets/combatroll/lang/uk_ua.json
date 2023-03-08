@@ -1,0 +1,32 @@
+{
+  "combatroll.mod_name" : "Combat Roll",
+
+  "keybinds.combatroll.roll" : "Перекид",
+
+  "gui.combatroll.config_menu" : "Конфігурація Combat Roll",
+  "gui.combatroll.close" : "Закрити",
+  "gui.combatroll.settings" : "Налаштування",
+  "gui.combatroll.hud" : "Перемістити стрілку",
+  "gui.combatroll.corner" : "Кут",
+  "gui.combatroll.reset" : "Скинути",
+
+  "enchantment.combatroll.longfooted" : "Довгоногість",
+  "enchantment.combatroll.longfooted.desc" : "Збільшує відстань ваших перекидів",
+  "enchantment.combatroll.acrobat" : "Акробатика",
+  "enchantment.combatroll.acrobat.desc" : "Зменшує час відновлення між перекидами",
+  "enchantment.combatroll.multi_roll" : "Мультиперекид",
+  "enchantment.combatroll.multi_roll.desc" : "Надає додаткові перекиди",
+
+  "attribute.name.combat_roll.distance" : "Відстань перекидів",
+  "attribute.name.combat_roll.count" : "Додаткові перекиди",
+  "attribute.name.combat_roll.recharge" : "Відновлення перекидів",
+
+  "text.autoconfig.combatroll.title": "Combat Roll",
+  "text.autoconfig.combatroll.option.client.playCooldownSound" : "Відтворювати звук відновлення перекиду",
+  "text.autoconfig.combatroll.option.client.playCooldownFlash": "Стрілка мигатиме, коли перекид готовий",
+  "text.autoconfig.combatroll.option.client.playRollSound" : "Відтворювати звук перекиду",
+  "text.autoconfig.combatroll.option.client.hudArrowColor" : "Колір стрілки",
+  "text.autoconfig.combatroll.option.client.hudBackgroundOpacity" : "Прозорість стрілки",
+  "text.autoconfig.combatroll.option.client.showHUDInCreative" : "Показувати стрілку в режимі творчости",
+  "text.autoconfig.combatroll.option.client.showWhenFull" : "Показувати стрілку, лише коли вона заповнена"
+}
