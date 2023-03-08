@@ -1,3 +1,7 @@
+# 1.1.5
+
+- Add Ukrainian translation, thanks to un_roman
+
 # 1.1.4
 - Disable rolling when player is immobile
 
