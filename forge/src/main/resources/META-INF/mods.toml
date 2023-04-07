@@ -61,24 +61,24 @@ side = "BOTH"
 modId = "minecraft"
 mandatory = true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange="[1.19,)"
+versionRange="[1.19.4,)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.combatroll]]
 modId="playeranimator"
 mandatory=true
-versionRange="[0.4.0,)"
+versionRange="[1.0.2,)"
 ordering="AFTER"
 side="BOTH"
 [[dependencies.combatroll]]
 modId="cloth_config"
 mandatory=true
-versionRange="[9.0.0,)"
+versionRange="[10.0.0,)"
 ordering="AFTER"
 side="BOTH"
 [[dependencies.combatroll]]
 modId="bettercombat"
 mandatory=false
-versionRange="[1.4.0,)"
+versionRange="[1.6.2,)"
 ordering="AFTER"
 side="BOTH"

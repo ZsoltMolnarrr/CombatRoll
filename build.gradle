@@ -15,7 +15,7 @@ subprojects {
     }
 
     archivesBaseName = rootProject.archives_base_name + "-${project.name}"
-    version = rootProject.mod_version + "+1.19.3"
+    version = rootProject.mod_version + "+${rootProject.minecraft_version}"
 
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
