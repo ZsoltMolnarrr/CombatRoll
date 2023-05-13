@@ -1,7 +1,7 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
     id "com.matthewprenger.cursegradle" version "1.4.0"
-    id "com.modrinth.minotaur" version "2.4.4"
+    id "com.modrinth.minotaur" version "2.+"
 }
 
 loom {
@@ -138,6 +138,7 @@ if(project.hasProperty('release_type')) {
     modrinth {
         token = System.getenv("MODRINTH_API_KEY")
         projectId = "combat-roll" // This can be the project ID or the slug. Either will work!
+        changelog = changelog_last_section()
         versionName = "${version}" // You don't need to set this manually. Will fail if Modrinth has this version already
         versionNumber = "${version}-forge" // You don't need to set this manually. Will fail if Modrinth has this version already
         versionType = release_type // This is the default -- can also be `beta` or `alpha`
