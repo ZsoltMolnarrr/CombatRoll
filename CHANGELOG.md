@@ -1,3 +1,7 @@
+# 1.2.0
+
+- Disable rolling when hungry
+
 # 1.1.5
 
 - Add Ukrainian translation, thanks to un_roman

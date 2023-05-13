@@ -83,6 +83,9 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             if(!CombatRoll.config.allow_rolling_while_airborn && !player.isOnGround()) {
                 return;
             }
+            if(player.getHungerManager().getFoodLevel() <= CombatRoll.config.food_level_required) {
+                return;
+            }
             if(player.isSwimming() || player.isCrawling()) {
                 return;
             }
