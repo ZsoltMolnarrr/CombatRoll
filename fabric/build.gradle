@@ -45,8 +45,8 @@ dependencies {
     }
     shadowCommon(implementation ("com.github.ZsoltMolnarrr:TinyConfig:${project.tiny_config_version}"))
 
-    modCompileOnly("com.terraformersmc:modmenu:${rootProject.mod_menu_version}") { transitive false }
-    modCompileOnly("maven.modrinth:better-combat:${rootProject.better_combat_version}-fabric")
+    modImplementation("com.terraformersmc:modmenu:${rootProject.mod_menu_version}") { transitive false }
+    modImplementation("maven.modrinth:better-combat:${rootProject.better_combat_version}-fabric")
 }
 
 processResources {
@@ -115,6 +115,9 @@ if(project.hasProperty('release_type')) {
             changelogType = 'markdown'
             releaseType = release_type
             addGameVersion "${rootProject.minecraft_version}"
+            additional_versions().each { version ->
+                addGameVersion version
+            }
             addGameVersion "Fabric"
 
             relations {
@@ -141,7 +144,7 @@ if(project.hasProperty('release_type')) {
         versionNumber = "${version}-fabric" // You don't need to set this manually. Will fail if Modrinth has this version already
         versionType = release_type // This is the default -- can also be `beta` or `alpha`
         uploadFile = remapJar // With Loom, this MUST be set to `remapJar` instead of `jar`!
-        gameVersions = ["${rootProject.minecraft_version}"] // Must be an array, even with only one version
+        gameVersions = ["${rootProject.minecraft_version}"] + additional_versions() // Must be an array, even with only one version
         loaders = ["fabric"] // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
         dependencies { // A special DSL for creating dependencies
             // scope.type

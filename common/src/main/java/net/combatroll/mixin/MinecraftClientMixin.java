@@ -123,7 +123,7 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
                     + CombatRoll.config.additional_roll_distance);
             direction = direction.multiply(distance);
 
-            var block = player.world.getBlockState(player.getBlockPos().down()).getBlock();
+            var block = player.getWorld().getBlockState(player.getBlockPos().down()).getBlock();
             var slipperiness = block.getSlipperiness();
             var defaultSlipperiness = Blocks.GRASS.getSlipperiness();
             if (slipperiness > defaultSlipperiness) {

@@ -3,9 +3,8 @@ package net.combatroll.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.combatroll.client.MinecraftClientExtension;
 import net.combatroll.client.RollManager;
@@ -18,7 +17,7 @@ public class HudRenderHelper {
     private static final Identifier ARROW = new Identifier("combatroll", "textures/hud/arrow.png");
     private static final Identifier ARROW_BACKGROUND = new Identifier("combatroll", "textures/hud/arrow_background.png");
 
-    public static void render(MatrixStack matrixStack, float tickDelta) {
+    public static void render(DrawContext context, float tickDelta) {
         var config = CombatRollClient.config;
         MinecraftClient client = MinecraftClient.getInstance();
         ClientPlayerEntity player = client.player;
@@ -66,9 +65,8 @@ public class HudRenderHelper {
             u = 0;
             v = 0;
             width = height = textureSize = 15;
-            RenderSystem.setShaderTexture(0, ARROW_BACKGROUND);
-            RenderSystem.setShaderColor(1, 1, 1, ((float)config.hudBackgroundOpacity) / 100F);
-            DrawableHelper.drawTexture(matrixStack, x, y, u, v, width, height, textureSize, textureSize);
+            context.setShaderColor(1, 1, 1, ((float)config.hudBackgroundOpacity) / 100F);
+            context.drawTexture(ARROW_BACKGROUND, x, y, u, v, width, height, textureSize, textureSize);
 
             var color = element.color;
             float red = ((float) ((color >> 16) & 0xFF)) / 255F;
@@ -84,14 +82,13 @@ public class HudRenderHelper {
             y = drawY + textureSize - height + shift;
             u = 0;
             v = textureSize - height;
-            RenderSystem.setShaderTexture(0, ARROW);
-            RenderSystem.setShaderColor(red, green, blue, element.full);
-            DrawableHelper.drawTexture(matrixStack, x, y, u, v, width, height, textureSize, textureSize);
+            context.setShaderColor(red, green, blue, element.full);
+            context.drawTexture(ARROW, x, y, u, v, width, height, textureSize, textureSize);
 
             drawX += horizontalSpacing;
         }
 
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     private record ViewModel(List<Element> elements) {

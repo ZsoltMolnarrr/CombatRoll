@@ -38,7 +38,7 @@ repositories {
 }
 
 dependencies {
-    forge "net.minecraftforge:forge:${rootProject.forge_version}"
+    forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
     // Remove the next line if you don't want to depend on the API
     // modApi "dev.architectury:architectury-forge:${rootProject.architectury_version_api}"
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
@@ -118,6 +118,9 @@ if(project.hasProperty('release_type')) {
             changelogType = 'markdown'
             releaseType = release_type
             addGameVersion "${rootProject.minecraft_version}"
+            additional_versions().each { version ->
+                addGameVersion version
+            }
             addGameVersion "Forge"
 
             relations {
@@ -143,7 +146,7 @@ if(project.hasProperty('release_type')) {
         versionNumber = "${version}-forge" // You don't need to set this manually. Will fail if Modrinth has this version already
         versionType = release_type // This is the default -- can also be `beta` or `alpha`
         uploadFile = remapJar // With Loom, this MUST be set to `remapJar` instead of `jar`!
-        gameVersions = ["${rootProject.minecraft_version}"] // Must be an array, even with only one version
+        gameVersions = ["${rootProject.minecraft_version}"] + additional_versions() // Must be an array, even with only one version
         loaders = ["forge"] // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
         dependencies { // A special DSL for creating dependencies
             // scope.type

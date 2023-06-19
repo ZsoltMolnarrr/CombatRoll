@@ -22,7 +22,7 @@ public record RollEffect(Visuals visuals, String soundId) {
         if (CombatRollClient.config.playRollSound) {
             var sound = Registries.SOUND_EVENT.get(new Identifier("combatroll:roll"));
             if (sound != null) {
-                player.world.playSound(player.getX(), player.getY(), player.getZ(), sound, SoundCategory.PLAYERS, 1, 1, true);
+                player.getWorld().playSound(player.getX(), player.getY(), player.getZ(), sound, SoundCategory.PLAYERS, 1, 1, true);
             }
         }
         switch (visuals.particles()) {
@@ -31,7 +31,7 @@ public record RollEffect(Visuals visuals, String soundId) {
                     double d = random.nextGaussian() * 0.02;
                     double e = random.nextGaussian() * 0.02;
                     double f = random.nextGaussian() * 0.02;
-                    player.world.addParticle(ParticleTypes.POOF,
+                    player.getWorld().addParticle(ParticleTypes.POOF,
                             player.getParticleX(1.5),
                             player.getBodyY(random.nextGaussian() * 0.3),
                             player.getParticleZ(1.5), d, e, f);
