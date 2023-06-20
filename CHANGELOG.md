@@ -1,3 +1,7 @@
+# 1.2.1
+
+- Fix mod version requirements
+
 # 1.2.0
 
 - Disable rolling when hungry
