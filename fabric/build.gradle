@@ -115,7 +115,9 @@ if(project.hasProperty('release_type')) {
             changelogType = 'markdown'
             releaseType = release_type
             addGameVersion "${rootProject.minecraft_version}"
-            addGameVersion "1.20"
+            additional_versions().each { version ->
+                addGameVersion version
+            }
             addGameVersion "Fabric"
 
             relations {
