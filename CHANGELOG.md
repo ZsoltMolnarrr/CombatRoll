@@ -1,3 +1,7 @@
+# 1.2.2
+
+- Add italian translation by Zano1999 #26
+
 # 1.2.1
 
 - Fix mod version requirements
