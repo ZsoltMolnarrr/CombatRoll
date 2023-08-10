@@ -1,0 +1,32 @@
+{
+  "combatroll.mod_name" : "Combat Roll",
+
+  "keybinds.combatroll.roll" : "Capriola",
+
+  "gui.combatroll.config_menu" : "Combat Roll config",
+  "gui.combatroll.close" : "Chiudi",
+  "gui.combatroll.settings" : "Impostazioni",
+  "gui.combatroll.hud" : "Muovi la freccia",
+  "gui.combatroll.corner" : "Bordo",
+  "gui.combatroll.reset" : "Reset",
+
+  "enchantment.combatroll.longfooted" : "Piede lungo",
+  "enchantment.combatroll.longfooted.desc" : "Aumenta la distanza della capriola",
+  "enchantment.combatroll.acrobat" : "Acrobata",
+  "enchantment.combatroll.acrobat.desc" : "Riduce la ricarica della capriola",
+  "enchantment.combatroll.multi_roll" : "Capriola multipla",
+  "enchantment.combatroll.multi_roll.desc" : "Permette di eseguire capriole extra",
+
+  "attribute.name.combat_roll.distance" : "Distanza capriola",
+  "attribute.name.combat_roll.count" : "Capriole extra",
+  "attribute.name.combat_roll.recharge" : "Ricarica capriola",
+
+  "text.autoconfig.combatroll.title": "Combat Roll",
+  "text.autoconfig.combatroll.option.client.playCooldownSound" : "Esegui suono a ricarica completata",
+  "text.autoconfig.combatroll.option.client.playCooldownFlash": "Fai brillare la freccia a ricarica completata",
+  "text.autoconfig.combatroll.option.client.playRollSound" : "Esegui suono capriola",
+  "text.autoconfig.combatroll.option.client.hudArrowColor" : "Colore freccia",
+  "text.autoconfig.combatroll.option.client.hudBackgroundOpacity" : "Opacità sfondo freccia",
+  "text.autoconfig.combatroll.option.client.showHUDInCreative" : "Mostra freccia in modalità creativa",
+  "text.autoconfig.combatroll.option.client.showWhenFull" : "Mostra freccia quando piena"
+}
