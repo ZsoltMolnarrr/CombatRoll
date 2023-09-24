@@ -50,9 +50,9 @@ public class HudConfigScreen extends Screen {
     }
 
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        renderBackground(context);
-        HudRenderHelper.render(context, delta);
+        renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
+        HudRenderHelper.render(context, delta);
     }
 
     @Override
