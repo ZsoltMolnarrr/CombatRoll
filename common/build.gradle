@@ -1,3 +1,7 @@
+architectury {
+    common(rootProject.platforms.split(","))
+}
+
 repositories {
     maven { url 'https://maven.kosmx.dev/' }
     maven { url 'https://maven.shedaniel.me/' }
@@ -20,7 +24,7 @@ dependencies {
     // modApi "dev.architectury:architectury:${rootProject.architectury_version_api}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
-    modImplementation("dev.kosmx.player-anim:player-animation-lib:${project.player_anim_version}")
+    modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim_version}")
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
@@ -28,10 +32,6 @@ dependencies {
 
     modCompileOnly("com.terraformersmc:modmenu:${rootProject.mod_menu_version}") { transitive false }
     modCompileOnly("maven.modrinth:better-combat:${rootProject.better_combat_version}-fabric") { transitive false }
-}
-
-architectury {
-    common()
 }
 
 publishing {

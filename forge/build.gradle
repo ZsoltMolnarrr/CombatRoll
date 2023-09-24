@@ -62,7 +62,7 @@ processResources {
 shadowJar {
     exclude "fabric.mod.json"
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier.set("dev-shadow")
     relocate 'net.fabricmc', 'net.combatroll.fabricmc'
     relocate 'net.tinyconfig', 'net.combatroll.tinyconfig'
 }
@@ -70,11 +70,11 @@ shadowJar {
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
+    archiveClassifier.set(null)
 }
 
 jar {
-    classifier "dev"
+    archiveClassifier.set("dev")
 }
 
 sourcesJar {
@@ -146,6 +146,7 @@ if(project.hasProperty('release_type')) {
         uploadFile = remapJar // With Loom, this MUST be set to `remapJar` instead of `jar`!
         gameVersions = ["${rootProject.minecraft_version}", "1.20"] // Must be an array, even with only one version
         loaders = ["forge"] // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
+        changelog = changelog_last_section()
         dependencies { // A special DSL for creating dependencies
             // scope.type
             // The scope can be `required`, `optional`, `incompatible`, or `embedded`
