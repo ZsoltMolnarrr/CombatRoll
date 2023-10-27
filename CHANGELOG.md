@@ -1,3 +1,7 @@
+# 1.2.3
+
+- Add japanese translation by @SAGA23456 #29
+
 # 1.2.2
 
 - Add italian translation by Zano1999 #26
