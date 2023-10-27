@@ -1,13 +1,13 @@
 package net.combatroll.network;
 
 import com.google.gson.Gson;
+import net.combatroll.config.ServerConfig;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.combatroll.CombatRoll;
 import net.combatroll.client.RollEffect;
-import net.combatroll.config.ServerConfig;
 
 public class Packets {
     public record RollPublish(int playerId, RollEffect.Visuals visuals, Vec3d velocity) {
@@ -58,12 +58,15 @@ public class Packets {
         }
     }
 
-    public static class ConfigSync {
+    public record ConfigSync(String json) {
         public static Identifier ID = new Identifier(CombatRoll.MOD_ID, "config_sync");
 
-        public static PacketByteBuf write(ServerConfig config) {
+        public static String serialize(ServerConfig config) {
             var gson = new Gson();
-            var json = gson.toJson(config);
+            return gson.toJson(config);
+        }
+
+        public PacketByteBuf write() {
             var buffer = PacketByteBufs.create();
             buffer.writeString(json);
             return buffer;

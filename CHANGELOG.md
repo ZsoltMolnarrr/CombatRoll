@@ -1,5 +1,6 @@
 # 1.2.3
 
+- (1.20.2) Fix packet handling issues preventing multiplayer, and rejoining a world in single player 
 - Add japanese translation by @SAGA23456 #29
 
 # 1.2.2

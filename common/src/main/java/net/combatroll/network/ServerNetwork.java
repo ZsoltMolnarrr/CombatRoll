@@ -12,12 +12,12 @@ import net.combatroll.api.event.Event;
 import net.combatroll.api.event.ServerSideRollEvents;
 
 public class ServerNetwork {
-    private static PacketByteBuf configSerialized = PacketByteBufs.create();
+    private static String configSerialized = "";
 
     public static void initializeHandlers() {
-        configSerialized = Packets.ConfigSync.write(CombatRoll.config);
+        configSerialized = Packets.ConfigSync.serialize(CombatRoll.config);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            sender.sendPacket(Packets.ConfigSync.ID, configSerialized);
+            sender.sendPacket(Packets.ConfigSync.ID, (new Packets.ConfigSync(configSerialized)).write());
         });
 
         ServerPlayNetworking.registerGlobalReceiver(Packets.RollPublish.ID, (server, player, handler, buf, responseSender) -> {
@@ -28,11 +28,11 @@ public class ServerNetwork {
             }
             final var packet = Packets.RollPublish.read(buf);
             final var velocity = packet.velocity();
-            final var forwardBuffer = new Packets.RollAnimation(player.getId(), packet.visuals(), packet.velocity()).write();
+            final var forwardPacket = new Packets.RollAnimation(player.getId(), packet.visuals(), packet.velocity());
             PlayerLookup.tracking(player).forEach(serverPlayer -> {
                 try {
                     if (serverPlayer.getId() != player.getId() && ServerPlayNetworking.canSend(serverPlayer, Packets.RollAnimation.ID)) {
-                        ServerPlayNetworking.send(serverPlayer, Packets.RollAnimation.ID, forwardBuffer);
+                        ServerPlayNetworking.send(serverPlayer, Packets.RollAnimation.ID, forwardPacket.write());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
