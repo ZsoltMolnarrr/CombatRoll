@@ -1,3 +1,7 @@
+# 1.3.0
+
+- Add keybinding label to HUD widget
+
 # 1.2.3
 
 - Add japanese translation by @SAGA23456 #29

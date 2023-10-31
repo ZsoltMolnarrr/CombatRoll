@@ -5,7 +5,7 @@ import net.combatroll.Platform;
 import net.combatroll.api.EntityAttributes_CombatRoll;
 import net.combatroll.client.MinecraftClientExtension;
 import net.combatroll.client.RollEffect;
-import net.combatroll.client.RollKeybings;
+import net.combatroll.client.Keybindings;
 import net.combatroll.client.RollManager;
 import net.combatroll.compatibility.BetterCombatHelper;
 import net.combatroll.network.Packets;
@@ -73,7 +73,7 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             return;
         }
         rollManager.tick(player);
-        if (RollKeybings.roll.isPressed()) {
+        if (Keybindings.roll.isPressed()) {
             if (Platform.Forge && client.currentScreen != null) {
                 return;
             }

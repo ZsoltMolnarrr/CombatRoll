@@ -15,4 +15,5 @@ public class ClientConfig implements ConfigData {
     public int hudBackgroundOpacity = 75;
     public boolean showWhenFull = true;
     public boolean showHUDInCreative = false;
+    public boolean showKeybinding = false;
 }

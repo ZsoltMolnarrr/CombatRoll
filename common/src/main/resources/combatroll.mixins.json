@@ -12,7 +12,8 @@
   "client": [
     "AbstractClientPlayerEntityMixin",
     "ClientPlayerEntityMixin",
-    "MinecraftClientMixin"
+    "MinecraftClientMixin",
+    "client.KeybindingAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
