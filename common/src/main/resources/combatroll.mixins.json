@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "EnchantmentHelperMixin",
+    "LivingEntityInvulnerable",
     "PlayerEntityAccessor",
     "PlayerEntityMixin",
     "RegistriesMixin"

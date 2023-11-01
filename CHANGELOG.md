@@ -1,6 +1,7 @@
 # 1.3.0
 
-- Add keybinding label to HUD widget
+- Show roll keybind label on HUD (configurable)
+- Add invulnerability frames upon roll (configurable, zero by default)
 
 # 1.2.3
 
