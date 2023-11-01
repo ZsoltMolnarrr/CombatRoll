@@ -5,7 +5,7 @@ import net.combatroll.Platform;
 import net.combatroll.api.EntityAttributes_CombatRoll;
 import net.combatroll.client.MinecraftClientExtension;
 import net.combatroll.client.RollEffect;
-import net.combatroll.client.RollKeybings;
+import net.combatroll.client.Keybindings;
 import net.combatroll.client.RollManager;
 import net.combatroll.compatibility.BetterCombatHelper;
 import net.combatroll.network.Packets;
@@ -14,6 +14,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -73,7 +74,7 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             return;
         }
         rollManager.tick(player);
-        if (RollKeybings.roll.isPressed()) {
+        if (Keybindings.roll.isPressed()) {
             if (Platform.Forge && client.currentScreen != null) {
                 return;
             }
@@ -122,6 +123,20 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
                     (EntityAttributes_CombatRoll.getAttributeValue(player, DISTANCE)
                     + CombatRoll.config.additional_roll_distance);
             direction = direction.multiply(distance);
+
+            if (player.isTouchingWater()) {
+                var liquidHeight = player.getFluidHeight(FluidTags.WATER);
+                liquidHeight = Math.min(liquidHeight, 1F);
+                // System.out.println("Water! " + liquidHeight * 0.5);
+                direction = direction.multiply(liquidHeight * 0.5);
+            }
+
+            if (player.isInLava()) {
+                var liquidHeight = player.getFluidHeight(FluidTags.LAVA);
+                liquidHeight = Math.min(liquidHeight, 1F);
+                // System.out.println("Lava! " + liquidHeight * 0.3);
+                direction = direction.multiply(0.3);
+            }
 
             var block = player.getWorld().getBlockState(player.getBlockPos().down()).getBlock();
             var slipperiness = block.getSlipperiness();

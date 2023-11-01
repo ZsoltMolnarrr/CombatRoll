@@ -12,13 +12,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.combatroll.CombatRoll;
 import net.combatroll.client.CombatRollClient;
-import net.combatroll.client.RollKeybings;
+import net.combatroll.client.Keybindings;
 
 @Mod.EventBusSubscriber(modid = CombatRoll.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ForgeClientModEvents {
     @SubscribeEvent
     public static void registerKeys(RegisterKeyMappingsEvent event){
-        RollKeybings.all.forEach(event::register);
+        Keybindings.all.forEach(event::register);
     }
 
     @SubscribeEvent

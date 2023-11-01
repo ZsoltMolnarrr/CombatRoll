@@ -2,6 +2,8 @@ package net.combatroll.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.combatroll.client.Keybindings;
+import net.combatroll.mixin.client.KeybindingAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -9,9 +11,11 @@ import net.minecraft.util.Identifier;
 import net.combatroll.client.MinecraftClientExtension;
 import net.combatroll.client.RollManager;
 import net.combatroll.client.CombatRollClient;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HudRenderHelper {
     private static final Identifier ARROW = new Identifier("combatroll", "textures/hud/arrow.png");
@@ -50,6 +54,7 @@ public class HudRenderHelper {
         int widgetHeight = biggestTextureSize;
         int drawX = (int) (originPoint.x + drawOffset.x); // Growing to right by removing `- (widgetWidth) / 2`
         int drawY = (int) (originPoint.y + drawOffset.y - (widgetHeight) / 2);
+        int drawnWith = 0;
         RenderSystem.enableBlend();
         for(var element: viewModel.elements()) {
             int x = 0;
@@ -60,7 +65,7 @@ public class HudRenderHelper {
             int height = 0;
             int textureSize = 0;
 
-            x = drawX;
+            x = drawX + drawnWith;
             y = drawY;
             u = 0;
             v = 0;
@@ -78,20 +83,68 @@ public class HudRenderHelper {
             var shift = (prevTextureSize - textureSize) / 2;
             width = textureSize;
             height = Math.round((element.full) * textureSize);
-            x = drawX + shift;
+            x = drawX + drawnWith + shift;
             y = drawY + textureSize - height + shift;
             u = 0;
             v = textureSize - height;
             context.setShaderColor(red, green, blue, element.full);
             context.drawTexture(ARROW, x, y, u, v, width, height, textureSize, textureSize);
 
-            drawX += horizontalSpacing;
+            drawnWith += horizontalSpacing;
+        }
+
+        context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+
+        if (config.showKeybinding) {
+            var textRenderer = client.inGameHud.getTextRenderer();
+
+            int keybindingX = drawX + drawnWith / 2;
+            int keybindingY = drawY + 1;
+
+            var iconHAnchor = Drawable.Anchor.CENTER;
+            var iconVAnchor = Drawable.Anchor.TRAILING;
+
+            switch (config.keybindingLabelPosition) {
+                case TOP -> {
+                    // keybindingY -= 1;
+                }
+                case LEFT -> {
+                    keybindingX = drawX;
+                    keybindingY = drawY + widgetHeight / 2;
+                    iconHAnchor = Drawable.Anchor.TRAILING;
+                    iconVAnchor = Drawable.Anchor.CENTER;
+                }
+            }
+
+            if (viewModel.drawable != null) {
+                viewModel.drawable.draw(context, keybindingX, keybindingY, iconHAnchor, iconVAnchor);
+            } else if (viewModel.label != null) {
+                var label = viewModel.label;
+                var textLength = textRenderer.getWidth(label);
+                var buttonLength = textLength + HudKeyVisuals.buttonLeading.draw().width() + HudKeyVisuals.buttonTrailing.draw().width();
+                if (iconHAnchor == Drawable.Anchor.TRAILING) {
+                    keybindingX -= buttonLength / 2;
+                }
+
+                HudKeyVisuals.buttonLeading.draw(context, keybindingX - (textLength / 2), keybindingY, Drawable.Anchor.TRAILING, iconVAnchor);
+                HudKeyVisuals.buttonCenter.drawFlexibleWidth(context, keybindingX - (textLength / 2), keybindingY, textLength, iconVAnchor);
+                HudKeyVisuals.buttonTrailing.draw(context, keybindingX + (textLength / 2), keybindingY, Drawable.Anchor.LEADING, iconVAnchor);
+
+                var textHeight = textRenderer.fontHeight + 1; // +1 for shadow
+                var textY = keybindingY;
+                switch (iconVAnchor) {
+                    case LEADING -> textY = textY;
+                    case TRAILING -> textY -= textHeight;
+                    case CENTER -> textY -= (textHeight / 2 - 1);
+                }
+                context.drawCenteredTextWithShadow(textRenderer, label, keybindingX, textY, 0xFFFFFF);
+            }
         }
 
         context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    private record ViewModel(List<Element> elements) {
+    private record ViewModel(List<Element> elements, String label, @Nullable Drawable.Component drawable) {
         record Element(int color, float full) { }
 
         static ViewModel create(RollManager.CooldownInfo info, float tickDelta) {
@@ -128,7 +181,17 @@ public class HudRenderHelper {
                 }
                 elements.add(new ViewModel.Element(color, full));
             }
-            return new ViewModel(elements);
+
+
+            var keybinding = Keybindings.roll;
+            var key = ((KeybindingAccessor) keybinding).getBoundKey().toString();
+            var drawable = HudKeyVisuals.custom.get(key);
+            var label = keybinding.getBoundKeyLocalizedText()
+                    .getString()
+                    .toUpperCase(Locale.US);
+            label = acronym(label, 3);
+
+            return new ViewModel(elements, label, drawable);
         }
 
         static ViewModel mock() {
@@ -139,12 +202,27 @@ public class HudRenderHelper {
                             new ViewModel.Element(color, 1),
                             new ViewModel.Element(color, 0.5F),
                             new ViewModel.Element(color, 0)
-                )
+                    ),
+                    "R",
+                    null
             );
         }
         
         private static float mixNumberFloat(float a, float b, float bias) {
             return a + (b - a) * bias;
+        }
+
+        private static String acronym(String phrase, int maxLength) {
+            StringBuilder result = new StringBuilder();
+            for (String token : phrase.split("\\s+")) {
+                result.append(token.toUpperCase().charAt(0));
+            }
+            var resultString = result.toString();
+            // Make the result at most 3 characters long
+            if (resultString.length() > maxLength) {
+                resultString = resultString.substring(0, maxLength);
+            }
+            return result.toString();
         }
     }
 }

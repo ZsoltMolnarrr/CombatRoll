@@ -6,7 +6,7 @@ import net.minecraft.client.util.InputUtil;
 
 import java.util.List;
 
-public class RollKeybings {
+public class Keybindings {
     public static KeyBinding roll;
     public static List<KeyBinding> all;
 

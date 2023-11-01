@@ -1,3 +1,8 @@
+# 1.3.0
+
+- Show roll keybind label on HUD (configurable)
+- Add invulnerability frames upon roll (configurable, zero by default)
+
 # 1.2.3
 
 - (1.20.2) Fix packet handling issues preventing multiplayer, and rejoining a world in single player 
