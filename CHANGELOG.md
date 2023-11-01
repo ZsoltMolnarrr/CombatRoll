@@ -1,7 +1,8 @@
 # 1.3.0
 
-- Show roll keybind label on HUD (configurable)
+- Show roll keybinding label on HUD (configurable)
 - Add invulnerability frames upon roll (configurable, zero by default)
+- Reduce rolling distance in liquids (water and lava) #19
 
 # 1.2.3
 
