@@ -14,7 +14,7 @@ public class HudConfig {
 
     public static HudElement createDefaultRollWidget() {
         var origin = HudElement.Origin.BOTTOM;
-        var offset = origin.initialOffset().add(new Vec2f(100, 0));
+        var offset = origin.initialOffset().add(new Vec2f(108, 0));
         return new HudElement(origin, offset);
     }
 }

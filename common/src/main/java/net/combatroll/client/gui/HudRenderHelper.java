@@ -96,19 +96,48 @@ public class HudRenderHelper {
         context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         if (config.showKeybinding) {
-            int keybindingX = drawX + drawnWith / 2;
-            int keybindingY = drawY;
-            var buttonY = keybindingY;
             var textRenderer = client.inGameHud.getTextRenderer();
+
+            int keybindingX = drawX + drawnWith / 2;
+            int keybindingY = drawY + 1;
+
+            var iconHAnchor = Drawable.Anchor.CENTER;
+            var iconVAnchor = Drawable.Anchor.TRAILING;
+
+            switch (config.keybindingLabelPosition) {
+                case TOP -> {
+                    // keybindingY -= 1;
+                }
+                case LEFT -> {
+                    keybindingX = drawX;
+                    keybindingY = drawY + widgetHeight / 2;
+                    iconHAnchor = Drawable.Anchor.TRAILING;
+                    iconVAnchor = Drawable.Anchor.CENTER;
+                }
+            }
+
             if (viewModel.drawable != null) {
-                viewModel.drawable.draw(context, keybindingX, buttonY, Drawable.Anchor.CENTER, Drawable.Anchor.TRAILING);
+                viewModel.drawable.draw(context, keybindingX, keybindingY, iconHAnchor, iconVAnchor);
             } else if (viewModel.label != null) {
                 var label = viewModel.label;
                 var textLength = textRenderer.getWidth(label);
-                HudKeyVisuals.buttonLeading.draw(context, keybindingX - (textLength / 2), buttonY, Drawable.Anchor.TRAILING, Drawable.Anchor.TRAILING);
-                HudKeyVisuals.buttonCenter.drawFlexibleWidth(context, keybindingX - (textLength / 2), buttonY, textLength, Drawable.Anchor.TRAILING);
-                HudKeyVisuals.buttonTrailing.draw(context, keybindingX + (textLength / 2), buttonY, Drawable.Anchor.LEADING, Drawable.Anchor.TRAILING);
-                context.drawCenteredTextWithShadow(textRenderer, label, keybindingX, keybindingY - 8, 0xFFFFFF);
+                var buttonLength = textLength + HudKeyVisuals.buttonLeading.draw().width() + HudKeyVisuals.buttonTrailing.draw().width();
+                if (iconHAnchor == Drawable.Anchor.TRAILING) {
+                    keybindingX -= buttonLength / 2;
+                }
+
+                HudKeyVisuals.buttonLeading.draw(context, keybindingX - (textLength / 2), keybindingY, Drawable.Anchor.TRAILING, iconVAnchor);
+                HudKeyVisuals.buttonCenter.drawFlexibleWidth(context, keybindingX - (textLength / 2), keybindingY, textLength, iconVAnchor);
+                HudKeyVisuals.buttonTrailing.draw(context, keybindingX + (textLength / 2), keybindingY, Drawable.Anchor.LEADING, iconVAnchor);
+
+                var textHeight = textRenderer.fontHeight + 1; // +1 for shadow
+                var textY = keybindingY;
+                switch (iconVAnchor) {
+                    case LEADING -> textY = textY;
+                    case TRAILING -> textY -= textHeight;
+                    case CENTER -> textY -= (textHeight / 2 - 1);
+                }
+                context.drawCenteredTextWithShadow(textRenderer, label, keybindingX, textY, 0xFFFFFF);
             }
         }
 

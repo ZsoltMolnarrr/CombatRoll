@@ -29,5 +29,6 @@
   "text.autoconfig.combatroll.option.client.hudBackgroundOpacity" : "Arrow background opacity",
   "text.autoconfig.combatroll.option.client.showHUDInCreative" : "Show Arrow in Creative mode",
   "text.autoconfig.combatroll.option.client.showWhenFull" : "Show Arrow when full",
-  "text.autoconfig.combatroll.option.client.showKeybinding" : "Show keybinding on HUD"
+  "text.autoconfig.combatroll.option.client.showKeybinding" : "Show keybinding on HUD",
+  "text.autoconfig.combatroll.option.client.keybindingLabelPosition" : "Keybinding label position"
 }
