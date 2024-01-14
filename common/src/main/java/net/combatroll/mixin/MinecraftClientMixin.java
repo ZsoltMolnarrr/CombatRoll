@@ -31,6 +31,7 @@ import static net.combatroll.client.RollEffect.Particles.PUFF;
 public abstract class MinecraftClientMixin implements MinecraftClientExtension {
     @Shadow private int itemUseCooldown;
     @Shadow @Nullable public ClientPlayerEntity player;
+    @Shadow @Nullable public Screen currentScreen;
     private RollManager rollManager = new RollManager();
     public RollManager getRollManager() {
         return rollManager;
@@ -63,21 +64,24 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
         }
     }
 
+    @Inject(method = "handleInputEvents", at = @At("TAIL"))
+    private void handleInputEvents_TAIL(CallbackInfo ci) {
+        tryRolling();
+    }
+
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick_TAIL(CallbackInfo ci) {
-        tryRolling();
+        if (player != null) {
+            rollManager.tick(player);
+        }
     }
 
     private void tryRolling() {
         var client = (MinecraftClient) ((Object)this);
-        if (player == null || client.isPaused()) {
+        if (player == null || client.isPaused() || client.currentScreen != null) {
             return;
         }
-        rollManager.tick(player);
         if (Keybindings.roll.isPressed()) {
-            if (Platform.Forge && client.currentScreen != null) {
-                return;
-            }
             if(!rollManager.isRollAvailable(player)) {
                 return;
             }

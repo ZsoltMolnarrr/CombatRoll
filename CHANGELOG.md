@@ -1,3 +1,7 @@
+# 1.3.1
+
+- Improve roll hotkey handling #40
+
 # 1.3.0
 
 - Show roll keybinding label on HUD (configurable)
