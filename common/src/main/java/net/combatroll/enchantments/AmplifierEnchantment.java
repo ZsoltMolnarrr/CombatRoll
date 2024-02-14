@@ -48,6 +48,16 @@ public class AmplifierEnchantment extends Enchantment implements CustomCondition
         return super.getMinPower(level) + 50;
     }
 
+    @Override
+    public boolean isAvailableForEnchantedBookOffer() {
+        return properties.enabled;
+    }
+
+    @Override
+    public boolean isAvailableForRandomSelection() {
+        return properties.enabled;
+    }
+
     // MARK: CustomConditionalEnchantment
 
     @Override
