@@ -33,6 +33,7 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
     @Shadow @Nullable public ClientPlayerEntity player;
     @Shadow @Nullable public Screen currentScreen;
     private RollManager rollManager = new RollManager();
+
     public RollManager getRollManager() {
         return rollManager;
     }
@@ -122,10 +123,13 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             } else  {
                 direction = new Vec3d(sideways, 0, forward).normalize();
             }
+
+            var RelativeDirection = direction; //We will use this later to determine which animation we have to play
+
             direction = direction.rotateY((float) Math.toRadians((-1.0) * player.getYaw()));
             var distance = 0.475 *
                     (EntityAttributes_CombatRoll.getAttributeValue(player, DISTANCE)
-                    + CombatRoll.config.additional_roll_distance);
+                            + CombatRoll.config.additional_roll_distance);
             direction = direction.multiply(distance);
 
             if (player.isTouchingWater()) {
@@ -153,7 +157,38 @@ public abstract class MinecraftClientMixin implements MinecraftClientExtension {
             player.addVelocity(direction.x, direction.y, direction.z);
             rollManager.onRoll(player);
 
-            var rollVisuals = new RollEffect.Visuals(CombatRoll.MOD_ID + ":roll", PUFF);
+            var fwdDir = RelativeDirection.getZ();
+            var sideDir = RelativeDirection.getX();
+            var rollAngle = Math.toDegrees(Math.acos(fwdDir) * (sideDir >= 0 ? 1.0 : -1.0));
+
+            var animName = "";
+
+            if (rollAngle >= -22.5 && rollAngle <= 22.5) {
+                animName = "forwards";
+
+            } else if (rollAngle > 22.5 && rollAngle < 67.5) {
+                animName = "forwardsleft";
+
+            } else if (rollAngle >= 67.5 && rollAngle <= 112.5) {
+                animName = "left";
+
+            } else if (rollAngle > 112.5 && rollAngle < 157.5) {
+                animName = "backwardsleft";
+
+            } else if (rollAngle >= 157.5 && rollAngle <= 202.5) {
+                animName = "backwards";
+
+            } else if (rollAngle > -157.5 && rollAngle < -112.5) {
+                animName = "backwardsright";
+
+            } else if (rollAngle >= -112.5 && rollAngle <= -67.5) {
+                animName = "right";
+
+            } else {
+                animName = "forwardsright";
+            }
+
+            var rollVisuals = new RollEffect.Visuals(CombatRoll.MOD_ID + ":" + animName + "roll", PUFF);
             ClientPlayNetworking.send(
                     Packets.RollPublish.ID,
                     new Packets.RollPublish(player.getId(), rollVisuals, direction).write());

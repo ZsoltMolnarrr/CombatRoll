@@ -10,6 +10,7 @@ import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.impl.IAnimatedPlayer;
 import net.combatroll.CombatRoll;
+import net.combatroll.client.CombatRollClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,7 +41,11 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
     @Inject(method = "<init>", at = @At("TAIL"))
     private void postInit(ClientWorld world, GameProfile profile, CallbackInfo ci) {
         var stack = ((IAnimatedPlayer) this).getAnimationStack();
-        base.addModifier(createAdjustmentModifier(), 0);
+
+        if (CombatRollClient.config.allowCharacterRotation){
+            base.addModifier(createAdjustmentModifier(), 0);
+        }
+
         base.addModifier(speedModifier, 0);
         speedModifier.speed = 1.2f;
         stack.addAnimLayer(1000, base);

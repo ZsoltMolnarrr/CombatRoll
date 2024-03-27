@@ -9,6 +9,7 @@ public class ClientConfig implements ConfigData {
     public boolean playCooldownSound = true;
     public boolean playCooldownFlash = true;
     public boolean playRollSound = true;
+    public boolean allowCharacterRotation = true;
     @ConfigEntry.ColorPicker
     public int hudArrowColor = 0x5488e3;
     @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
@@ -18,4 +19,6 @@ public class ClientConfig implements ConfigData {
     public boolean showKeybinding = true;
     public enum LabelPosition { TOP, LEFT }
     public LabelPosition keybindingLabelPosition = LabelPosition.LEFT;
+
+
 }
