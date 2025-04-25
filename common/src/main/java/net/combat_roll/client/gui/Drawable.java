@@ -1,6 +1,7 @@
 package net.combat_roll.client.gui;
 
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 
 public class Drawable {
@@ -29,7 +30,7 @@ public class Drawable {
                     y -= draw().height;
                 }
             }
-            context.drawTexture(texture().id, x, y, draw().u, draw().v, draw().width, draw().height, texture().width, texture().height);
+            context.drawTexture(RenderLayer::getGuiTextured, texture().id, x, y, draw().u, draw().v, draw().width, draw().height, texture().width, texture().height);
         }
 
         public void drawFlexibleWidth(DrawContext context, int x, int y, int width, Anchor vAnchor) {
@@ -44,7 +45,7 @@ public class Drawable {
                     y -= draw().height;
                 }
             }
-            context.drawTexture(texture().id, x, y, draw().u, draw().v, width, draw().height, texture().width, texture().height);
+            context.drawTexture(RenderLayer::getGuiTextured, texture().id, x, y, draw().u, draw().v, width, draw().height, texture().width, texture().height);
         }
     }
     public record Draw(int u, int v, int width, int height) {}

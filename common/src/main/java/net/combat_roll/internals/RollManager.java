@@ -36,7 +36,7 @@ public class RollManager {
                 && availableRolls > 0
                 && !((PlayerEntityAccessor)player).invokeIsImmobile_combat_roll()
                 && player.canMoveVoluntarily()
-                && player.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED) > 0;
+                && player.getAttributeValue(EntityAttributes.MOVEMENT_SPEED) > 0;
     }
 
     public boolean isRolling() {

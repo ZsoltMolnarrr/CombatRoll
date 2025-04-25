@@ -5,6 +5,7 @@ import net.combat_roll.internals.RollManager;
 import net.combat_roll.internals.RollingEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.util.PlayerInput;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -32,12 +33,21 @@ public class ClientPlayerEntityMixin implements RollingEntity {
     @Final
     protected MinecraftClient client;
 
-    @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/input/Input;tick(ZF)V", shift = At.Shift.AFTER))
+    @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/input/Input;tick()V", shift = At.Shift.AFTER))
     private void tickMovement_ModifyInput(CallbackInfo ci) {
         var clientPlayer = (ClientPlayerEntity) ((Object) this);
         var config = CombatRollMod.config;
         if (!config.allow_jump_while_rolling && rollManager.isRolling()) {
-            clientPlayer.input.jumping = false;
+            var input = clientPlayer.input.playerInput;
+            clientPlayer.input.playerInput = new PlayerInput(
+                    input.forward(),
+                    input.backward(),
+                    input.left(),
+                    input.right(),
+                    false,
+                    input.sneak(),
+                    input.sprint()
+            );
         }
     }
 

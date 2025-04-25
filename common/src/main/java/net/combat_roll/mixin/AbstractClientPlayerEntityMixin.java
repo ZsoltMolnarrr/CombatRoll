@@ -1,9 +1,11 @@
 package net.combat_roll.mixin;
 
 import com.mojang.authlib.GameProfile;
+import dev.kosmx.playerAnim.api.PartKey;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
+import dev.kosmx.playerAnim.api.layered.modifier.AdjustmentModifier;
 import dev.kosmx.playerAnim.api.layered.modifier.SpeedModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
@@ -11,7 +13,6 @@ import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.impl.IAnimatedPlayer;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 import net.combat_roll.CombatRollMod;
-import net.combat_roll.client.animation.AdjustmentModifier;
 import net.combat_roll.client.animation.AnimatablePlayer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -66,7 +67,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
 
     private AdjustmentModifier createAdjustmentModifier() {
         var player = (PlayerEntity)this;
-        return new AdjustmentModifier((partName) -> {
+        return new AdjustmentModifier((part) -> {
             float rotationX = 0;
             float rotationY = 0;
             float rotationZ = 0;
@@ -74,19 +75,17 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
             float offsetY = 0;
             float offsetZ = 0;
 
-            switch (partName) {
-                case "body" -> {
-                    if (lastRollDirection != null) {
-                        var absoluteOrientation = new Vec3d(0,0,1).rotateY((float) Math.toRadians(-1.0 * player.bodyYaw));
-                        float angle = (float) angleWithSignBetween(absoluteOrientation, lastRollDirection, new Vec3d(0,1,0));
-                        rotationY = (float) Math.toRadians(angle); // + 180;
-                    } else {
-                        return Optional.empty();
-                    }
-                }
-                default -> {
+
+            if (part == PartKey.BODY) {
+                if (lastRollDirection != null) {
+                    var absoluteOrientation = new Vec3d(0,0,1).rotateY((float) Math.toRadians(-1.0 * player.bodyYaw));
+                    float angle = (float) angleWithSignBetween(absoluteOrientation, lastRollDirection, new Vec3d(0,1,0));
+                    rotationY = (float) Math.toRadians(angle); // + 180;
+                } else {
                     return Optional.empty();
                 }
+            } else {
+                return Optional.empty();
             }
 
             return Optional.of(new AdjustmentModifier.PartModifier(

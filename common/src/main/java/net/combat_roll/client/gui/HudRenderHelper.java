@@ -9,7 +9,9 @@ import net.combat_roll.mixin.client.KeybindingAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -71,13 +73,15 @@ public class HudRenderHelper {
             u = 0;
             v = 0;
             width = height = textureSize = 15;
-            context.setShaderColor(1, 1, 1, ((float)config.hudBackgroundOpacity) / 100F);
-            context.drawTexture(ARROW_BACKGROUND, x, y, u, v, width, height, textureSize, textureSize);
+            var backgroundColorARGB = ColorHelper.fromFloats(((float)config.hudBackgroundOpacity) / 100F, 1, 1, 1);
+            context.drawTexture(RenderLayer::getGuiTextured, ARROW_BACKGROUND, x, y, u, v, width, height, width, height, textureSize, textureSize, backgroundColorARGB);
 
             var color = element.color;
             float red = ((float) ((color >> 16) & 0xFF)) / 255F;
             float green = ((float) ((color >> 8) & 0xFF)) / 255F;
             float blue = ((float) (color & 0xFF)) / 255F;
+
+            var arrowColorARGB = ColorHelper.fromFloats(1F, red, green, blue);
 
             var prevTextureSize = textureSize;
             textureSize = 13;
@@ -88,9 +92,7 @@ public class HudRenderHelper {
             y = drawY + textureSize - height + shift;
             u = 0;
             v = textureSize - height;
-            context.setShaderColor(red, green, blue, element.full);
-            context.drawTexture(ARROW, x, y, u, v, width, height, textureSize, textureSize);
-            context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            context.drawTexture(RenderLayer::getGuiTextured, ARROW, x, y, u, v, width, height, width, height, textureSize, textureSize, arrowColorARGB);
 
             drawnWith += horizontalSpacing;
         }

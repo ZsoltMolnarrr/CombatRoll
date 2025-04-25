@@ -4,7 +4,6 @@
   "package": "net.combat_roll.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "EnchantmentHelperMixin",
     "EntityAttributesMixin",
     "LivingEntityInvulnerable",
     "PlayerEntityAccessor",
