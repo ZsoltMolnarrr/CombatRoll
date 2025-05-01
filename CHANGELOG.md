@@ -1,3 +1,7 @@
+# 2.0.4
+
+- Update translations
+
 # 2.0.3
 
 - Fix potential HUD rendering issues
