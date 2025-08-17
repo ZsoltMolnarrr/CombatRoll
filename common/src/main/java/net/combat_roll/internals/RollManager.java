@@ -17,7 +17,7 @@ public class RollManager {
         return CombatRollMod.config.roll_duration;
     }
     private int timeSinceLastRoll = 10;
-    private int currentCooldownProgress = 0;
+    private float currentCooldownProgress = 0;
     private int currentCooldownLength = 0;
     private int maxRolls = 1;
     private int availableRolls = 0;
@@ -27,7 +27,7 @@ public class RollManager {
     public record CooldownInfo(int elapsed, int total, int availableRolls, int maxRolls) { }
 
     public CooldownInfo getCooldown() {
-        return new CooldownInfo(currentCooldownProgress, currentCooldownLength, availableRolls, maxRolls);
+        return new CooldownInfo((int)currentCooldownProgress, currentCooldownLength, availableRolls, maxRolls);
     }
 
     public boolean isRollAvailable(PlayerEntity player) {
@@ -53,7 +53,7 @@ public class RollManager {
         maxRolls = (int) player.getAttributeValue(CombatRoll.Attributes.COUNT.entry);
         timeSinceLastRoll += 1;
         if (availableRolls < maxRolls) {
-            currentCooldownProgress += 1;
+            currentCooldownProgress += increment(player);
             if (currentCooldownProgress >= currentCooldownLength) {
                 rechargeRoll(player);
             }
@@ -66,9 +66,13 @@ public class RollManager {
         }
     }
 
+    private float increment(PlayerEntity player) {
+        return (float) (player.getAttributeValue(CombatRoll.Attributes.RECHARGE.entry) / 20F);
+    }
+
     private void rechargeRoll(ClientPlayerEntity player) {
         availableRolls += 1;
-        currentCooldownProgress = 0;
+        currentCooldownProgress = Math.max(currentCooldownProgress - currentCooldownLength, 0);
         updateCooldownLength(player);
         if (CombatRollClient.config.playCooldownSound) {
             var cooldownReady = Registries.SOUND_EVENT.get(Identifier.of("combat_roll:roll_cooldown_ready"));
@@ -80,6 +84,6 @@ public class RollManager {
 
     private void updateCooldownLength(ClientPlayerEntity player) {
         var duration = CombatRollMod.config.roll_cooldown;
-        currentCooldownLength = (int) Math.round(duration * 20F * (20F / player.getAttributeValue(CombatRoll.Attributes.RECHARGE.entry)));
+        currentCooldownLength = Math.round(duration * 20F);
     }
 }
