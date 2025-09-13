@@ -1,3 +1,11 @@
+# 2.0.5
+
+- Fix roll recharge attribute changes not applied dynamically
+
+# 2.0.4
+
+- Update translations
+
 # 2.0.3
 
 - Fix potential HUD rendering issues

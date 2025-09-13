@@ -1,0 +1,34 @@
+{
+  "combat_roll.mod_name": "Combat Roll",
+
+  "keybinds.combat_roll.roll": "Rodar",
+
+  "gui.combat_roll.config_menu": "Configuración de Rodar en Combate",
+  "gui.combat_roll.close": "Cerrar",
+  "gui.combat_roll.settings": "Configuraciones",
+  "gui.combat_roll.hud": "Mover la flecha",
+  "gui.combat_roll.corner": "Esquina",
+  "gui.combat_roll.reset": "Restablecer",
+
+  "enchantment.combat_roll.longfooted": "Paso Largo",
+  "enchantment.combat_roll.longfooted.desc": "Aumenta la distancia de tus rodadas",
+  "enchantment.combat_roll.acrobat": "Acróbata",
+  "enchantment.combat_roll.acrobat.desc": "Reduce el tiempo de recarga entre rodadas",
+  "enchantment.combat_roll.multi_roll": "Rodada Múltiple",
+  "enchantment.combat_roll.multi_roll.desc": "Otorga rodadas adicionales",
+
+  "attribute.name.combat_roll.distance": "Distancia de Rodada",
+  "attribute.name.combat_roll.count": "Rodada Extra",
+  "attribute.name.combat_roll.recharge": "Recarga de Rodada",
+
+  "text.autoconfig.combat_roll.title": "Rodar en Combate",
+  "text.autoconfig.combat_roll.option.client.playCooldownSound": "Reproducir sonido al terminar la recarga",
+  "text.autoconfig.combat_roll.option.client.playCooldownFlash": "Parpadeo de la flecha al terminar la recarga",
+  "text.autoconfig.combat_roll.option.client.playRollSound": "Reproducir sonido de rodada",
+  "text.autoconfig.combat_roll.option.client.hudArrowColor": "Color de la flecha",
+  "text.autoconfig.combat_roll.option.client.hudBackgroundOpacity": "Opacidad del fondo de la flecha",
+  "text.autoconfig.combat_roll.option.client.showHUDInCreative": "Mostrar flecha en modo Creativo",
+  "text.autoconfig.combat_roll.option.client.showWhenFull": "Mostrar flecha al estar llena",
+  "text.autoconfig.combat_roll.option.client.showKeybinding": "Mostrar tecla asignada en el HUD",
+  "text.autoconfig.combat_roll.option.client.keybindingLabelPosition": "Posición de la etiqueta de la tecla"
+}

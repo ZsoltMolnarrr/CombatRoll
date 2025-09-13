@@ -39,7 +39,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void postInit(ClientWorld world, GameProfile profile, CallbackInfo ci) {
-        var stack = ((IAnimatedPlayer) this).getAnimationStack();
+        var stack = ((IAnimatedPlayer) this).playerAnimator$getAnimationStack();
         base.addModifier(createAdjustmentModifier(), 0);
         base.addModifier(speedModifier, 0);
         speedModifier.speed = 1.2f;
