@@ -1,3 +1,7 @@
+# 2.0.6
+
+- Update some translations
+
 # 2.0.5
 
 - Support Minecraft 1.21.4
