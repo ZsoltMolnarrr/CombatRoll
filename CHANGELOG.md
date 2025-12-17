@@ -1,3 +1,7 @@
+# 2.0.6
+
+- Update some translations
+
 # 2.0.5
 
 - Fix roll recharge attribute changes not applied dynamically
