@@ -12,7 +12,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
-@EventBusSubscriber(modid = CombatRollMod.ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = CombatRollMod.ID, value = Dist.CLIENT)
 public class CombatRollClientModNeoForge {
     @SubscribeEvent
     public static void registerKeys(RegisterKeyMappingsEvent event){

@@ -8,12 +8,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
-@EventBusSubscriber(modid = CombatRollMod.ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = CombatRollMod.ID, value = Dist.CLIENT)
 public class ClientEventsNeoForge {
     @SubscribeEvent
     public static void onRenderHud(RenderGuiEvent.Post event){
         if (!MinecraftClient.getInstance().options.hudHidden) {
-            HudRenderHelper.render(event.getGuiGraphics(), event.getPartialTick().getTickDelta(true));
+            HudRenderHelper.render(event.getGuiGraphics(), event.getPartialTick().getTickProgress(true));
         }
     }
 }

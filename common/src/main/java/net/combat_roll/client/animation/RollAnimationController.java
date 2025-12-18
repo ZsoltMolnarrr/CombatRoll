@@ -51,7 +51,7 @@ public class RollAnimationController extends PlayerAnimationController {
             var player = this.getPlayer();
             var absoluteOrientation = new Vec3d(0,0,1).rotateY((float) Math.toRadians(-1F * player.getYaw()));
             float angle = (float) angleWithSignBetween(absoluteOrientation, lastRollDirection, new Vec3d(0,1,0));
-            
+
             var rotationY = Math.abs(angle) > 100 ? (float) Math.toRadians(angle) : 0; // + 180;
             return java.util.Optional.of(new AdjustmentModifier.PartModifier(
                 new Vec3f(0, rotationY, 0),

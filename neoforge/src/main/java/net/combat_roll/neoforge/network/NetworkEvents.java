@@ -19,7 +19,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 import java.util.function.Consumer;
 
-@EventBusSubscriber(modid = CombatRollMod.ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = CombatRollMod.ID)
 public class NetworkEvents {
     @SubscribeEvent
     public static void register(final RegisterConfigurationTasksEvent event) {
@@ -40,7 +40,7 @@ public class NetworkEvents {
 
         registrar.playToServer(Packets.RollPublish.PACKET_ID, Packets.RollPublish.CODEC, (packet, context) -> {
             var player = (ServerPlayerEntity)context.player();
-            var server = player.server;
+            var server = player.getServer();
             ServerNetwork.handleRollPublish(packet, server, player);
         });
 
