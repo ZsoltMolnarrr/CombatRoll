@@ -16,7 +16,7 @@ logoFile = "icon.png"
 [[dependencies.combat_roll]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.0,)"
+versionRange = "[21.6,)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -28,9 +28,16 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.combat_roll]]
-modId="playeranimator"
+modId="player_animation_library"
 type = "required"
 versionRange="[1,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.combat_roll]]
+modId="cloth_config"
+type = "required"
+versionRange="[19.0.0,)"
 ordering="AFTER"
 side="BOTH"
 

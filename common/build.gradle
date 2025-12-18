@@ -4,16 +4,19 @@ architectury {
 
 
 repositories {
-    maven { url 'https://maven.kosmx.dev/' }
     maven { url 'https://maven.shedaniel.me/' }
     maven { url 'https://maven.terraformersmc.com/' }
-    maven { url 'https://jitpack.io' }
     maven {
         name = 'Modrinth'
         url = 'https://api.modrinth.com/maven'
         content {
             includeGroup 'maven.modrinth'
         }
+    }
+    mavenCentral()
+    maven {
+        name = "RedlanceMinecraft"
+        url = "https://repo.redlance.org/public"
     }
 }
 
@@ -23,10 +26,11 @@ dependencies {
     // Do NOT use other classes from Fabric Loader.
     modImplementation "net.fabricmc:fabric-loader:$project.fabric_loader_version"
 
-    modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim_version}")
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+    modApi("com.zigythebird.playeranim:PlayerAnimationLibCommon:${project.player_anim_version}")
+    implementation("com.zigythebird.playeranim:PlayerAnimationLibCore:${project.player_anim_version}")
     modImplementation("maven.modrinth:tiny-config:${project.tiny_config_version}-fabric")
     modCompileOnly("maven.modrinth:better-combat:${project.better_combat_version}-fabric") { transitive false }
 }
