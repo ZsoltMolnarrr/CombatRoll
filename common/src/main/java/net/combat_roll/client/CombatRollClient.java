@@ -7,7 +7,7 @@ import net.combat_roll.CombatRollMod;
 import net.combat_roll.config.ClientConfig;
 import net.combat_roll.config.ClientConfigWrapper;
 import net.combat_roll.config.HudConfig;
-import net.tinyconfig.ConfigManager;
+import net.tiny_config.ConfigManager;
 
 public class CombatRollClient {
     public static ClientConfig config;
