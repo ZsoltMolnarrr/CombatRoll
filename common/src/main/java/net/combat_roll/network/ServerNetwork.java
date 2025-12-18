@@ -18,7 +18,7 @@ public class ServerNetwork {
     }
 
     public static void handleRollPublish(Packets.RollPublish packet, MinecraftServer server, ServerPlayerEntity player) {
-        ServerWorld world = Iterables.tryFind(server.getWorlds(), (element) -> element == player.getWorld())
+        ServerWorld world = Iterables.tryFind(server.getWorlds(), (element) -> element == player.getEntityWorld())
                 .orNull();
         final var velocity = packet.velocity();
         final var forwardPacket = new Packets.RollAnimation(player.getId(), packet.visuals(), packet.velocity());

@@ -2,6 +2,7 @@
   "combat_roll.mod_name" : "Combat Roll",
 
   "keybinds.combat_roll.roll" : "Roll",
+  "key.category.combat_roll.main" : "Combat Roll",
 
   "gui.combat_roll.config_menu" : "Combat Roll config",
   "gui.combat_roll.close" : "Close",

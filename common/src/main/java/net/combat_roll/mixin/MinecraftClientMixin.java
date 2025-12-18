@@ -135,7 +135,7 @@ public abstract class MinecraftClientMixin {
                 direction = direction.multiply(0.3);
             }
 
-            var block = player.getWorld().getBlockState(player.getBlockPos().down()).getBlock();
+            var block = player.getEntityWorld().getBlockState(player.getBlockPos().down()).getBlock();
             var slipperiness = block.getSlipperiness();
             var defaultSlipperiness = Blocks.GRASS_BLOCK.getSlipperiness();
             if (slipperiness > defaultSlipperiness) {

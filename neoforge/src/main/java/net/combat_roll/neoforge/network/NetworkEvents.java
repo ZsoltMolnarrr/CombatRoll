@@ -40,7 +40,7 @@ public class NetworkEvents {
 
         registrar.playToServer(Packets.RollPublish.PACKET_ID, Packets.RollPublish.CODEC, (packet, context) -> {
             var player = (ServerPlayerEntity)context.player();
-            var server = player.getServer();
+            var server = player.getEntityWorld().getServer();
             ServerNetwork.handleRollPublish(packet, server, player);
         });
 

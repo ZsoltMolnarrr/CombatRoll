@@ -7,6 +7,7 @@ import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
 import com.zigythebird.playeranimcore.math.Vec3f;
 import net.combat_roll.CombatRollMod;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.entity.PlayerLikeEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
@@ -16,7 +17,7 @@ public class RollAnimationController extends PlayerAnimationController {
     private final SpeedModifier speedModifier;
     private Vec3d lastRollDirection;
 
-    public RollAnimationController(AbstractClientPlayerEntity player, AnimationStateHandler animationHandler) {
+    public RollAnimationController(PlayerLikeEntity player, AnimationStateHandler animationHandler) {
         super(player, animationHandler);
         this.speedModifier = new SpeedModifier(1.2f);
         postInit();
@@ -48,7 +49,7 @@ public class RollAnimationController extends PlayerAnimationController {
                 return java.util.Optional.empty();
             }
 
-            var player = this.getPlayer();
+            var player = this.getAvatar();
             var absoluteOrientation = new Vec3d(0,0,1).rotateY((float) Math.toRadians(-1F * player.getYaw()));
             float angle = (float) angleWithSignBetween(absoluteOrientation, lastRollDirection, new Vec3d(0,1,0));
 

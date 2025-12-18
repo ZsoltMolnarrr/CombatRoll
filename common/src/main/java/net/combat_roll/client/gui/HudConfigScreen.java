@@ -2,6 +2,7 @@ package net.combat_roll.client.gui;
 
 import net.combat_roll.client.CombatRollClient;
 import net.combat_roll.config.HudConfig;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -54,14 +55,14 @@ public class HudConfigScreen extends Screen {
     }
 
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        if (!this.isDragging() && button == 0) {
+    public boolean mouseDragged(Click click, double offsetX, double offsetY) {
+        if (!this.isDragging() && click.button() == 0) {
             var config = CombatRollClient.hudConfig.value;
             config.rollWidget.offset = new Vec2f(
-                    (float) (config.rollWidget.offset.x + deltaX),
-                    (float) (config.rollWidget.offset.y + deltaY));
+                    (float) (config.rollWidget.offset.x + offsetX),
+                    (float) (config.rollWidget.offset.y + offsetY));
         }
-        return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+        return super.mouseDragged(click, offsetX, offsetY);
     }
 
     public static void nextOrigin() {
