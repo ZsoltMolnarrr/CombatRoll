@@ -49,17 +49,9 @@ public class RollAnimationController extends PlayerAnimationController {
             }
 
             var player = this.getPlayer();
-//            var absoluteOrientation = new Vec3d(0, 0, 1)
-//                .rotateY((float) Math.toRadians(-1.0 * player.bodyYaw));
-//            float angle = (float) angleWithSignBetween(
-//                absoluteOrientation, lastRollDirection, new Vec3d(0, 1, 0)
-//            );
-
-            System.out.println("Player Yaw: " + player.getYaw() + ", Body Yaw: " + player.getBodyYaw() + ", Head Yaw: " + player.getHeadYaw());
             var absoluteOrientation = new Vec3d(0,0,1).rotateY((float) Math.toRadians(-1F * player.getYaw()));
-            float angle = (float) angleWithSignBetween(absoluteOrientation, lastRollDirection.normalize(), new Vec3d(0,1,0));
-            System.out.println("Absolute Orientation: " + absoluteOrientation + ", Last Roll Direction: " + lastRollDirection + ", Angle: " + angle);
-
+            float angle = (float) angleWithSignBetween(absoluteOrientation, lastRollDirection, new Vec3d(0,1,0));
+            
             var rotationY = Math.abs(angle) > 100 ? (float) Math.toRadians(angle) : 0; // + 180;
             return java.util.Optional.of(new AdjustmentModifier.PartModifier(
                 new Vec3f(0, rotationY, 0),
@@ -69,10 +61,32 @@ public class RollAnimationController extends PlayerAnimationController {
     }
 
     private double angleWithSignBetween(Vec3d a, Vec3d b, Vec3d planeNormal) {
-        var cosineTheta = a.dotProduct(b) / (a.length() * b.length());
+        // Normalize vectors to ensure magnitude doesn't affect angle calculation
+        Vec3d normalizedA = a.normalize();
+        Vec3d normalizedB = b.normalize();
+
+        // Calculate cosine of angle using normalized vectors
+        var cosineTheta = normalizedA.dotProduct(normalizedB);
+
+        // Clamp to valid domain [-1, 1] to handle floating-point precision errors
+        cosineTheta = Math.max(-1.0, Math.min(1.0, cosineTheta));
+
+        // Calculate unsigned angle
         var angle = Math.toDegrees(Math.acos(cosineTheta));
-        var cross = a.crossProduct(b);
-        angle *= Math.signum(cross.dotProduct(planeNormal));
-        return Double.isNaN(angle) ? 0 : angle;
+
+        // Determine sign using cross product
+        var cross = normalizedA.crossProduct(normalizedB);
+        var crossDotPlane = cross.dotProduct(planeNormal);
+
+        // Handle degenerate case: when vectors are parallel/anti-parallel, cross product is ~0
+        // In this case, return the unsigned angle (0° or 180°)
+        if (Math.abs(crossDotPlane) < 1e-6) {
+            return angle;
+        }
+
+        // Apply sign to angle
+        angle *= Math.signum(crossDotPlane);
+
+        return angle;
     }
 }
