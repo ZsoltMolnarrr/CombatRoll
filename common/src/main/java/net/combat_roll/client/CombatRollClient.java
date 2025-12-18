@@ -1,9 +1,12 @@
 package net.combat_roll.client;
 
+import com.zigythebird.playeranim.api.PlayerAnimationFactory;
+import com.zigythebird.playeranimcore.enums.PlayState;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import net.combat_roll.CombatRollMod;
+import net.combat_roll.client.animation.RollAnimationController;
 import net.combat_roll.config.ClientConfig;
 import net.combat_roll.config.ClientConfigWrapper;
 import net.combat_roll.config.HudConfig;
@@ -22,5 +25,21 @@ public class CombatRollClient {
         AutoConfig.register(ClientConfigWrapper.class, PartitioningSerializer.wrap(JanksonConfigSerializer::new));
         config = AutoConfig.getConfigHolder(ClientConfigWrapper.class).getConfig().client;
         hudConfig.refresh();
+    }
+
+    /**
+     * Sets up player animation system.
+     * Must be called during client initialization AFTER resources are available.
+     * For Fabric: Call directly in onInitializeClient
+     * For NeoForge: Call via event.enqueueWork() in FMLClientSetupEvent
+     */
+    public static void setupAnimations() {
+        PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(
+            RollAnimationController.ID,
+            1000,  // Priority (matches old implementation)
+            player -> new RollAnimationController(player,
+                (controller, state, animSetter) -> PlayState.STOP
+            )
+        );
     }
 }

@@ -106,8 +106,8 @@ public abstract class MinecraftClientMixin {
                 return;
             }
 
-            var forward = player.input.movementForward;
-            var sideways = player.input.movementSideways;
+            var forward = player.forwardSpeed;
+            var sideways = player.sidewaysSpeed;
             Vec3d direction;
             if (forward == 0 && sideways == 0) {
                 direction = new Vec3d(0, 0, 1);

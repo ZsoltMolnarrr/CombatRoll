@@ -23,6 +23,11 @@ public class CombatRollClientModNeoForge {
     public static void onClientSetup(FMLClientSetupEvent event){
         CombatRollClient.initialize();
 
+        // Setup animations on main thread for thread safety
+        event.enqueueWork(() -> {
+            CombatRollClient.setupAnimations();
+        });
+
         ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class, () -> {
             return (IConfigScreenFactory) (modContainer, parent) -> new ConfigMenuScreen(parent);
         });

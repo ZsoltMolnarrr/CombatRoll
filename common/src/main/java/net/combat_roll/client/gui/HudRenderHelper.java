@@ -7,6 +7,7 @@ import net.combat_roll.internals.RollManager;
 import net.combat_roll.internals.RollingEntity;
 import net.combat_roll.mixin.client.KeybindingAccessor;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -57,8 +58,6 @@ public class HudRenderHelper {
         int drawX = (int) (originPoint.x + drawOffset.x); // Growing to right by removing `- (widgetWidth) / 2`
         int drawY = (int) (originPoint.y + drawOffset.y - (widgetHeight) / 2);
         int drawnWith = 0;
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
         for(var element: viewModel.elements()) {
             int x = 0;
             int y = 0;
@@ -74,7 +73,7 @@ public class HudRenderHelper {
             v = 0;
             width = height = textureSize = 15;
             var backgroundColorARGB = ColorHelper.fromFloats(((float)config.hudBackgroundOpacity) / 100F, 1, 1, 1);
-            context.drawTexture(RenderLayer::getGuiTextured, ARROW_BACKGROUND, x, y, u, v, width, height, width, height, textureSize, textureSize, backgroundColorARGB);
+            context.drawTexture(RenderPipelines.GUI_TEXTURED, ARROW_BACKGROUND, x, y, u, v, width, height, width, height, textureSize, textureSize, backgroundColorARGB);
 
             var color = element.color;
             float red = ((float) ((color >> 16) & 0xFF)) / 255F;
@@ -92,11 +91,10 @@ public class HudRenderHelper {
             y = drawY + textureSize - height + shift;
             u = 0;
             v = textureSize - height;
-            context.drawTexture(RenderLayer::getGuiTextured, ARROW, x, y, u, v, width, height, width, height, textureSize, textureSize, arrowColorARGB);
+            context.drawTexture(RenderPipelines.GUI_TEXTURED, ARROW, x, y, u, v, width, height, width, height, textureSize, textureSize, arrowColorARGB);
 
             drawnWith += horizontalSpacing;
         }
-        RenderSystem.disableBlend();
 
         if (config.showKeybinding) {
             var textRenderer = client.inGameHud.getTextRenderer();
@@ -140,7 +138,9 @@ public class HudRenderHelper {
                     case TRAILING -> textY -= textHeight;
                     case CENTER -> textY -= (textHeight / 2 - 1);
                 }
-                context.drawCenteredTextWithShadow(textRenderer, label, keybindingX, textY, 0xFFFFFF);
+                context.getMatrices().pushMatrix();
+                context.drawCenteredTextWithShadow(textRenderer, label, keybindingX, textY, ColorHelper.withAlpha(0xFF, 0xFFFFFF));
+                context.getMatrices().popMatrix();
             }
         }
     }
