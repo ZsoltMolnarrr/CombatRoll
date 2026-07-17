@@ -1,3 +1,7 @@
+# 3.0.1
+
+- Add player statistics: Rolls, Rolled Distance
+
 # 3.0.0
 
 - Support Minecraft 1.21.11

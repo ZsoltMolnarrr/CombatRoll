@@ -1,7 +1,6 @@
 package net.combat_roll.neoforge;
 
 import net.combat_roll.CombatRollMod;
-import net.combat_roll.stat.CombatRollStats;
 import net.combat_roll.utils.SoundHelper;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
@@ -15,7 +14,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class CombatRollModNeoForge {
     public CombatRollModNeoForge(IEventBus modEventBus, ModContainer modContainer) {
         CombatRollMod.init();
-        CombatRollStats.registerStats();
         SOUND_EVENTS.register(modEventBus);
     }
 

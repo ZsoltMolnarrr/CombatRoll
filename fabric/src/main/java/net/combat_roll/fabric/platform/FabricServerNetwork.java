@@ -3,10 +3,7 @@ package net.combat_roll.fabric.platform;
 import net.combat_roll.CombatRollMod;
 import net.combat_roll.network.Packets;
 import net.combat_roll.network.ServerNetwork;
-import net.combat_roll.stat.CombatRollStats;
 import net.fabricmc.fabric.api.networking.v1.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.ServerPlayerConfigurationTask;
 
@@ -38,15 +35,6 @@ public class FabricServerNetwork {
 
         ServerPlayNetworking.registerGlobalReceiver(Packets.RollPublish.PACKET_ID, (packet, context) -> {
             ServerNetwork.handleRollPublish(packet, context.server(), context.player());
-
-            Entity entity = context.player().getEntity();
-
-            double distanceInBlocks = packet.velocity().length();
-
-            if (entity instanceof PlayerEntity player) {
-                player.incrementStat(CombatRollStats.ROLL);
-                player.increaseStat(CombatRollStats.ROLL_CM, (int)(distanceInBlocks * 100));
-            }
         });
     }
 

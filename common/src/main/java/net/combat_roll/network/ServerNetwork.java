@@ -6,6 +6,7 @@ import net.combat_roll.Platform;
 import net.combat_roll.api.RollInvulnerable;
 import net.combat_roll.api.event.Event;
 import net.combat_roll.api.event.ServerSideRollEvents;
+import net.combat_roll.stat.CombatRollStats;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -35,6 +36,9 @@ public class ServerNetwork {
         world.getServer().executeSync(() -> {
             ((RollInvulnerable)player).setRollInvulnerableTicks(CombatRollMod.config.invulnerable_ticks_upon_roll);
             player.addExhaustion(CombatRollMod.config.exhaust_on_roll);
+            player.incrementStat(CombatRollStats.ROLL.stat);
+            // 1.5D to approximate difference between velocity and actual travel
+            player.increaseStat(CombatRollStats.ROLL_CM.stat, (int)(velocity.length() * 100 * 1.5D));
             var proxy = (Event.Proxy<ServerSideRollEvents.PlayerStartRolling>)ServerSideRollEvents.PLAYER_START_ROLLING;
             proxy.handlers.forEach(hander -> { hander.onPlayerStartedRolling(player, velocity);});
         });

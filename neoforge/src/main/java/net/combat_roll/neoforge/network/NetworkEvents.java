@@ -5,7 +5,6 @@ import net.combat_roll.CombatRollMod;
 import net.combat_roll.client.ClientNetwork;
 import net.combat_roll.network.Packets;
 import net.combat_roll.network.ServerNetwork;
-import net.combat_roll.stat.CombatRollStats;
 import net.minecraft.network.listener.ServerConfigurationPacketListener;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.server.network.ServerPlayerConfigurationTask;
@@ -43,11 +42,6 @@ public class NetworkEvents {
             var player = (ServerPlayerEntity)context.player();
             var server = player.getEntityWorld().getServer();
             ServerNetwork.handleRollPublish(packet, server, player);
-
-            double distanceInBlocks = packet.velocity().length();
-
-            player.incrementStat(CombatRollStats.ROLL);
-            player.increaseStat(CombatRollStats.ROLL_CM, (int)(distanceInBlocks * 100));
         });
 
         // Client
