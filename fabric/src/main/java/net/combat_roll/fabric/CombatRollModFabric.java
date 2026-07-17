@@ -2,6 +2,7 @@ package net.combat_roll.fabric;
 
 import net.combat_roll.CombatRollMod;
 import net.combat_roll.fabric.platform.FabricServerNetwork;
+import net.combat_roll.stat.CombatRollStats;
 import net.fabricmc.api.ModInitializer;
 import net.combat_roll.utils.SoundHelper;
 
@@ -10,6 +11,7 @@ public class CombatRollModFabric implements ModInitializer {
     public void onInitialize() {
         CombatRollMod.init();
         SoundHelper.registerSounds();
+        CombatRollStats.registerStats();
         FabricServerNetwork.init();
     }
 }
