@@ -7,8 +7,8 @@ import net.combat_roll.client.CombatRollClient;
 import net.combat_roll.client.Keybindings;
 import net.combat_roll.client.gui.HudRenderHelper;
 import net.fabricmc.fabric.impl.client.rendering.hud.HudElementRegistryImpl;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.Identifier;
 
 public class CombatRollClientModFabric implements ClientModInitializer {
     @Override
@@ -19,9 +19,9 @@ public class CombatRollClientModFabric implements ClientModInitializer {
             KeyBindingHelper.registerKeyBinding(keybinding);
         }
 
-        HudElementRegistryImpl.addFirst(Identifier.of(CombatRollMod.ID, "recharge"), (context, tickCounter) -> {
-            if (!MinecraftClient.getInstance().options.hudHidden) {
-                HudRenderHelper.render(context, tickCounter.getTickProgress(true));
+        HudElementRegistryImpl.addFirst(Identifier.fromNamespaceAndPath(CombatRollMod.ID, "recharge"), (context, tickCounter) -> {
+            if (!Minecraft.getInstance().options.hideGui) {
+                HudRenderHelper.render(context, tickCounter.getGameTimeDeltaPartialTick(true));
             }
         });
 

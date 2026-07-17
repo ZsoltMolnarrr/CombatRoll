@@ -2,18 +2,18 @@ package net.combat_roll.client.gui;
 
 import net.combat_roll.client.CombatRollClient;
 import net.combat_roll.config.HudConfig;
-import net.minecraft.client.gui.Click;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.Vec2f;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.phys.Vec2;
 
 public class HudConfigScreen extends Screen {
     private Screen previous;
 
     public HudConfigScreen(Screen previous) {
-        super(Text.translatable("gui.combat_roll.hud"));
+        super(Component.translatable("gui.combat_roll.hud"));
         this.previous = previous;
     }
 
@@ -24,41 +24,41 @@ public class HudConfigScreen extends Screen {
         var buttonCenterX = (width / 2) - (buttonWidth / 2);
         var buttonCenterY = (height / 2) - (buttonHeight / 2);
 
-        addDrawableChild(
-            ButtonWidget.builder(Text.translatable("gui.combat_roll.close"), button -> { close(); })
-                .position(buttonCenterX, buttonCenterY - 30)
+        addRenderableWidget(
+            Button.builder(Component.translatable("gui.combat_roll.close"), button -> { onClose(); })
+                .pos(buttonCenterX, buttonCenterY - 30)
                 .size(buttonWidth, buttonHeight)
                 .build()
         );
-        addDrawableChild(
-            ButtonWidget.builder(Text.translatable("gui.combat_roll.corner"), button -> { nextOrigin(); })
-                .position(buttonCenterX, buttonCenterY)
+        addRenderableWidget(
+            Button.builder(Component.translatable("gui.combat_roll.corner"), button -> { nextOrigin(); })
+                .pos(buttonCenterX, buttonCenterY)
                 .size(buttonWidth, buttonHeight)
                 .build()
         );
-        addDrawableChild(
-            ButtonWidget.builder(Text.translatable("gui.combat_roll.reset"), button -> { reset(); })
-                .position(buttonCenterX, buttonCenterY + 30)
+        addRenderableWidget(
+            Button.builder(Component.translatable("gui.combat_roll.reset"), button -> { reset(); })
+                .pos(buttonCenterX, buttonCenterY + 30)
                 .size(buttonWidth, buttonHeight)
                 .build()
         );
     }
 
-    public void close() {
+    public void onClose() {
         this.save();
-        this.client.setScreen(previous);
+        this.minecraft.setScreen(previous);
     }
 
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         HudRenderHelper.render(context, delta);
     }
 
     @Override
-    public boolean mouseDragged(Click click, double offsetX, double offsetY) {
+    public boolean mouseDragged(MouseButtonEvent click, double offsetX, double offsetY) {
         if (!this.isDragging() && click.button() == 0) {
             var config = CombatRollClient.hudConfig.value;
-            config.rollWidget.offset = new Vec2f(
+            config.rollWidget.offset = new Vec2(
                     (float) (config.rollWidget.offset.x + offsetX),
                     (float) (config.rollWidget.offset.y + offsetY));
         }

@@ -1,13 +1,12 @@
 package net.combat_roll.stat;
 
 import net.combat_roll.CombatRollMod;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.stat.Stat;
-import net.minecraft.stat.StatFormatter;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.stats.Stat;
+import net.minecraft.stats.StatFormatter;
+import net.minecraft.stats.Stats;
 import java.util.ArrayList;
 
 public class CombatRollStats {
@@ -28,15 +27,15 @@ public class CombatRollStats {
         public Stat<Identifier> stat;
 
         public Entry(String name, StatFormatter formatter) {
-            this.id = Identifier.of(CombatRollMod.ID, name);
+            this.id = Identifier.fromNamespaceAndPath(CombatRollMod.ID, name);
             this.formatter = formatter;
         }
 
         // Called from StatsMixin at the tail of Stats.<clinit>, while the
         // CUSTOM_STAT registry is still unfrozen (same lifecycle as vanilla stats).
         public void register() {
-            Registry.register(Registries.CUSTOM_STAT, id, id);
-            stat = Stats.CUSTOM.getOrCreateStat(id, formatter);
+            Registry.register(BuiltInRegistries.CUSTOM_STAT, id, id);
+            stat = Stats.CUSTOM.get(id, formatter);
         }
     }
 }

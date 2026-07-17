@@ -5,22 +5,22 @@ import com.zigythebird.playeranim.api.PlayerAnimationAccess;
 import net.combat_roll.CombatRollMod;
 import net.combat_roll.client.animation.AnimatablePlayer;
 import net.combat_roll.client.animation.RollAnimationController;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(AbstractClientPlayerEntity.class)
-public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity implements AnimatablePlayer {
-    public AbstractClientPlayerEntityMixin(World world, GameProfile gameProfile) {
+@Mixin(AbstractClientPlayer.class)
+public abstract class AbstractClientPlayerEntityMixin extends Player implements AnimatablePlayer {
+    public AbstractClientPlayerEntityMixin(Level world, GameProfile gameProfile) {
         super(world, gameProfile);
     }
 
     @Override
-    public void playRollAnimation(String animationName, Vec3d direction) {
+    public void playRollAnimation(String animationName, Vec3 direction) {
         var controller = (RollAnimationController) PlayerAnimationAccess.getPlayerAnimationLayer(
-            (AbstractClientPlayerEntity)(Object)this,
+            (AbstractClientPlayer)(Object)this,
             RollAnimationController.ID
         );
 

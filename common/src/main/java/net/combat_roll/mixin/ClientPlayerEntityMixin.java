@@ -3,9 +3,9 @@ package net.combat_roll.mixin;
 import net.combat_roll.CombatRollMod;
 import net.combat_roll.internals.RollManager;
 import net.combat_roll.internals.RollingEntity;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.util.PlayerInput;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.player.Input;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(ClientPlayerEntity.class)
+@Mixin(LocalPlayer.class)
 public class ClientPlayerEntityMixin implements RollingEntity {
     private RollManager rollManager = new RollManager();
     public RollManager getRollManager() {
@@ -23,7 +23,7 @@ public class ClientPlayerEntityMixin implements RollingEntity {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick_TAIL(CallbackInfo ci) {
-        var player = (ClientPlayerEntity) ((Object)this);
+        var player = (LocalPlayer) ((Object)this);
         if (player != null) {
             rollManager.tick(player);
         }
@@ -31,27 +31,27 @@ public class ClientPlayerEntityMixin implements RollingEntity {
 
     @Shadow
     @Final
-    protected MinecraftClient client;
+    protected Minecraft minecraft;
 
-    @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/input/Input;tick()V", shift = At.Shift.AFTER))
+    @Inject(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/ClientInput;tick()V", shift = At.Shift.AFTER))
     private void tickMovement_ModifyInput(CallbackInfo ci) {
-        var clientPlayer = (ClientPlayerEntity) ((Object) this);
+        var clientPlayer = (LocalPlayer) ((Object) this);
         var config = CombatRollMod.config;
         if (!config.allow_jump_while_rolling && rollManager.isRolling()) {
-            var input = clientPlayer.input.playerInput;
-            clientPlayer.input.playerInput = new PlayerInput(
+            var input = clientPlayer.input.keyPresses;
+            clientPlayer.input.keyPresses = new Input(
                     input.forward(),
                     input.backward(),
                     input.left(),
                     input.right(),
                     false,
-                    input.sneak(),
+                    input.shift(),
                     input.sprint()
             );
         }
     }
 
-    @Inject(method = "shouldAutoJump", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "canAutoJump", at = @At("HEAD"), cancellable = true)
     public void shouldAutoJump_HEAD(CallbackInfoReturnable<Boolean> cir) {
         var config = CombatRollMod.config;
         if (config != null) {

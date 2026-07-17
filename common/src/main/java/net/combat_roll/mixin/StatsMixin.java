@@ -1,7 +1,7 @@
 package net.combat_roll.mixin;
 
 import net.combat_roll.stat.CombatRollStats;
-import net.minecraft.stat.Stats;
+import net.minecraft.stats.Stats;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

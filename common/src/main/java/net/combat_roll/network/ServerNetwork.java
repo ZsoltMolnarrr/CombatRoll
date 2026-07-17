@@ -8,8 +8,8 @@ import net.combat_roll.api.event.Event;
 import net.combat_roll.api.event.ServerSideRollEvents;
 import net.combat_roll.stat.CombatRollStats;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 
 public class ServerNetwork {
     public static String configSerialized = "";
@@ -18,8 +18,8 @@ public class ServerNetwork {
         configSerialized = Packets.ConfigSync.serialize(CombatRollMod.config);
     }
 
-    public static void handleRollPublish(Packets.RollPublish packet, MinecraftServer server, ServerPlayerEntity player) {
-        ServerWorld world = Iterables.tryFind(server.getWorlds(), (element) -> element == player.getEntityWorld())
+    public static void handleRollPublish(Packets.RollPublish packet, MinecraftServer server, ServerPlayer player) {
+        ServerLevel world = Iterables.tryFind(server.getAllLevels(), (element) -> element == player.level())
                 .orNull();
         final var velocity = packet.velocity();
         final var forwardPacket = new Packets.RollAnimation(player.getId(), packet.visuals(), packet.velocity());
@@ -33,12 +33,12 @@ public class ServerNetwork {
             }
         });
 
-        world.getServer().executeSync(() -> {
+        world.getServer().executeIfPossible(() -> {
             ((RollInvulnerable)player).setRollInvulnerableTicks(CombatRollMod.config.invulnerable_ticks_upon_roll);
-            player.addExhaustion(CombatRollMod.config.exhaust_on_roll);
-            player.incrementStat(CombatRollStats.ROLL.stat);
+            player.causeFoodExhaustion(CombatRollMod.config.exhaust_on_roll);
+            player.awardStat(CombatRollStats.ROLL.stat);
             // 1.5D to approximate difference between velocity and actual travel
-            player.increaseStat(CombatRollStats.ROLL_CM.stat, (int)(velocity.length() * 100 * 1.5D));
+            player.awardStat(CombatRollStats.ROLL_CM.stat, (int)(velocity.length() * 100 * 1.5D));
             var proxy = (Event.Proxy<ServerSideRollEvents.PlayerStartRolling>)ServerSideRollEvents.PLAYER_START_ROLLING;
             proxy.handlers.forEach(hander -> { hander.onPlayerStartedRolling(player, velocity);});
         });

@@ -6,13 +6,12 @@ import net.combat_roll.client.Keybindings;
 import net.combat_roll.internals.RollManager;
 import net.combat_roll.internals.RollingEntity;
 import net.combat_roll.mixin.client.KeybindingAccessor;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -20,13 +19,13 @@ import java.util.List;
 import java.util.Locale;
 
 public class HudRenderHelper {
-    private static final Identifier ARROW = Identifier.of("combat_roll", "textures/hud/arrow.png");
-    private static final Identifier ARROW_BACKGROUND = Identifier.of("combat_roll", "textures/hud/arrow_background.png");
+    private static final Identifier ARROW = Identifier.fromNamespaceAndPath("combat_roll", "textures/hud/arrow.png");
+    private static final Identifier ARROW_BACKGROUND = Identifier.fromNamespaceAndPath("combat_roll", "textures/hud/arrow_background.png");
 
-    public static void render(DrawContext context, float tickDelta) {
+    public static void render(GuiGraphics context, float tickDelta) {
         var config = CombatRollClient.config;
-        MinecraftClient client = MinecraftClient.getInstance();
-        ClientPlayerEntity player = client.player;
+        Minecraft client = Minecraft.getInstance();
+        LocalPlayer player = client.player;
         ViewModel viewModel;
         if (player == null) {
             viewModel = ViewModel.mock();
@@ -45,8 +44,8 @@ public class HudRenderHelper {
             viewModel = ViewModel.create(cooldownInfo, tickDelta);
         }
 
-        var screenWidth = client.getWindow().getScaledWidth();
-        var screenHeight = client.getWindow().getScaledHeight();
+        var screenWidth = client.getWindow().getGuiScaledWidth();
+        var screenHeight = client.getWindow().getGuiScaledHeight();
         var rollWidget = CombatRollClient.hudConfig.value.rollWidget;
         var originPoint = rollWidget.origin.getPoint(screenWidth, screenHeight);
         var drawOffset = rollWidget.offset;
@@ -72,15 +71,15 @@ public class HudRenderHelper {
             u = 0;
             v = 0;
             width = height = textureSize = 15;
-            var backgroundColorARGB = ColorHelper.fromFloats(((float)config.hudBackgroundOpacity) / 100F, 1, 1, 1);
-            context.drawTexture(RenderPipelines.GUI_TEXTURED, ARROW_BACKGROUND, x, y, u, v, width, height, width, height, textureSize, textureSize, backgroundColorARGB);
+            var backgroundColorARGB = ARGB.colorFromFloat(((float)config.hudBackgroundOpacity) / 100F, 1, 1, 1);
+            context.blit(RenderPipelines.GUI_TEXTURED, ARROW_BACKGROUND, x, y, u, v, width, height, width, height, textureSize, textureSize, backgroundColorARGB);
 
             var color = element.color;
             float red = ((float) ((color >> 16) & 0xFF)) / 255F;
             float green = ((float) ((color >> 8) & 0xFF)) / 255F;
             float blue = ((float) (color & 0xFF)) / 255F;
 
-            var arrowColorARGB = ColorHelper.fromFloats(1F, red, green, blue);
+            var arrowColorARGB = ARGB.colorFromFloat(1F, red, green, blue);
 
             var prevTextureSize = textureSize;
             textureSize = 13;
@@ -91,13 +90,13 @@ public class HudRenderHelper {
             y = drawY + textureSize - height + shift;
             u = 0;
             v = textureSize - height;
-            context.drawTexture(RenderPipelines.GUI_TEXTURED, ARROW, x, y, u, v, width, height, width, height, textureSize, textureSize, arrowColorARGB);
+            context.blit(RenderPipelines.GUI_TEXTURED, ARROW, x, y, u, v, width, height, width, height, textureSize, textureSize, arrowColorARGB);
 
             drawnWith += horizontalSpacing;
         }
 
         if (config.showKeybinding) {
-            var textRenderer = client.inGameHud.getTextRenderer();
+            var textRenderer = client.gui.getFont();
 
             int keybindingX = drawX + drawnWith / 2;
             int keybindingY = drawY + 1;
@@ -121,7 +120,7 @@ public class HudRenderHelper {
                 viewModel.drawable.draw(context, keybindingX, keybindingY, iconHAnchor, iconVAnchor);
             } else if (viewModel.label != null) {
                 var label = viewModel.label;
-                var textLength = textRenderer.getWidth(label);
+                var textLength = textRenderer.width(label);
                 var buttonLength = textLength + HudKeyVisuals.buttonLeading.draw().width() + HudKeyVisuals.buttonTrailing.draw().width();
                 if (iconHAnchor == Drawable.Anchor.TRAILING) {
                     keybindingX -= buttonLength / 2;
@@ -131,16 +130,16 @@ public class HudRenderHelper {
                 HudKeyVisuals.buttonCenter.drawFlexibleWidth(context, keybindingX - (textLength / 2), keybindingY, textLength, iconVAnchor);
                 HudKeyVisuals.buttonTrailing.draw(context, keybindingX + (textLength / 2), keybindingY, Drawable.Anchor.LEADING, iconVAnchor);
 
-                var textHeight = textRenderer.fontHeight + 1; // +1 for shadow
+                var textHeight = textRenderer.lineHeight + 1; // +1 for shadow
                 var textY = keybindingY;
                 switch (iconVAnchor) {
                     case LEADING -> textY = textY;
                     case TRAILING -> textY -= textHeight;
                     case CENTER -> textY -= (textHeight / 2 - 1);
                 }
-                context.getMatrices().pushMatrix();
-                context.drawCenteredTextWithShadow(textRenderer, label, keybindingX, textY, ColorHelper.withAlpha(0xFF, 0xFFFFFF));
-                context.getMatrices().popMatrix();
+                context.pose().pushMatrix();
+                context.drawCenteredString(textRenderer, label, keybindingX, textY, ARGB.color(0xFF, 0xFFFFFF));
+                context.pose().popMatrix();
             }
         }
     }
@@ -185,9 +184,9 @@ public class HudRenderHelper {
 
 
             var keybinding = Keybindings.roll;
-            var key = ((KeybindingAccessor) keybinding).getBoundKey().toString();
+            var key = ((KeybindingAccessor) keybinding).getKey().toString();
             var drawable = HudKeyVisuals.custom.get(key);
-            var label = keybinding.getBoundKeyLocalizedText()
+            var label = keybinding.getTranslatedKeyMessage()
                     .getString()
                     .toUpperCase(Locale.US);
             label = acronym(label, 3);

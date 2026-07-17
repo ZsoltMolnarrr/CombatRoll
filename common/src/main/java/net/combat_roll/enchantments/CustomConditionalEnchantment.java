@@ -1,6 +1,6 @@
 package net.combat_roll.enchantments;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public interface CustomConditionalEnchantment {
     interface Condition {

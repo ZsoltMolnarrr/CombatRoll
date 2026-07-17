@@ -4,9 +4,7 @@ import net.combat_roll.CombatRollMod;
 import net.combat_roll.network.Packets;
 import net.combat_roll.network.ServerNetwork;
 import net.fabricmc.fabric.api.networking.v1.*;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.server.network.ServerPlayerConfigurationTask;
-
+import net.minecraft.network.protocol.Packet;
 import java.util.function.Consumer;
 
 public class FabricServerNetwork {
@@ -38,17 +36,17 @@ public class FabricServerNetwork {
         });
     }
 
-    public record ConfigurationTask(String configString) implements ServerPlayerConfigurationTask {
+    public record ConfigurationTask(String configString) implements net.minecraft.server.network.ConfigurationTask {
         public static final String name = CombatRollMod.ID + ":" + "config";
-        public static final ServerPlayerConfigurationTask.Key KEY = new ServerPlayerConfigurationTask.Key(name);
+        public static final net.minecraft.server.network.ConfigurationTask.Type KEY = new net.minecraft.server.network.ConfigurationTask.Type(name);
 
         @Override
-        public ServerPlayerConfigurationTask.Key getKey() {
+        public net.minecraft.server.network.ConfigurationTask.Type type() {
             return KEY;
         }
 
         @Override
-        public void sendPacket(Consumer<Packet<?>> sender) {
+        public void start(Consumer<Packet<?>> sender) {
             sender.accept(ServerConfigurationNetworking.createS2CPacket(new Packets.ConfigSync(this.configString)));
         }
     }

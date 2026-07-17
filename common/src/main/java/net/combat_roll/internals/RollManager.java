@@ -4,12 +4,12 @@ import net.combat_roll.CombatRollMod;
 import net.combat_roll.api.CombatRoll;
 import net.combat_roll.client.CombatRollClient;
 import net.combat_roll.mixin.PlayerEntityAccessor;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.Registries;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 
 public class RollManager {
     public boolean isEnabled = true;
@@ -30,26 +30,26 @@ public class RollManager {
         return new CooldownInfo((int)currentCooldownProgress, currentCooldownLength, availableRolls, maxRolls);
     }
 
-    public boolean isRollAvailable(PlayerEntity player) {
+    public boolean isRollAvailable(Player player) {
         return isEnabled
                 && !isRolling()
                 && availableRolls > 0
                 && !((PlayerEntityAccessor)player).invokeIsImmobile_combat_roll()
-                && player.canMoveVoluntarily()
-                && player.getAttributeValue(EntityAttributes.MOVEMENT_SPEED) > 0;
+                && player.canSimulateMovement()
+                && player.getAttributeValue(Attributes.MOVEMENT_SPEED) > 0;
     }
 
     public boolean isRolling() {
         return timeSinceLastRoll <= rollDuration();
     }
 
-    public void onRoll(ClientPlayerEntity player) {
+    public void onRoll(LocalPlayer player) {
         availableRolls -= 1;
         timeSinceLastRoll = 0;
         updateCooldownLength(player);
     }
 
-    public void tick(ClientPlayerEntity player) {
+    public void tick(LocalPlayer player) {
         maxRolls = (int) player.getAttributeValue(CombatRoll.Attributes.COUNT.entry);
         timeSinceLastRoll += 1;
         if (availableRolls < maxRolls) {
@@ -66,23 +66,23 @@ public class RollManager {
         }
     }
 
-    private float increment(PlayerEntity player) {
+    private float increment(Player player) {
         return (float) (player.getAttributeValue(CombatRoll.Attributes.RECHARGE.entry) / 20F);
     }
 
-    private void rechargeRoll(ClientPlayerEntity player) {
+    private void rechargeRoll(LocalPlayer player) {
         availableRolls += 1;
         currentCooldownProgress = Math.max(currentCooldownProgress - currentCooldownLength, 0);
         updateCooldownLength(player);
         if (CombatRollClient.config.playCooldownSound) {
-            var cooldownReady = Registries.SOUND_EVENT.get(Identifier.of("combat_roll:roll_cooldown_ready"));
+            var cooldownReady = BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("combat_roll:roll_cooldown_ready"));
             if (cooldownReady != null) {
-                player.getEntityWorld().playSoundClient(player.getX(), player.getY(), player.getZ(), cooldownReady, SoundCategory.PLAYERS, 1, 1, false);
+                player.level().playLocalSound(player.getX(), player.getY(), player.getZ(), cooldownReady, SoundSource.PLAYERS, 1, 1, false);
             }
         }
     }
 
-    private void updateCooldownLength(ClientPlayerEntity player) {
+    private void updateCooldownLength(LocalPlayer player) {
         var duration = CombatRollMod.config.roll_cooldown;
         currentCooldownLength = Math.round(duration * 20F);
     }

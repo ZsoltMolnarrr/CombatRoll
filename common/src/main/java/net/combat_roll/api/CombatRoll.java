@@ -1,14 +1,14 @@
 package net.combat_roll.api;
 
-import net.minecraft.entity.attribute.ClampedEntityAttribute;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 
 public class CombatRoll {
     public static final String NAMESPACE = "combat_roll";
@@ -24,20 +24,20 @@ public class CombatRoll {
         public static class Entry {
             public final Identifier id;
             public final String translationKey;
-            public final EntityAttribute attribute;
+            public final Attribute attribute;
             public final double baseValue;
             @Nullable
-            public RegistryEntry<EntityAttribute> entry;
+            public Holder<Attribute> entry;
 
             public Entry(String name, double baseValue, double minValue, double maxValue, boolean tracked) {
-                this.id = Identifier.of(NAMESPACE, name);
+                this.id = Identifier.fromNamespaceAndPath(NAMESPACE, name);
                 this.translationKey = "attribute.name." + NAMESPACE + "." + name;
-                this.attribute = new ClampedEntityAttribute(translationKey, baseValue, minValue, maxValue).setTracked(tracked);
+                this.attribute = new RangedAttribute(translationKey, baseValue, minValue, maxValue).setSyncable(tracked);
                 this.baseValue = baseValue;
             }
 
             public void register() {
-                entry = Registry.registerReference(Registries.ATTRIBUTE, id, attribute);
+                entry = Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, id, attribute);
             }
         }
 

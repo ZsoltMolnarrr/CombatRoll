@@ -6,18 +6,17 @@ import com.zigythebird.playeranimcore.animation.layered.modifier.AdjustmentModif
 import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
 import com.zigythebird.playeranimcore.math.Vec3f;
 import net.combat_roll.CombatRollMod;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.entity.PlayerLikeEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.Avatar;
+import net.minecraft.world.phys.Vec3;
 
 public class RollAnimationController extends PlayerAnimationController {
-    public static final Identifier ID = Identifier.of(CombatRollMod.ID, "roll");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(CombatRollMod.ID, "roll");
 
     private final SpeedModifier speedModifier;
-    private Vec3d lastRollDirection;
+    private Vec3 lastRollDirection;
 
-    public RollAnimationController(PlayerLikeEntity player, AnimationStateHandler animationHandler) {
+    public RollAnimationController(Avatar player, AnimationStateHandler animationHandler) {
         super(player, animationHandler);
         this.speedModifier = new SpeedModifier(1.2f);
         postInit();
@@ -28,10 +27,10 @@ public class RollAnimationController extends PlayerAnimationController {
         this.addModifierLast(createAdjustmentModifier());
     }
 
-    public void playRoll(String animationName, Vec3d direction, int duration) {
+    public void playRoll(String animationName, Vec3 direction, int duration) {
         try {
             this.lastRollDirection = direction;
-            var animation = PlayerAnimResources.getAnimation(Identifier.of(animationName));
+            var animation = PlayerAnimResources.getAnimation(Identifier.parse(animationName));
             float length = animation.length();
             speedModifier.speed = length / ((float) duration);
             this.triggerAnimation(animation);
@@ -50,8 +49,8 @@ public class RollAnimationController extends PlayerAnimationController {
             }
 
             var player = this.getAvatar();
-            var absoluteOrientation = new Vec3d(0,0,1).rotateY((float) Math.toRadians(-1F * player.getYaw()));
-            float angle = (float) angleWithSignBetween(absoluteOrientation, lastRollDirection, new Vec3d(0,1,0));
+            var absoluteOrientation = new Vec3(0,0,1).yRot((float) Math.toRadians(-1F * player.getYRot()));
+            float angle = (float) angleWithSignBetween(absoluteOrientation, lastRollDirection, new Vec3(0,1,0));
 
             var rotationY = Math.abs(angle) > 100 ? (float) Math.toRadians(angle) : 0; // + 180;
             return java.util.Optional.of(new AdjustmentModifier.PartModifier(
@@ -61,13 +60,13 @@ public class RollAnimationController extends PlayerAnimationController {
         });
     }
 
-    private double angleWithSignBetween(Vec3d a, Vec3d b, Vec3d planeNormal) {
+    private double angleWithSignBetween(Vec3 a, Vec3 b, Vec3 planeNormal) {
         // Normalize vectors to ensure magnitude doesn't affect angle calculation
-        Vec3d normalizedA = a.normalize();
-        Vec3d normalizedB = b.normalize();
+        Vec3 normalizedA = a.normalize();
+        Vec3 normalizedB = b.normalize();
 
         // Calculate cosine of angle using normalized vectors
-        var cosineTheta = normalizedA.dotProduct(normalizedB);
+        var cosineTheta = normalizedA.dot(normalizedB);
 
         // Clamp to valid domain [-1, 1] to handle floating-point precision errors
         cosineTheta = Math.max(-1.0, Math.min(1.0, cosineTheta));
@@ -76,8 +75,8 @@ public class RollAnimationController extends PlayerAnimationController {
         var angle = Math.toDegrees(Math.acos(cosineTheta));
 
         // Determine sign using cross product
-        var cross = normalizedA.crossProduct(normalizedB);
-        var crossDotPlane = cross.dotProduct(planeNormal);
+        var cross = normalizedA.cross(normalizedB);
+        var crossDotPlane = cross.dot(planeNormal);
 
         // Handle degenerate case: when vectors are parallel/anti-parallel, cross product is ~0
         // In this case, return the unsigned angle (0° or 180°)

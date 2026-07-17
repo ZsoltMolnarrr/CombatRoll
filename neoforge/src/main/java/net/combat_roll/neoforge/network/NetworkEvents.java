@@ -5,11 +5,10 @@ import net.combat_roll.CombatRollMod;
 import net.combat_roll.client.ClientNetwork;
 import net.combat_roll.network.Packets;
 import net.combat_roll.network.ServerNetwork;
-import net.minecraft.network.listener.ServerConfigurationPacketListener;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.server.network.ServerPlayerConfigurationTask;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.protocol.configuration.ServerConfigurationPacketListener;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.configuration.ICustomConfigurationTask;
@@ -39,8 +38,8 @@ public class NetworkEvents {
         });
 
         registrar.playToServer(Packets.RollPublish.PACKET_ID, Packets.RollPublish.CODEC, (packet, context) -> {
-            var player = (ServerPlayerEntity)context.player();
-            var server = player.getEntityWorld().getServer();
+            var player = (ServerPlayer)context.player();
+            var server = player.level().getServer();
             ServerNetwork.handleRollPublish(packet, server, player);
         });
 
@@ -57,10 +56,10 @@ public class NetworkEvents {
     }
 
     public record ConfigurationTask(ServerConfigurationPacketListener listener) implements ICustomConfigurationTask {
-        public static final Identifier ID = Identifier.of(CombatRollMod.ID, "config");
-        public static final ServerPlayerConfigurationTask.Key KEY = new ServerPlayerConfigurationTask.Key(Identifier.of(CombatRollMod.ID, "config"));
+        public static final Identifier ID = Identifier.fromNamespaceAndPath(CombatRollMod.ID, "config");
+        public static final net.minecraft.server.network.ConfigurationTask.Type KEY = new net.minecraft.server.network.ConfigurationTask.Type(Identifier.fromNamespaceAndPath(CombatRollMod.ID, "config"));
         @Override
-        public void run(Consumer<CustomPayload> sender) {
+        public void run(Consumer<CustomPacketPayload> sender) {
             var gson = new Gson();
             var configString = gson.toJson(CombatRollMod.config);
             var configPayload = new Packets.ConfigSync(configString);
@@ -68,7 +67,7 @@ public class NetworkEvents {
         }
 
         @Override
-        public Key getKey() {
+        public Type type() {
             return KEY;
         }
     }

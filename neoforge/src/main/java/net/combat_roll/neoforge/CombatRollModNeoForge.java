@@ -2,9 +2,9 @@ package net.combat_roll.neoforge;
 
 import net.combat_roll.CombatRollMod;
 import net.combat_roll.utils.SoundHelper;
-import net.minecraft.registry.Registries;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -18,9 +18,9 @@ public final class CombatRollModNeoForge {
     }
 
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
-            DeferredRegister.create(Registries.SOUND_EVENT, CombatRollMod.ID);
+            DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, CombatRollMod.ID);
 
     static {
-        SoundHelper.soundKeys.forEach(soundKey -> SOUND_EVENTS.register(soundKey, () -> SoundEvent.of(Identifier.of(CombatRollMod.ID, soundKey))));
+        SoundHelper.soundKeys.forEach(soundKey -> SOUND_EVENTS.register(soundKey, () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(CombatRollMod.ID, soundKey))));
     }
 }

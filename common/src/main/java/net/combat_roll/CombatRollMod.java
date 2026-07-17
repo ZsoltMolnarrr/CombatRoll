@@ -7,12 +7,12 @@ import net.combat_roll.api.CombatRoll;
 import net.combat_roll.config.ServerConfig;
 import net.combat_roll.config.ServerConfigWrapper;
 import net.combat_roll.network.ServerNetwork;
-import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.resources.language.I18n;
 
 public class CombatRollMod {
     public static final String ID = CombatRoll.NAMESPACE;
     public static String modName() {
-        return I18n.translate(CombatRoll.NAMESPACE + ".mod_name");
+        return I18n.get(CombatRoll.NAMESPACE + ".mod_name");
     }
     public static ServerConfig config;
 
