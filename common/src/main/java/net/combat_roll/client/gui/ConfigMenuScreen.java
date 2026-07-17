@@ -2,7 +2,7 @@ package net.combat_roll.client.gui;
 
 import me.shedaniel.autoconfig.AutoConfigClient;
 import net.combat_roll.config.ClientConfigWrapper;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -50,8 +50,8 @@ public class ConfigMenuScreen extends Screen {
         this.minecraft.setScreen(previous);
     }
 
-    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
-        // renderBackground(context, mouseX, mouseY, delta);
-        super.render(context, mouseX, mouseY, delta);
+    @Override
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
+        super.extractRenderState(context, mouseX, mouseY, delta);
     }
 }

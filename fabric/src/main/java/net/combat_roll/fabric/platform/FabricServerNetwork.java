@@ -10,8 +10,8 @@ import java.util.function.Consumer;
 public class FabricServerNetwork {
     public static void init() {
         // Config stage
-        PayloadTypeRegistry.configurationS2C().register(Packets.ConfigSync.PACKET_ID, Packets.ConfigSync.CODEC);
-        PayloadTypeRegistry.configurationC2S().register(Packets.Ack.PACKET_ID, Packets.Ack.CODEC);
+        PayloadTypeRegistry.clientboundConfiguration().register(Packets.ConfigSync.PACKET_ID, Packets.ConfigSync.CODEC);
+        PayloadTypeRegistry.serverboundConfiguration().register(Packets.Ack.PACKET_ID, Packets.Ack.CODEC);
 
         ServerConfigurationConnectionEvents.CONFIGURE.register((handler, server) -> {
             // This if block is required! Otherwise the client gets stuck in connection screen
@@ -23,13 +23,13 @@ public class FabricServerNetwork {
 
         ServerConfigurationNetworking.registerGlobalReceiver(Packets.Ack.PACKET_ID, (packet, context) -> {
             if (packet.code().equals(ConfigurationTask.name)) {
-                context.networkHandler().completeTask(ConfigurationTask.KEY);
+                context.packetListener().completeTask(ConfigurationTask.KEY);
             }
         });
 
         // Play stage
-        PayloadTypeRegistry.playC2S().register(Packets.RollPublish.PACKET_ID, Packets.RollPublish.CODEC);
-        PayloadTypeRegistry.playS2C().register(Packets.RollAnimation.PACKET_ID, Packets.RollAnimation.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(Packets.RollPublish.PACKET_ID, Packets.RollPublish.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(Packets.RollAnimation.PACKET_ID, Packets.RollAnimation.CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(Packets.RollPublish.PACKET_ID, (packet, context) -> {
             ServerNetwork.handleRollPublish(packet, context.server(), context.player());
@@ -47,7 +47,7 @@ public class FabricServerNetwork {
 
         @Override
         public void start(Consumer<Packet<?>> sender) {
-            sender.accept(ServerConfigurationNetworking.createS2CPacket(new Packets.ConfigSync(this.configString)));
+            sender.accept(ServerConfigurationNetworking.createClientboundPacket(new Packets.ConfigSync(this.configString)));
         }
     }
 }

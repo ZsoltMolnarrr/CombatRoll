@@ -7,7 +7,7 @@ import net.combat_roll.internals.RollManager;
 import net.combat_roll.internals.RollingEntity;
 import net.combat_roll.mixin.client.KeybindingAccessor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
@@ -22,7 +22,7 @@ public class HudRenderHelper {
     private static final Identifier ARROW = Identifier.fromNamespaceAndPath("combat_roll", "textures/hud/arrow.png");
     private static final Identifier ARROW_BACKGROUND = Identifier.fromNamespaceAndPath("combat_roll", "textures/hud/arrow_background.png");
 
-    public static void render(GuiGraphics context, float tickDelta) {
+    public static void render(GuiGraphicsExtractor context, float tickDelta) {
         var config = CombatRollClient.config;
         Minecraft client = Minecraft.getInstance();
         LocalPlayer player = client.player;
@@ -138,7 +138,7 @@ public class HudRenderHelper {
                     case CENTER -> textY -= (textHeight / 2 - 1);
                 }
                 context.pose().pushMatrix();
-                context.drawCenteredString(textRenderer, label, keybindingX, textY, ARGB.color(0xFF, 0xFFFFFF));
+                context.centeredText(textRenderer, label, keybindingX, textY, ARGB.color(0xFF, 0xFFFFFF));
                 context.pose().popMatrix();
             }
         }

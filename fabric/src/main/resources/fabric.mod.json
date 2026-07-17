@@ -29,11 +29,11 @@
     "combat_roll.mixins.json"
   ],
   "depends": {
-    "minecraft": ">=1.21.6",
+    "minecraft": ">=26.1",
     "fabricloader": "*",
     "fabric-api": "*",
     "cloth-config": "*",
-    "player_animation_library": ">=1.0.13"
+    "player_animation_library": ">=1.2"
   },
   "custom": {
     "modmenu": {

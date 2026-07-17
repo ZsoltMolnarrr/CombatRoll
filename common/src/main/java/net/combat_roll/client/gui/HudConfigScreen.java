@@ -2,7 +2,7 @@ package net.combat_roll.client.gui;
 
 import net.combat_roll.client.CombatRollClient;
 import net.combat_roll.config.HudConfig;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
@@ -49,8 +49,9 @@ public class HudConfigScreen extends Screen {
         this.minecraft.setScreen(previous);
     }
 
-    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
-        super.render(context, mouseX, mouseY, delta);
+    @Override
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
+        super.extractRenderState(context, mouseX, mouseY, delta);
         HudRenderHelper.render(context, delta);
     }
 

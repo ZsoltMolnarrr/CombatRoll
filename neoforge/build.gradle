@@ -52,12 +52,12 @@ repositories {
 dependencies {
     neoForge "net.neoforged:neoforge:$project.neoforge_version"
 
-    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':common')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 
-    modImplementation("com.zigythebird.playeranim:PlayerAnimationLibNeo:${project.player_anim_version}")
-    modApi("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}")
-    include(modImplementation("maven.modrinth:tiny-config:${project.tiny_config_version}-${platform}"))
+    implementation("com.zigythebird.playeranim:PlayerAnimationLibNeo:${project.player_anim_version}")
+    api("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}")
+    include(implementation("maven.modrinth:tiny-config:${project.tiny_config_version}-${platform}"))
 }
 
 processResources {
@@ -68,14 +68,16 @@ processResources {
     }
 }
 
-shadowJar {
-    configurations = [project.configurations.shadowBundle]
-    archiveClassifier = 'dev-shadow'
+jar {
+    archiveClassifier = 'raw'
 }
 
-remapJar {
-    inputFile.set shadowJar.archiveFile
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = null
 }
+
+assemble.dependsOn shadowJar
 
 if(project.hasProperty('release_type')) {
     tasks.register("publishMod") {
@@ -92,8 +94,6 @@ if(project.hasProperty('release_type')) {
             changelogType = 'markdown'
             releaseType = release_type
             addGameVersion "${rootProject.minecraft_version}"
-            addGameVersion "1.21.7"
-            addGameVersion "1.21.6"
             addGameVersion "NeoForge"
 
             relations {
@@ -101,9 +101,9 @@ if(project.hasProperty('release_type')) {
                 requiredDependency 'player-animation-library'
             }
 
-            mainArtifact(remapJar)
+            mainArtifact(shadowJar)
             afterEvaluate {
-                uploadTask.dependsOn(remapJar)
+                uploadTask.dependsOn(shadowJar)
             }
             options {
                 forgeGradleIntegration = false
@@ -118,8 +118,8 @@ if(project.hasProperty('release_type')) {
         versionName = "${version}" // You don't need to set this manually. Will fail if Modrinth has this version already
         versionNumber = "${version}-neoforge" // You don't need to set this manually. Will fail if Modrinth has this version already
         versionType = release_type // This is the default -- can also be `beta` or `alpha`
-        uploadFile = remapJar // With Loom, this MUST be set to `remapJar` instead of `jar`!
-        gameVersions = ["${rootProject.minecraft_version}", "1.21.7", "1.21.6"] // Must be an array, even with only one version
+        uploadFile = shadowJar // remapJar is gone at 26.1 — the shadow jar is the main artifact
+        gameVersions = ["${rootProject.minecraft_version}"] // Must be an array, even with only one version
         loaders = ["neoforge"] // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
         changelog = changelog_last_section()
         dependencies { // A special DSL for creating dependencies
