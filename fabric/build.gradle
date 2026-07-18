@@ -58,9 +58,7 @@ dependencies {
     }
     include(implementation("maven.modrinth:tiny-config:${project.tiny_config_version}-${platform}"))
     implementation "com.zigythebird.playeranim:PlayerAnimationLibFabric:${project.player_anim_version}"
-
     implementation("com.terraformersmc:modmenu:${project.mod_menu_version}") { transitive false }
-    // TODO: Bump to the 26.1 build once published; only the MC-free API interface MinecraftClient_BetterCombat is compiled against
     compileOnly("maven.modrinth:better-combat:${project.better_combat_version}-${platform}")
 }
 
