@@ -12,7 +12,7 @@ import net.neoforged.neoforge.client.event.RenderGuiEvent;
 public class ClientEventsNeoForge {
     @SubscribeEvent
     public static void onRenderHud(RenderGuiEvent.Post event){
-        if (!Minecraft.getInstance().options.hideGui) {
+        if (!Minecraft.getInstance().gui.hud.isHidden()) {
             HudRenderHelper.render(event.getGuiGraphics(), event.getPartialTick().getGameTimeDeltaPartialTick(true));
         }
     }

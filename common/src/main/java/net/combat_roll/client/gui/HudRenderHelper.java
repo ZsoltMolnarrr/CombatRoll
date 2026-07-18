@@ -96,7 +96,7 @@ public class HudRenderHelper {
         }
 
         if (config.showKeybinding) {
-            var textRenderer = client.gui.getFont();
+            var textRenderer = client.font;
 
             int keybindingX = drawX + drawnWith / 2;
             int keybindingY = drawY + 1;

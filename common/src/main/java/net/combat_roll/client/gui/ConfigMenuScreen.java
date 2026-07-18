@@ -30,7 +30,7 @@ public class ConfigMenuScreen extends Screen {
         );
         addRenderableWidget(
                 Button.builder(Component.translatable("gui.combat_roll.settings"), button -> {
-                            minecraft.setScreen(AutoConfigClient.getConfigScreen(ClientConfigWrapper.class, this).get());
+                            minecraft.gui.setScreen(AutoConfigClient.getConfigScreen(ClientConfigWrapper.class, this).get());
                         })
                         .pos(buttonCenterX, buttonCenterY)
                         .size(buttonWidth, buttonHeight)
@@ -38,7 +38,7 @@ public class ConfigMenuScreen extends Screen {
         );
         addRenderableWidget(
                 Button.builder(Component.translatable("gui.combat_roll.hud"), button -> {
-                            minecraft.setScreen(new HudConfigScreen(this));
+                            minecraft.gui.setScreen(new HudConfigScreen(this));
                         })
                         .pos(buttonCenterX, buttonCenterY + 30)
                         .size(buttonWidth, buttonHeight)
@@ -47,7 +47,7 @@ public class ConfigMenuScreen extends Screen {
     }
 
     public void onClose() {
-        this.minecraft.setScreen(previous);
+        this.minecraft.gui.setScreen(previous);
     }
 
     @Override

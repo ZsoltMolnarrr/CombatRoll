@@ -20,7 +20,7 @@ public class CombatRollClientModFabric implements ClientModInitializer {
         }
 
         HudElementRegistry.addFirst(Identifier.fromNamespaceAndPath(CombatRollMod.ID, "recharge"), (context, tickCounter) -> {
-            if (!Minecraft.getInstance().options.hideGui) {
+            if (!Minecraft.getInstance().gui.hud.isHidden()) {
                 HudRenderHelper.render(context, tickCounter.getGameTimeDeltaPartialTick(true));
             }
         });

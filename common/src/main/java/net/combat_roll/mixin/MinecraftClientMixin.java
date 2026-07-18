@@ -68,7 +68,7 @@ public abstract class MinecraftClientMixin {
 
     private void tryRolling() {
         var client = (Minecraft) ((Object)this);
-        if (player == null || client.isPaused() || client.screen != null) {
+        if (player == null || client.isPaused() || client.gui.screen() != null) {
             return;
         }
         var rollingPlayer = ((RollingEntity)player);
