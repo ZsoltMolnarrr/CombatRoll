@@ -2,6 +2,7 @@
   "combat_roll.mod_name" : "Combat Roll",
 
   "keybinds.combat_roll.roll" : "Перекид",
+  "key.category.combat_roll.main" : "Combat Roll",
 
   "gui.combat_roll.config_menu" : "Конфігурація Combat Roll",
   "gui.combat_roll.close" : "Закрити",
@@ -17,16 +18,21 @@
   "enchantment.combat_roll.multi_roll" : "Мультиперекид",
   "enchantment.combat_roll.multi_roll.desc" : "Надає додаткові перекиди",
 
-  "attribute.name.combat_roll.distance" : "Відстань перекидів",
+  "attribute.name.combat_roll.distance" : "Відстань перекиду",
   "attribute.name.combat_roll.count" : "Додаткові перекиди",
   "attribute.name.combat_roll.recharge" : "Відновлення перекидів",
 
+  "stat.combat_roll.roll": "Перекиди",
+  "stat.combat_roll.roll_cm": "Подолана перекидами відстань",
+
   "text.autoconfig.combat_roll.title": "Combat Roll",
-  "text.autoconfig.combat_roll.option.client.playCooldownSound" : "Відтворювати звук відновлення перекиду",
+  "text.autoconfig.combat_roll.option.client.playCooldownSound" : "Відтворювати звук готовності перекиду",
   "text.autoconfig.combat_roll.option.client.playCooldownFlash": "Стрілка мигатиме, коли перекид готовий",
   "text.autoconfig.combat_roll.option.client.playRollSound" : "Відтворювати звук перекиду",
   "text.autoconfig.combat_roll.option.client.hudArrowColor" : "Колір стрілки",
-  "text.autoconfig.combat_roll.option.client.hudBackgroundOpacity" : "Прозорість стрілки",
-  "text.autoconfig.combat_roll.option.client.showHUDInCreative" : "Показувати стрілку в режимі творчости",
-  "text.autoconfig.combat_roll.option.client.showWhenFull" : "Показувати стрілку, лише коли вона заповнена"
+  "text.autoconfig.combat_roll.option.client.hudBackgroundOpacity" : "Прозорість тла стрілки",
+  "text.autoconfig.combat_roll.option.client.showHUDInCreative" : "Показувати стрілку в режимі творчості",
+  "text.autoconfig.combat_roll.option.client.showWhenFull" : "Показувати стрілку, лише коли вона заповнена",
+  "text.autoconfig.combat_roll.option.client.showKeybinding" : "Показувати прив'язку клавіші на екрані",
+  "text.autoconfig.combat_roll.option.client.keybindingLabelPosition" : "Розташування підказки клавіші"
 }
