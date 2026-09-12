@@ -21,6 +21,9 @@
   "attribute.name.combat_roll.count" : "Extra Roll",
   "attribute.name.combat_roll.recharge" : "Roll Recharge",
 
+  "stat.combatroll.roll": "Rolls",
+  "stat.combatroll.roll_cm": "Rolled Distance",
+
   "text.autoconfig.combatroll.title": "Combat Roll",
   "text.autoconfig.combatroll.option.client.playCooldownSound" : "Play cooldown ready sound",
   "text.autoconfig.combatroll.option.client.playCooldownFlash": "Flash arrow when cooldown ready",

@@ -3,6 +3,7 @@ package net.combatroll.network;
 import com.google.common.collect.Iterables;
 import net.combatroll.CombatRoll;
 import net.combatroll.api.RollInvulnerable;
+import net.combatroll.stat.CombatRollStats;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -44,6 +45,10 @@ public class ServerNetwork {
                 ((RollInvulnerable)player).setRollInvulnerableTicks(CombatRoll.config.invulnerable_ticks_upon_roll);
                 player.addExhaustion(CombatRoll.config.exhaust_on_roll);
                 var proxy = (Event.Proxy<ServerSideRollEvents.PlayerStartRolling>)ServerSideRollEvents.PLAYER_START_ROLLING;
+
+                player.incrementStat(CombatRollStats.ROLL.stat);
+                player.increaseStat(CombatRollStats.ROLL_CM.stat, (int)(velocity.length() * 100 * 1.5D));
+
                 proxy.handlers.forEach(hander -> { hander.onPlayerStartedRolling(player, velocity);});
             });
         });
