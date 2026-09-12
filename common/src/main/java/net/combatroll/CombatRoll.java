@@ -1,5 +1,6 @@
 package net.combatroll;
 
+import joptsimple.internal.Reflection;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
