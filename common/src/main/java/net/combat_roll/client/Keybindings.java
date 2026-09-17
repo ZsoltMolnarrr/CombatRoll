@@ -11,7 +11,7 @@ public class Keybindings {
     static {
         roll = new KeyMapping(
                 "keybinds.combat_roll.roll",
-                InputConstants.Type.KEYSYM,
+                InputConstants.Type.KEYBOARD,
                 InputConstants.KEY_R,
                 KeyMapping.Category.MOVEMENT);
 

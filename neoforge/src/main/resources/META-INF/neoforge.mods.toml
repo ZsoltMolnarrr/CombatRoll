@@ -11,19 +11,19 @@ authors = "Daedelus"
 description = '''
 Adds combat roll ability, with related attributes and enchantments.
 '''
-logoFile = "icon.png"
+iconFile = "icon.png"
 
 [[dependencies.combat_roll]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.2,)"
+versionRange = "[26.3,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.combat_roll]]
 modId = "minecraft"
 type = "required"
-versionRange = "[26.2,)"
+versionRange = "[26.3,)"
 ordering = "NONE"
 side = "BOTH"
 
