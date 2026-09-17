@@ -5,6 +5,7 @@ import net.combat_roll.config.HudConfig;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec2;
@@ -57,7 +58,7 @@ public class HudConfigScreen extends Screen {
 
     @Override
     public boolean mouseDragged(MouseButtonEvent click, double offsetX, double offsetY) {
-        if (!this.isDragging() && click.button() == 0) {
+        if (!this.isDragging() && click.button() == InputConstants.MOUSE_BUTTON_LEFT) {
             var config = CombatRollClient.hudConfig.value;
             config.rollWidget.offset = new Vec2(
                     (float) (config.rollWidget.offset.x + offsetX),
