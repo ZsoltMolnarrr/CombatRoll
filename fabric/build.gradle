@@ -28,7 +28,7 @@ configurations {
 }
 
 repositories {
-    maven { url 'https://maven.shedaniel.me/' }
+    maven { url = 'https://maven.shedaniel.me/' }
     maven {
         name = 'Modrinth'
         url = 'https://api.modrinth.com/maven'
@@ -44,10 +44,10 @@ repositories {
 }
 
 dependencies {
-    implementation "net.fabricmc:fabric-loader:$project.fabric_loader_version"
-    implementation "net.fabricmc.fabric-api:fabric-api:$project.fabric_api_version"
+    implementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+    implementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
-    common(project(path: ':common')) { transitive false }
+    common(project(path: ':common')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 
     api("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
@@ -55,7 +55,7 @@ dependencies {
     }
     include(implementation("maven.modrinth:tiny-config:${project.tiny_config_version}-${platform}"))
     implementation "com.zigythebird.playeranim:PlayerAnimationLibFabric:${project.player_anim_version}"
-    implementation("maven.modrinth:modmenu:${project.mod_menu_version}") { transitive false }
+    implementation("maven.modrinth:modmenu:${project.mod_menu_version}") { transitive = false }
     compileOnly("maven.modrinth:better-combat:${project.better_combat_version}-${platform}")
 }
 
@@ -63,10 +63,12 @@ processResources {
     inputs.property 'version', project.version
 
     filesMatching('fabric.mod.json') {
-        expand version: project.version
+        expand version: inputs.properties.version
     }
 }
 
+// Minecraft is not obfuscated on this version, so there is no remapJar task.
+// The shaded jar is the mod jar that ships.
 jar {
     archiveClassifier = 'raw'
 }
@@ -83,6 +85,17 @@ shadowJar {
 }
 
 assemble.dependsOn shadowJar
+
+configurations {
+    apiElements {
+        outgoing.artifacts.clear()
+        outgoing.artifact(shadowJar)
+    }
+    runtimeElements {
+        outgoing.artifacts.clear()
+        outgoing.artifact(shadowJar)
+    }
+}
 
 // Publishing is configured unconditionally: tasks only *run* when explicitly invoked
 // (e.g. `publishMod` in CI), and all credentials are lazy env providers, so a local

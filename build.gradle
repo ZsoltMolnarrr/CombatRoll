@@ -1,7 +1,8 @@
 plugins {
+    // This version of Minecraft is not obfuscated, so Loom is set up without remapping.
     id 'dev.architectury.loom-no-remap' version '1.17-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.5-SNAPSHOT'
-    id 'com.gradleup.shadow' version '9.4.2' apply false
+    id 'com.gradleup.shadow' version '9.4.3' apply false
 }
 
 architectury {
@@ -33,7 +34,7 @@ subprojects {
     }
 
     dependencies {
-        minecraft "com.mojang:minecraft:$rootProject.minecraft_version"
+        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
     }
 
     java {
